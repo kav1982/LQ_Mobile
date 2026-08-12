@@ -100,16 +100,33 @@ namespace DungeonImport.Editor
         static Dictionary<string, Texture2D> ImportTextures(string pkgDir, Dictionary<string, object> man, string outRoot)
         {
             var map = new Dictionary<string, Texture2D>(StringComparer.OrdinalIgnoreCase);
-            var list = Get<List<object>>(man, "textures") ?? new List<object>();
-            foreach (var o in list)
+            // Prefer the textures/ folder on disk over package.json's list — late-resolved
+            // cutout maps (Vine_01, LotusLeaf, …) are often written after the catalog was frozen.
+            var names = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            string texDir = Path.Combine(pkgDir, "textures");
+            if (Directory.Exists(texDir))
+                foreach (var p in Directory.GetFiles(texDir, "*.png"))
+                    names.Add(Path.GetFileName(p));
+            foreach (var o in Get<List<object>>(man, "textures") ?? new List<object>())
+                if (o is string fn && !string.IsNullOrEmpty(fn))
+                    names.Add(fn);
+
+            foreach (var fn in names)
             {
-                string fn = o as string;
-                if (string.IsNullOrEmpty(fn)) continue;
                 string src = $"{pkgDir}/textures/{fn}";
                 string dst = $"{outRoot}/Textures/{fn}";
                 if (!File.Exists(src)) continue;
                 if (!File.Exists(dst))
-                    AssetDatabase.CopyAsset(src, dst);
+                    File.Copy(src, dst.Replace('/', Path.DirectorySeparatorChar), overwrite: false);
+                else
+                {
+                    // Refresh when the pack PNG is newer (texture resolve after first import).
+                    var srcInfo = new FileInfo(src);
+                    var dstInfo = new FileInfo(dst.Replace('/', Path.DirectorySeparatorChar));
+                    if (srcInfo.LastWriteTimeUtc > dstInfo.LastWriteTimeUtc)
+                        File.Copy(src, dstInfo.FullName, overwrite: true);
+                }
+                AssetDatabase.ImportAsset(dst);
 
                 var ti = AssetImporter.GetAtPath(dst) as TextureImporter;
                 if (ti != null)
@@ -216,7 +233,7 @@ namespace DungeonImport.Editor
                     if (te == null) continue;
                     if (!types.TryGetValue(prop, out var pt) || pt != ShaderPropertyType.Texture) continue;
 
-                    var tex = ResolveTexture(te, texMap);
+                    var tex = ResolveTexture(te, texMap, name);
                     if (tex != null) mat.SetTexture(prop, tex);
 
                     var scale = ToVector2(Get<List<object>>(te, "scale"));
@@ -225,8 +242,14 @@ namespace DungeonImport.Editor
                     if (offset.HasValue) mat.SetTextureOffset(prop, offset.Value);
                 }
 
-            // The MMN shaders gate clipping on a float, but URP still needs the keyword + queue.
-            if (mat.HasProperty("_ALPHATEST") && mat.GetFloat("_ALPHATEST") > 0.5f)
+            // TreeLeaves uses `_AlphaTest`; SimpleLit / Grass use `_ALPHATEST`. Either float means
+            // cutout. TreeLeaves also clips unconditionally in HLSL, but SimpleLit needs the
+            // keyword or vine / lotus cards stay solid green when only Base Tint is set.
+            bool alphaTest =
+                (mat.HasProperty("_ALPHATEST") && mat.GetFloat("_ALPHATEST") > 0.5f)
+                || (mat.HasProperty("_AlphaTest") && mat.GetFloat("_AlphaTest") > 0.5f)
+                || (mat.HasProperty("_AlphaClip") && mat.GetFloat("_AlphaClip") > 0.5f);
+            if (alphaTest)
             {
                 mat.EnableKeyword("_ALPHATEST_ON");
                 mat.SetOverrideTag("RenderType", "TransparentCutout");
@@ -253,7 +276,8 @@ namespace DungeonImport.Editor
             return map;
         }
 
-        static Texture2D ResolveTexture(Dictionary<string, object> te, Dictionary<string, Texture2D> texMap)
+        static Texture2D ResolveTexture(Dictionary<string, object> te, Dictionary<string, Texture2D> texMap,
+            string materialName = null)
         {
             string png = Get<string>(te, "png");
             if (!string.IsNullOrEmpty(png))
@@ -263,6 +287,10 @@ namespace DungeonImport.Editor
             }
             string tname = Get<string>(te, "texture");
             if (!string.IsNullOrEmpty(tname) && texMap.TryGetValue(tname, out var t2)) return t2;
+            // Shared vine / grass mats often keep a texture pathID whose PNG was resolved late;
+            // fall back to the material name (Vine_01 → Vine_01.png) when the slot is still empty.
+            if (!string.IsNullOrEmpty(materialName) && texMap.TryGetValue(materialName, out var t3))
+                return t3;
             return null;
         }
 
@@ -512,11 +540,10 @@ namespace DungeonImport.Editor
 
             // Single mode rather than additive: an untitled scene in the setup makes additive
             // NewScene throw, and a previously opened preview cannot be saved over itself.
-            if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
-            {
-                Debug.Log($"[{dungeon}] scene build cancelled - unsaved scenes were kept");
-                return;
-            }
+            // Auto-save instead of SaveCurrentModifiedScenesIfUserWantsTo — the latter pops a
+            // modal that silently cancels (or hangs MCP/menu automation) when another preview
+            // like Gothic is open and dirty.
+            EditorSceneManager.SaveOpenScenes();
             var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
 
             // Modules are all authored around the origin, so they get spread along X to sit side
@@ -634,14 +661,24 @@ namespace DungeonImport.Editor
         }
 
         /// <summary>
-        /// Stands in for the fire particle systems at the anchors kept during extraction: a warm
-        /// point light per brazier, which is what actually reads as light in a preview scene.
+        /// Stands in for the fire / candle particle systems at the anchors kept during
+        /// extraction: a warm point light per FX_Fire or FX_CandleLight node, which is what
+        /// actually reads as light in a preview scene.
         /// Intensity is derived from how high the flame sits rather than fixed, because these
         /// anchors range from bowls atop 6 unit stands in the halls down to sconces a few units
         /// off the floor in the passages. A constant that pools nicely under a hall brazier blows
         /// out a passage tile, and inverse-square falloff means holding the lit floor at a steady
         /// brightness takes intensity proportional to the square of that height.
         /// </summary>
+        static bool IsLightAnchor(string name)
+        {
+            if (string.IsNullOrEmpty(name)) return false;
+            // Mesh children (e.g. FX_CandleLight_Mesh) share the parent flame; light the parent only.
+            if (name.IndexOf("Mesh", StringComparison.OrdinalIgnoreCase) >= 0) return false;
+            return name.IndexOf("FX_Fire", StringComparison.OrdinalIgnoreCase) >= 0
+                || name.IndexOf("FX_CandleLight", StringComparison.OrdinalIgnoreCase) >= 0;
+        }
+
         static int AddBrazierLights(GameObject instance, float floorTop)
         {
             const float floorBrightness = 0.5f;
@@ -649,11 +686,15 @@ namespace DungeonImport.Editor
             var renderers = instance.GetComponentsInChildren<Renderer>();
             foreach (var t in instance.GetComponentsInChildren<Transform>())
             {
-                if (t.name.IndexOf("FX_Fire", StringComparison.OrdinalIgnoreCase) < 0) continue;
+                if (!IsLightAnchor(t.name)) continue;
 
                 var go = new GameObject("Light_" + t.name);
                 go.transform.SetParent(t, false);
-                go.transform.localPosition = new Vector3(0f, 0.8f, 0f);
+                // Candles sit lower than standing braziers; a smaller local lift keeps the
+                // warm pool on the stick instead of floating a unit above the flame mesh.
+                float lift = t.name.IndexOf("Candle", StringComparison.OrdinalIgnoreCase) >= 0
+                    ? 0.25f : 0.8f;
+                go.transform.localPosition = new Vector3(0f, lift, 0f);
                 go.transform.position = PushOutOfGeometry(go.transform.position, renderers);
 
                 float height = float.IsNaN(floorTop) ? 5f : go.transform.position.y - floorTop;
