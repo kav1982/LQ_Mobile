@@ -1,0 +1,71 @@
+//////////////////////////////////////////
+//
+// NOTE: This is *not* a valid shader file
+//
+///////////////////////////////////////////
+Shader "Amplify Impostors/MM_Horizontal Impostor URP" {
+Properties {
+
+_Albedo ("BaseMap", 2D) = "white" { }
+
+_Normals ("Normals & Depth", 2D) = "white" { }
+
+_Frames ("Frames", Float) = 16.0
+
+_ClipMask ("Clip", Range(0, 1)) = 0.009999999776482582
+
+_TextureBias ("Texture Bias", Float) = -1.0
+
+[Toggle(_USE_PARALLAX_ON)] _Use_Parallax ("Use Parallax", Float) = 0.0
+
+_Parallax ("Parallax", Range(-1, 1)) = 1.0
+
+_AI_ShadowBias ("Shadow Bias", Range(0, 2)) = 0.25
+
+_AI_ShadowView ("Shadow View", Range(0, 1)) = 1.0
+
+_FramesX ("Frames X", Float) = 16.0
+
+_FramesY ("Frames Y", Float) = 16.0
+
+_DepthSize ("DepthSize", Float) = 1.0
+
+_ImpostorSize ("Impostor Size", Vector) = (1,1,1,1)
+
+_Offset ("Offset", Vector) = (0,0,0,0)
+
+_AI_SizeOffset ("Size & Offset", Vector) = (0,0,0,0)
+
+[Toggle(EFFECT_HUE_VARIATION)] _Hue ("Use SpeedTree Hue", Float) = 0.0
+
+_HueVariation ("Hue Variation", Color) = (0,0,0,0)
+
+[Toggle] _AI_AlphaToCoverage ("Alpha To Coverage", Float) = 0.0
+
+_ReceiveShadowStrength ("리시브 셰도우 강도", Range(0, 1)) = 0.5
+
+_ShadingPow ("음영 날카롭기 조정", Range(0.01, 3)) = 1.0
+
+_GIStrength ("음영 밝게하기)", Range(0, 1)) = 0.0
+
+_TintColor ("틴트칼라", Color) = (1,1,1,1)
+
+_TintStr ("틴트 적용 강도", Float) = 0.0
+
+[Toggle] _IsRaindrop ("빗방울이 떨어질까요?/ 눈이 쌓일까요?", Float) = 1.0
+
+}
+SubShader {
+ Tags { "DisableBatching" = "true" "QUEUE" = "Geometry" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" }
+ Pass {
+ Name "Base"
+  Tags { "DisableBatching" = "true" "LIGHTMODE" = "UniversalForward" "QUEUE" = "Geometry" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" }
+  GpuProgramID 61799
+}
+ Pass {
+ Name "DepthOnly"
+  Tags { "DisableBatching" = "true" "LIGHTMODE" = "DepthOnly" "QUEUE" = "Geometry" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" }
+  GpuProgramID 118834
+}
+}
+}
