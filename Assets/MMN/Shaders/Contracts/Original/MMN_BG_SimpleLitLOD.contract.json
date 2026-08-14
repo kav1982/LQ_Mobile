@@ -1,0 +1,911 @@
+{
+  "customEditor": "MM.Client.Editor.ShaderGUI.MMN_SimpleLitGUI_LOD",
+  "extractorVersion": "1.1.0",
+  "fallback": "",
+  "keywordNames": [
+    "DEBUG_DISPLAY",
+    "FOG_LINEAR",
+    "STEREO_CUBEMAP_RENDER_ON",
+    "STEREO_INSTANCING_ON",
+    "STEREO_MULTIVIEW_ON",
+    "UNITY_SINGLE_PASS_STEREO",
+    "_ALPHATEST_ON",
+    "_GLOBAL_OPTION_VERY_LOW",
+    "_SHOWVERTEXALPHA_ON",
+    "_SHOWVERTEXCOLOR_ON"
+  ],
+  "name": "MMN/BG/SimpleLitLOD",
+  "properties": [
+    {
+      "attributes": [
+        "Toggle"
+      ],
+      "default": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "description": "글로벌 디더링 패턴 그림자를 사용한다",
+      "flags": 0,
+      "name": "_IsShadowDitheringPattern",
+      "type": "Float"
+    },
+    {
+      "attributes": [
+        "Toggle"
+      ],
+      "default": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "description": "알파테스트",
+      "flags": 0,
+      "name": "_ALPHATEST",
+      "type": "Float"
+    },
+    {
+      "attributes": [],
+      "default": [
+        0.5,
+        0,
+        1,
+        0
+      ],
+      "description": "Alpha Clipping",
+      "flags": 0,
+      "name": "_Cutoff",
+      "range": [
+        0,
+        1
+      ],
+      "type": "Range"
+    },
+    {
+      "attributes": [
+        "Enum(off, 0, front, 1, back, 2)"
+      ],
+      "default": [
+        2,
+        0,
+        0,
+        0
+      ],
+      "description": "BackfaceCull",
+      "flags": 0,
+      "name": "_Cull",
+      "type": "Float"
+    },
+    {
+      "attributes": [],
+      "default": [
+        1,
+        0,
+        1,
+        0
+      ],
+      "description": "버텍스 칼라 영향력 가중치",
+      "flags": 0,
+      "name": "_VertexColorWeight",
+      "range": [
+        0,
+        1
+      ],
+      "type": "Range"
+    },
+    {
+      "attributes": [
+        "Toggle"
+      ],
+      "default": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "description": "Show Vertex Color(확인용)",
+      "flags": 0,
+      "name": "_ShowVertexColor",
+      "type": "Float"
+    },
+    {
+      "attributes": [
+        "Toggle"
+      ],
+      "default": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "description": "Show Vertex Alpha(확인용)",
+      "flags": 0,
+      "name": "_ShowVertexAlpha",
+      "type": "Float"
+    },
+    {
+      "attributes": [],
+      "default": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "defaultTextureName": "white",
+      "description": "Base Map (RGB) Smoothness / Alpha (A)",
+      "flags": 128,
+      "name": "_BaseMap",
+      "textureDimension": "2D",
+      "type": "Texture"
+    },
+    {
+      "attributes": [],
+      "default": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "description": "Base Tint",
+      "flags": 256,
+      "name": "_BaseColor",
+      "type": "Color"
+    },
+    {
+      "attributes": [],
+      "default": [
+        0,
+        -1,
+        1,
+        0
+      ],
+      "description": "Albedo Tint Strength",
+      "flags": 0,
+      "name": "_AlbedoTintStrength",
+      "range": [
+        -1,
+        1
+      ],
+      "type": "Range"
+    },
+    {
+      "attributes": [],
+      "default": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "description": "Emission Color",
+      "flags": 16,
+      "name": "_EmissionColor",
+      "type": "Color"
+    },
+    {
+      "attributes": [],
+      "default": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "defaultTextureName": "white",
+      "description": "Emission Map",
+      "flags": 4,
+      "name": "_EmissionMap",
+      "textureDimension": "2D",
+      "type": "Texture"
+    },
+    {
+      "attributes": [],
+      "default": [
+        1,
+        0,
+        10,
+        0
+      ],
+      "description": "Emission Intensity",
+      "flags": 0,
+      "name": "_EmissionIntensity",
+      "range": [
+        0,
+        10
+      ],
+      "type": "Range"
+    },
+    {
+      "attributes": [
+        "Enum(Always, 0, NightOnly, 1, DayOnly, 2)"
+      ],
+      "default": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "description": "언제 Emission이 켜지게 할까요",
+      "flags": 0,
+      "name": "_Night2DayEnum",
+      "type": "Float"
+    },
+    {
+      "attributes": [
+        "Toggle"
+      ],
+      "default": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "description": "빗방울이 떨어질까요?/ 눈이 쌓일까요?",
+      "flags": 0,
+      "name": "_IsRaindrop",
+      "type": "Float"
+    }
+  ],
+  "schemaVersion": 2,
+  "shaderLabExport": {
+    "available": true,
+    "error": null
+  },
+  "source": {
+    "blob": "AssetPackages/Starter/0031.blob",
+    "blobSha256": "1bb07ff5cfb6bed4bec14f20cd3dbf4899a6e70405860c02bcdd6721551ff5ab",
+    "chunk": 22,
+    "pathID": 4068992084013414211
+  },
+  "subShaders": [
+    {
+      "lod": 200,
+      "passes": [
+        {
+          "name": "ForwardLit",
+          "programStages": [
+            "Vertex",
+            "Fragment"
+          ],
+          "stateEntries": [
+            {
+              "key": "alphaToMask",
+              "value": "0"
+            },
+            {
+              "key": "culling",
+              "value": "property:_Cull"
+            },
+            {
+              "key": "fogMode",
+              "value": "-1"
+            },
+            {
+              "key": "lighting",
+              "value": "0"
+            },
+            {
+              "key": "offsetFactor",
+              "value": "0"
+            },
+            {
+              "key": "offsetUnits",
+              "value": "0"
+            },
+            {
+              "key": "rtBlend0.blendOp",
+              "value": "0"
+            },
+            {
+              "key": "rtBlend0.blendOpAlpha",
+              "value": "0"
+            },
+            {
+              "key": "rtBlend0.colMask",
+              "value": "15"
+            },
+            {
+              "key": "rtBlend0.destBlend",
+              "value": "0"
+            },
+            {
+              "key": "rtBlend0.destBlendAlpha",
+              "value": "0"
+            },
+            {
+              "key": "rtBlend0.srcBlend",
+              "value": "1"
+            },
+            {
+              "key": "rtBlend0.srcBlendAlpha",
+              "value": "1"
+            },
+            {
+              "key": "rtBlend1.blendOp",
+              "value": "0"
+            },
+            {
+              "key": "rtBlend1.blendOpAlpha",
+              "value": "0"
+            },
+            {
+              "key": "rtBlend1.colMask",
+              "value": "15"
+            },
+            {
+              "key": "rtBlend1.destBlend",
+              "value": "0"
+            },
+            {
+              "key": "rtBlend1.destBlendAlpha",
+              "value": "0"
+            },
+            {
+              "key": "rtBlend1.srcBlend",
+              "value": "1"
+            },
+            {
+              "key": "rtBlend1.srcBlendAlpha",
+              "value": "1"
+            },
+            {
+              "key": "rtSeparateBlend",
+              "value": "0"
+            },
+            {
+              "key": "stencilOp.comp",
+              "value": "8"
+            },
+            {
+              "key": "stencilOp.fail",
+              "value": "0"
+            },
+            {
+              "key": "stencilOp.pass_",
+              "value": "0"
+            },
+            {
+              "key": "stencilOp.zFail",
+              "value": "0"
+            },
+            {
+              "key": "stencilReadMask",
+              "value": "255"
+            },
+            {
+              "key": "stencilRef",
+              "value": "0"
+            },
+            {
+              "key": "stencilWriteMask",
+              "value": "255"
+            },
+            {
+              "key": "zTest",
+              "value": "4"
+            },
+            {
+              "key": "zWrite",
+              "value": "1"
+            }
+          ],
+          "states": {
+            "alphaToMask": 0,
+            "culling": {
+              "property": "_Cull"
+            },
+            "fogMode": -1,
+            "lighting": 0,
+            "offsetFactor": 0,
+            "offsetUnits": 0,
+            "rtBlend0": {
+              "blendOp": 0,
+              "blendOpAlpha": 0,
+              "colMask": 15,
+              "destBlend": 0,
+              "destBlendAlpha": 0,
+              "srcBlend": 1,
+              "srcBlendAlpha": 1
+            },
+            "rtBlend1": {
+              "blendOp": 0,
+              "blendOpAlpha": 0,
+              "colMask": 15,
+              "destBlend": 0,
+              "destBlendAlpha": 0,
+              "srcBlend": 1,
+              "srcBlendAlpha": 1
+            },
+            "rtSeparateBlend": 0,
+            "stencilOp": {
+              "comp": 8,
+              "fail": 0,
+              "pass_": 0,
+              "zFail": 0
+            },
+            "stencilReadMask": 255,
+            "stencilRef": 0,
+            "stencilWriteMask": 255,
+            "zTest": 4,
+            "zWrite": 1
+          },
+          "tagEntries": [
+            {
+              "key": "IGNOREPROJECTOR",
+              "value": "true"
+            },
+            {
+              "key": "LIGHTMODE",
+              "value": "BG"
+            },
+            {
+              "key": "RenderPipeline",
+              "value": "UniversalPipeline"
+            },
+            {
+              "key": "RenderType",
+              "value": "Opaque"
+            },
+            {
+              "key": "ShaderModel",
+              "value": "4.5"
+            },
+            {
+              "key": "UniversalMaterialType",
+              "value": "SimpleLit"
+            }
+          ],
+          "tags": {
+            "IGNOREPROJECTOR": "true",
+            "LIGHTMODE": "BG",
+            "RenderPipeline": "UniversalPipeline",
+            "RenderType": "Opaque",
+            "ShaderModel": "4.5",
+            "UniversalMaterialType": "SimpleLit"
+          },
+          "type": 0,
+          "useName": ""
+        },
+        {
+          "name": "DepthOnly",
+          "programStages": [
+            "Vertex",
+            "Fragment"
+          ],
+          "stateEntries": [
+            {
+              "key": "alphaToMask",
+              "value": "0"
+            },
+            {
+              "key": "culling",
+              "value": "property:_Cull"
+            },
+            {
+              "key": "fogMode",
+              "value": "-1"
+            },
+            {
+              "key": "lighting",
+              "value": "0"
+            },
+            {
+              "key": "offsetFactor",
+              "value": "0"
+            },
+            {
+              "key": "offsetUnits",
+              "value": "0"
+            },
+            {
+              "key": "rtBlend0.blendOp",
+              "value": "0"
+            },
+            {
+              "key": "rtBlend0.blendOpAlpha",
+              "value": "0"
+            },
+            {
+              "key": "rtBlend0.colMask",
+              "value": "0"
+            },
+            {
+              "key": "rtBlend0.destBlend",
+              "value": "0"
+            },
+            {
+              "key": "rtBlend0.destBlendAlpha",
+              "value": "0"
+            },
+            {
+              "key": "rtBlend0.srcBlend",
+              "value": "1"
+            },
+            {
+              "key": "rtBlend0.srcBlendAlpha",
+              "value": "1"
+            },
+            {
+              "key": "rtBlend1.blendOp",
+              "value": "0"
+            },
+            {
+              "key": "rtBlend1.blendOpAlpha",
+              "value": "0"
+            },
+            {
+              "key": "rtBlend1.colMask",
+              "value": "15"
+            },
+            {
+              "key": "rtBlend1.destBlend",
+              "value": "0"
+            },
+            {
+              "key": "rtBlend1.destBlendAlpha",
+              "value": "0"
+            },
+            {
+              "key": "rtBlend1.srcBlend",
+              "value": "1"
+            },
+            {
+              "key": "rtBlend1.srcBlendAlpha",
+              "value": "1"
+            },
+            {
+              "key": "rtSeparateBlend",
+              "value": "0"
+            },
+            {
+              "key": "stencilOp.comp",
+              "value": "8"
+            },
+            {
+              "key": "stencilOp.fail",
+              "value": "0"
+            },
+            {
+              "key": "stencilOp.pass_",
+              "value": "0"
+            },
+            {
+              "key": "stencilOp.zFail",
+              "value": "0"
+            },
+            {
+              "key": "stencilReadMask",
+              "value": "255"
+            },
+            {
+              "key": "stencilRef",
+              "value": "0"
+            },
+            {
+              "key": "stencilWriteMask",
+              "value": "255"
+            },
+            {
+              "key": "zTest",
+              "value": "4"
+            },
+            {
+              "key": "zWrite",
+              "value": "1"
+            }
+          ],
+          "states": {
+            "alphaToMask": 0,
+            "culling": {
+              "property": "_Cull"
+            },
+            "fogMode": -1,
+            "lighting": 0,
+            "offsetFactor": 0,
+            "offsetUnits": 0,
+            "rtBlend0": {
+              "blendOp": 0,
+              "blendOpAlpha": 0,
+              "colMask": 0,
+              "destBlend": 0,
+              "destBlendAlpha": 0,
+              "srcBlend": 1,
+              "srcBlendAlpha": 1
+            },
+            "rtBlend1": {
+              "blendOp": 0,
+              "blendOpAlpha": 0,
+              "colMask": 15,
+              "destBlend": 0,
+              "destBlendAlpha": 0,
+              "srcBlend": 1,
+              "srcBlendAlpha": 1
+            },
+            "rtSeparateBlend": 0,
+            "stencilOp": {
+              "comp": 8,
+              "fail": 0,
+              "pass_": 0,
+              "zFail": 0
+            },
+            "stencilReadMask": 255,
+            "stencilRef": 0,
+            "stencilWriteMask": 255,
+            "zTest": 4,
+            "zWrite": 1
+          },
+          "tagEntries": [
+            {
+              "key": "IGNOREPROJECTOR",
+              "value": "true"
+            },
+            {
+              "key": "LIGHTMODE",
+              "value": "DepthOnly"
+            },
+            {
+              "key": "RenderPipeline",
+              "value": "UniversalPipeline"
+            },
+            {
+              "key": "RenderType",
+              "value": "Opaque"
+            },
+            {
+              "key": "ShaderModel",
+              "value": "4.5"
+            },
+            {
+              "key": "UniversalMaterialType",
+              "value": "SimpleLit"
+            }
+          ],
+          "tags": {
+            "IGNOREPROJECTOR": "true",
+            "LIGHTMODE": "DepthOnly",
+            "RenderPipeline": "UniversalPipeline",
+            "RenderType": "Opaque",
+            "ShaderModel": "4.5",
+            "UniversalMaterialType": "SimpleLit"
+          },
+          "type": 0,
+          "useName": ""
+        },
+        {
+          "name": "SSAODepthOnly",
+          "programStages": [
+            "Vertex",
+            "Fragment"
+          ],
+          "stateEntries": [
+            {
+              "key": "alphaToMask",
+              "value": "0"
+            },
+            {
+              "key": "culling",
+              "value": "property:_Cull"
+            },
+            {
+              "key": "fogMode",
+              "value": "-1"
+            },
+            {
+              "key": "lighting",
+              "value": "0"
+            },
+            {
+              "key": "offsetFactor",
+              "value": "0"
+            },
+            {
+              "key": "offsetUnits",
+              "value": "0"
+            },
+            {
+              "key": "rtBlend0.blendOp",
+              "value": "0"
+            },
+            {
+              "key": "rtBlend0.blendOpAlpha",
+              "value": "0"
+            },
+            {
+              "key": "rtBlend0.colMask",
+              "value": "15"
+            },
+            {
+              "key": "rtBlend0.destBlend",
+              "value": "0"
+            },
+            {
+              "key": "rtBlend0.destBlendAlpha",
+              "value": "0"
+            },
+            {
+              "key": "rtBlend0.srcBlend",
+              "value": "1"
+            },
+            {
+              "key": "rtBlend0.srcBlendAlpha",
+              "value": "1"
+            },
+            {
+              "key": "rtBlend1.blendOp",
+              "value": "0"
+            },
+            {
+              "key": "rtBlend1.blendOpAlpha",
+              "value": "0"
+            },
+            {
+              "key": "rtBlend1.colMask",
+              "value": "15"
+            },
+            {
+              "key": "rtBlend1.destBlend",
+              "value": "0"
+            },
+            {
+              "key": "rtBlend1.destBlendAlpha",
+              "value": "0"
+            },
+            {
+              "key": "rtBlend1.srcBlend",
+              "value": "1"
+            },
+            {
+              "key": "rtBlend1.srcBlendAlpha",
+              "value": "1"
+            },
+            {
+              "key": "rtSeparateBlend",
+              "value": "0"
+            },
+            {
+              "key": "stencilOp.comp",
+              "value": "8"
+            },
+            {
+              "key": "stencilOp.fail",
+              "value": "0"
+            },
+            {
+              "key": "stencilOp.pass_",
+              "value": "0"
+            },
+            {
+              "key": "stencilOp.zFail",
+              "value": "0"
+            },
+            {
+              "key": "stencilReadMask",
+              "value": "255"
+            },
+            {
+              "key": "stencilRef",
+              "value": "0"
+            },
+            {
+              "key": "stencilWriteMask",
+              "value": "255"
+            },
+            {
+              "key": "zTest",
+              "value": "4"
+            },
+            {
+              "key": "zWrite",
+              "value": "1"
+            }
+          ],
+          "states": {
+            "alphaToMask": 0,
+            "culling": {
+              "property": "_Cull"
+            },
+            "fogMode": -1,
+            "lighting": 0,
+            "offsetFactor": 0,
+            "offsetUnits": 0,
+            "rtBlend0": {
+              "blendOp": 0,
+              "blendOpAlpha": 0,
+              "colMask": 15,
+              "destBlend": 0,
+              "destBlendAlpha": 0,
+              "srcBlend": 1,
+              "srcBlendAlpha": 1
+            },
+            "rtBlend1": {
+              "blendOp": 0,
+              "blendOpAlpha": 0,
+              "colMask": 15,
+              "destBlend": 0,
+              "destBlendAlpha": 0,
+              "srcBlend": 1,
+              "srcBlendAlpha": 1
+            },
+            "rtSeparateBlend": 0,
+            "stencilOp": {
+              "comp": 8,
+              "fail": 0,
+              "pass_": 0,
+              "zFail": 0
+            },
+            "stencilReadMask": 255,
+            "stencilRef": 0,
+            "stencilWriteMask": 255,
+            "zTest": 4,
+            "zWrite": 1
+          },
+          "tagEntries": [
+            {
+              "key": "IGNOREPROJECTOR",
+              "value": "true"
+            },
+            {
+              "key": "LIGHTMODE",
+              "value": "SSAODepthOnly"
+            },
+            {
+              "key": "RenderPipeline",
+              "value": "UniversalPipeline"
+            },
+            {
+              "key": "RenderType",
+              "value": "Opaque"
+            },
+            {
+              "key": "ShaderModel",
+              "value": "4.5"
+            },
+            {
+              "key": "UniversalMaterialType",
+              "value": "SimpleLit"
+            }
+          ],
+          "tags": {
+            "IGNOREPROJECTOR": "true",
+            "LIGHTMODE": "SSAODepthOnly",
+            "RenderPipeline": "UniversalPipeline",
+            "RenderType": "Opaque",
+            "ShaderModel": "4.5",
+            "UniversalMaterialType": "SimpleLit"
+          },
+          "type": 0,
+          "useName": ""
+        }
+      ],
+      "tagEntries": [
+        {
+          "key": "IGNOREPROJECTOR",
+          "value": "true"
+        },
+        {
+          "key": "RenderPipeline",
+          "value": "UniversalPipeline"
+        },
+        {
+          "key": "RenderType",
+          "value": "Opaque"
+        },
+        {
+          "key": "ShaderModel",
+          "value": "4.5"
+        },
+        {
+          "key": "UniversalMaterialType",
+          "value": "SimpleLit"
+        }
+      ],
+      "tags": {
+        "IGNOREPROJECTOR": "true",
+        "RenderPipeline": "UniversalPipeline",
+        "RenderType": "Opaque",
+        "ShaderModel": "4.5",
+        "UniversalMaterialType": "SimpleLit"
+      }
+    }
+  ]
+}

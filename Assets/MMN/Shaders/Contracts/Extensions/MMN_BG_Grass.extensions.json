@@ -1,0 +1,51 @@
+{
+  "shader": "MMN/BG/Grass",
+  "propertyExtensions": [
+    {
+      "name": "_ShadingPow",
+      "reason": "Current preview HLSL still wraps lighting with this exponent; existing materials serialize the value here.",
+      "consumer": "MMN_BG_Grass.shader ForwardLit / imported dungeon materials"
+    },
+    {
+      "name": "_GIStrength",
+      "reason": "Current preview HLSL still boosts SH ambient with this name; existing materials serialize the value here.",
+      "consumer": "MMN_BG_Grass.shader ForwardLit / imported dungeon materials"
+    },
+    {
+      "name": "_NormalLerp",
+      "reason": "Current preview HLSL still blends normals toward up with this name; existing materials serialize the value here.",
+      "consumer": "MMN_BG_Grass.shader ForwardLit / imported dungeon materials"
+    },
+    {
+      "name": "_ReceiveShadowStrength",
+      "reason": "Current preview HLSL still scales shadow attenuation with this name; existing materials serialize the value here.",
+      "consumer": "MMN_BG_Grass.shader ForwardLit / imported dungeon materials"
+    },
+    {
+      "name": "_ReceiveShadows",
+      "reason": "Current preview HLSL still gates shadows with this toggle; existing materials serialize the value here.",
+      "consumer": "MMN_BG_Grass.shader ForwardLit / imported dungeon materials"
+    },
+    {
+      "name": "_RimColor",
+      "reason": "Current preview HLSL still adds rim lighting from this color; existing materials serialize the value here.",
+      "consumer": "MMN_BG_Grass.shader ForwardLit / imported dungeon materials"
+    },
+    {
+      "name": "_RimArea",
+      "reason": "Current preview HLSL still scales rim intensity with this name; existing materials serialize the value here.",
+      "consumer": "MMN_BG_Grass.shader ForwardLit / imported dungeon materials"
+    },
+    {
+      "name": "_RimRange",
+      "reason": "Current preview HLSL still powers the rim falloff with this name; existing materials serialize the value here.",
+      "consumer": "MMN_BG_Grass.shader ForwardLit / imported dungeon materials"
+    },
+    {
+      "name": "_ShowVertexColor",
+      "reason": "Current preview HLSL still uses this debug toggle; existing materials serialize the value here.",
+      "consumer": "MMN_BG_Grass.shader ForwardLit / imported dungeon materials"
+    }
+  ],
+  "passExtensions": []
+}

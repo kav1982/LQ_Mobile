@@ -1,0 +1,21 @@
+{
+  "shader": "MMN/FX/ObjectDecalLight_StreetLamp_BG",
+  "propertyExtensions": [
+    {
+      "name": "_BaseMap",
+      "reason": "Current preview HLSL still samples this name; existing materials serialize the decal texture here.",
+      "consumer": "MMN_FX_ObjectDecalLight_StreetLamp_BG.shader ForwardLit / imported dungeon materials"
+    },
+    {
+      "name": "_BaseColor",
+      "reason": "Current preview HLSL still multiplies this tint; existing materials serialize the value here.",
+      "consumer": "MMN_FX_ObjectDecalLight_StreetLamp_BG.shader ForwardLit / imported dungeon materials"
+    },
+    {
+      "name": "_EmissionIntensity",
+      "reason": "Current preview HLSL still scales emission with this name; without it decals go black.",
+      "consumer": "MMN_FX_ObjectDecalLight_StreetLamp_BG.shader ForwardLit / imported dungeon materials"
+    }
+  ],
+  "passExtensions": []
+}

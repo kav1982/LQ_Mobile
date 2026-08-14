@@ -1,0 +1,608 @@
+{
+  "customEditor": "MM.Client.Editor.ShaderGUI.MMN_CausticGUI",
+  "extractorVersion": "1.1.0",
+  "fallback": "",
+  "keywordNames": [
+    "FOG_LINEAR",
+    "STEREO_CUBEMAP_RENDER_ON",
+    "STEREO_INSTANCING_ON",
+    "STEREO_MULTIVIEW_ON",
+    "UNITY_SINGLE_PASS_STEREO",
+    "_MAIN_LIGHT_SHADOWS",
+    "_MAIN_LIGHT_SHADOWS_CASCADE",
+    "_MAIN_LIGHT_SHADOWS_SCREEN",
+    "_SHADOWS_SOFT"
+  ],
+  "name": "MMN/BG/Caustic",
+  "properties": [
+    {
+      "attributes": [],
+      "default": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "defaultTextureName": "white",
+      "description": "BaseMap",
+      "flags": 4,
+      "name": "_BaseMap",
+      "textureDimension": "2D",
+      "type": "Texture"
+    },
+    {
+      "attributes": [],
+      "default": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "defaultTextureName": "white",
+      "description": "MaskMap",
+      "flags": 4,
+      "name": "_MaskMap",
+      "textureDimension": "2D",
+      "type": "Texture"
+    },
+    {
+      "attributes": [],
+      "default": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "description": "CausticsColor",
+      "flags": 0,
+      "name": "_CausticsColor",
+      "type": "Color"
+    },
+    {
+      "attributes": [],
+      "default": [
+        0.2,
+        0,
+        1,
+        0
+      ],
+      "description": "AlphaAdd",
+      "flags": 0,
+      "name": "_AlphaAdd",
+      "range": [
+        0,
+        1
+      ],
+      "type": "Range"
+    },
+    {
+      "attributes": [],
+      "default": [
+        0.1,
+        0,
+        1,
+        0
+      ],
+      "description": "AlphaWaveLength",
+      "flags": 0,
+      "name": "_AlphaWaveLength",
+      "range": [
+        0,
+        1
+      ],
+      "type": "Range"
+    },
+    {
+      "attributes": [],
+      "default": [
+        1,
+        0,
+        3,
+        0
+      ],
+      "description": "AlphaWaveSpeed",
+      "flags": 0,
+      "name": "_AlphaWaveSpeed",
+      "range": [
+        0,
+        3
+      ],
+      "type": "Range"
+    },
+    {
+      "attributes": [],
+      "default": [
+        0.1,
+        0,
+        1,
+        0
+      ],
+      "description": "DistortionSpeed",
+      "flags": 0,
+      "name": "_DistortionSpeed",
+      "range": [
+        0,
+        1
+      ],
+      "type": "Range"
+    },
+    {
+      "attributes": [],
+      "default": [
+        0.3,
+        0,
+        1,
+        0
+      ],
+      "description": "DistortionPower",
+      "flags": 0,
+      "name": "_DistortionPower",
+      "range": [
+        0,
+        1
+      ],
+      "type": "Range"
+    },
+    {
+      "attributes": [],
+      "default": [
+        20,
+        20,
+        0,
+        0
+      ],
+      "description": "DistortionTile",
+      "flags": 0,
+      "name": "_DistortionTile",
+      "type": "Vector"
+    },
+    {
+      "attributes": [],
+      "default": [
+        1.2,
+        0,
+        3,
+        0
+      ],
+      "description": "CausticsPower",
+      "flags": 0,
+      "name": "_CausticsPower",
+      "range": [
+        0,
+        3
+      ],
+      "type": "Range"
+    },
+    {
+      "attributes": [],
+      "default": [
+        0.3,
+        0,
+        1,
+        0
+      ],
+      "description": "CausticsBrightness1",
+      "flags": 0,
+      "name": "_CausticsBrightness1",
+      "range": [
+        0,
+        1
+      ],
+      "type": "Range"
+    },
+    {
+      "attributes": [],
+      "default": [
+        0.3,
+        0,
+        1,
+        0
+      ],
+      "description": "CausticsBrightness2",
+      "flags": 0,
+      "name": "_CausticsBrightness2",
+      "range": [
+        0,
+        1
+      ],
+      "type": "Range"
+    },
+    {
+      "attributes": [],
+      "default": [
+        0.6,
+        0.3,
+        -0.6,
+        -0.3
+      ],
+      "description": "CausticsDirection",
+      "flags": 0,
+      "name": "_CausticsDirection",
+      "type": "Vector"
+    },
+    {
+      "attributes": [],
+      "default": [
+        0.2,
+        0,
+        1,
+        0
+      ],
+      "description": "CausticsTile1",
+      "flags": 0,
+      "name": "_CausticsTile1",
+      "range": [
+        0,
+        1
+      ],
+      "type": "Range"
+    },
+    {
+      "attributes": [],
+      "default": [
+        0.2,
+        0,
+        1,
+        0
+      ],
+      "description": "CausticsTile2",
+      "flags": 0,
+      "name": "_CausticsTile2",
+      "range": [
+        0,
+        1
+      ],
+      "type": "Range"
+    },
+    {
+      "attributes": [],
+      "default": [
+        0.2,
+        0,
+        0,
+        0
+      ],
+      "description": "CausticsSpeed1",
+      "flags": 0,
+      "name": "_CausticsSpeed1",
+      "type": "Float"
+    },
+    {
+      "attributes": [],
+      "default": [
+        0.2,
+        0,
+        0,
+        0
+      ],
+      "description": "CausticsSpeed2",
+      "flags": 0,
+      "name": "_CausticsSpeed2",
+      "type": "Float"
+    },
+    {
+      "attributes": [],
+      "default": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "description": "UseCaustics2",
+      "flags": 0,
+      "name": "_UseCaustics2",
+      "type": "Float"
+    },
+    {
+      "attributes": [],
+      "default": [
+        0.05,
+        0,
+        0.5,
+        0
+      ],
+      "description": "CausticsWaveLength1",
+      "flags": 0,
+      "name": "_CausticsWaveLength1",
+      "range": [
+        0,
+        0.5
+      ],
+      "type": "Range"
+    },
+    {
+      "attributes": [],
+      "default": [
+        0.05,
+        0,
+        0.5,
+        0
+      ],
+      "description": "CausticsWaveLength2",
+      "flags": 0,
+      "name": "_CausticsWaveLength2",
+      "range": [
+        0,
+        0.5
+      ],
+      "type": "Range"
+    },
+    {
+      "attributes": [],
+      "default": [
+        1,
+        0,
+        3,
+        0
+      ],
+      "description": "CausticsWaveSpeed1",
+      "flags": 0,
+      "name": "_CausticsWaveSpeed1",
+      "range": [
+        0,
+        3
+      ],
+      "type": "Range"
+    },
+    {
+      "attributes": [],
+      "default": [
+        1,
+        0,
+        3,
+        0
+      ],
+      "description": "CausticsWaveSpeed2",
+      "flags": 0,
+      "name": "_CausticsWaveSpeed2",
+      "range": [
+        0,
+        3
+      ],
+      "type": "Range"
+    },
+    {
+      "attributes": [],
+      "default": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "description": "ReceiveLight",
+      "flags": 0,
+      "name": "_ReceiveLight",
+      "type": "Float"
+    }
+  ],
+  "schemaVersion": 2,
+  "shaderLabExport": {
+    "available": true,
+    "error": null
+  },
+  "source": {
+    "blob": "AssetPackages/Starter/0031.blob",
+    "blobSha256": "1bb07ff5cfb6bed4bec14f20cd3dbf4899a6e70405860c02bcdd6721551ff5ab",
+    "chunk": 15,
+    "pathID": 7998873435644569163
+  },
+  "subShaders": [
+    {
+      "lod": 0,
+      "passes": [
+        {
+          "name": "Base",
+          "programStages": [
+            "Vertex",
+            "Fragment"
+          ],
+          "stateEntries": [
+            {
+              "key": "alphaToMask",
+              "value": "0"
+            },
+            {
+              "key": "culling",
+              "value": "2"
+            },
+            {
+              "key": "fogMode",
+              "value": "-1"
+            },
+            {
+              "key": "lighting",
+              "value": "0"
+            },
+            {
+              "key": "offsetFactor",
+              "value": "0"
+            },
+            {
+              "key": "offsetUnits",
+              "value": "0"
+            },
+            {
+              "key": "rtBlend0.blendOp",
+              "value": "0"
+            },
+            {
+              "key": "rtBlend0.blendOpAlpha",
+              "value": "0"
+            },
+            {
+              "key": "rtBlend0.colMask",
+              "value": "15"
+            },
+            {
+              "key": "rtBlend0.destBlend",
+              "value": "1"
+            },
+            {
+              "key": "rtBlend0.destBlendAlpha",
+              "value": "1"
+            },
+            {
+              "key": "rtBlend0.srcBlend",
+              "value": "5"
+            },
+            {
+              "key": "rtBlend0.srcBlendAlpha",
+              "value": "5"
+            },
+            {
+              "key": "rtBlend1.blendOp",
+              "value": "0"
+            },
+            {
+              "key": "rtBlend1.blendOpAlpha",
+              "value": "0"
+            },
+            {
+              "key": "rtBlend1.colMask",
+              "value": "15"
+            },
+            {
+              "key": "rtBlend1.destBlend",
+              "value": "0"
+            },
+            {
+              "key": "rtBlend1.destBlendAlpha",
+              "value": "0"
+            },
+            {
+              "key": "rtBlend1.srcBlend",
+              "value": "1"
+            },
+            {
+              "key": "rtBlend1.srcBlendAlpha",
+              "value": "1"
+            },
+            {
+              "key": "rtSeparateBlend",
+              "value": "0"
+            },
+            {
+              "key": "stencilOp.comp",
+              "value": "8"
+            },
+            {
+              "key": "stencilOp.fail",
+              "value": "0"
+            },
+            {
+              "key": "stencilOp.pass_",
+              "value": "0"
+            },
+            {
+              "key": "stencilOp.zFail",
+              "value": "0"
+            },
+            {
+              "key": "stencilReadMask",
+              "value": "255"
+            },
+            {
+              "key": "stencilRef",
+              "value": "0"
+            },
+            {
+              "key": "stencilWriteMask",
+              "value": "255"
+            },
+            {
+              "key": "zTest",
+              "value": "4"
+            },
+            {
+              "key": "zWrite",
+              "value": "0"
+            }
+          ],
+          "states": {
+            "alphaToMask": 0,
+            "culling": 2,
+            "fogMode": -1,
+            "lighting": 0,
+            "offsetFactor": 0,
+            "offsetUnits": 0,
+            "rtBlend0": {
+              "blendOp": 0,
+              "blendOpAlpha": 0,
+              "colMask": 15,
+              "destBlend": 1,
+              "destBlendAlpha": 1,
+              "srcBlend": 5,
+              "srcBlendAlpha": 5
+            },
+            "rtBlend1": {
+              "blendOp": 0,
+              "blendOpAlpha": 0,
+              "colMask": 15,
+              "destBlend": 0,
+              "destBlendAlpha": 0,
+              "srcBlend": 1,
+              "srcBlendAlpha": 1
+            },
+            "rtSeparateBlend": 0,
+            "stencilOp": {
+              "comp": 8,
+              "fail": 0,
+              "pass_": 0,
+              "zFail": 0
+            },
+            "stencilReadMask": 255,
+            "stencilRef": 0,
+            "stencilWriteMask": 255,
+            "zTest": 4,
+            "zWrite": 0
+          },
+          "tagEntries": [
+            {
+              "key": "LIGHTMODE",
+              "value": "Decal"
+            },
+            {
+              "key": "QUEUE",
+              "value": "Transparent-300"
+            },
+            {
+              "key": "RenderPipeline",
+              "value": "UniversalPipeline"
+            },
+            {
+              "key": "RenderType",
+              "value": "Transparent"
+            }
+          ],
+          "tags": {
+            "LIGHTMODE": "Decal",
+            "QUEUE": "Transparent-300",
+            "RenderPipeline": "UniversalPipeline",
+            "RenderType": "Transparent"
+          },
+          "type": 0,
+          "useName": ""
+        }
+      ],
+      "tagEntries": [
+        {
+          "key": "QUEUE",
+          "value": "Transparent-300"
+        },
+        {
+          "key": "RenderPipeline",
+          "value": "UniversalPipeline"
+        },
+        {
+          "key": "RenderType",
+          "value": "Transparent"
+        }
+      ],
+      "tags": {
+        "QUEUE": "Transparent-300",
+        "RenderPipeline": "UniversalPipeline",
+        "RenderType": "Transparent"
+      }
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "shader": "MMN/BG/Waterfall",
+  "propertyExtensions": [
+    {
+      "name": "_BaseMap",
+      "reason": "Current preview HLSL still samples this name; existing materials serialize the waterfall texture here.",
+      "consumer": "MMN_BG_Waterfall.shader ForwardLit / imported dungeon materials"
+    },
+    {
+      "name": "_BaseColor",
+      "reason": "Current preview HLSL still multiplies this tint; existing materials serialize the value here.",
+      "consumer": "MMN_BG_Waterfall.shader ForwardLit / imported dungeon materials"
+    },
+    {
+      "name": "_ScrollSpeed",
+      "reason": "Current preview HLSL still scrolls UVs with this vector; existing materials serialize the value here.",
+      "consumer": "MMN_BG_Waterfall.shader ForwardLit / imported dungeon materials"
+    }
+  ],
+  "passExtensions": []
+}

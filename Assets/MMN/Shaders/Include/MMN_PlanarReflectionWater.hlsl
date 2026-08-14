@@ -13,7 +13,9 @@
 // NOT-IMPLEMENTED: _Global_Sky*/_Global_Sun*/_Global_Night2Day/_Global_Raining and the
 //                  MiniGBuffer cubemaps. URP's reflection probe stands in for the procedural
 //                  sky; the rain-ripple add (gated by _Global_Raining) stays at zero.
-// NOT-IMPLEMENTED: _FoamEdgeIntensity is a shipped property the program never loads.
+// PROJECT EXTENSION: the shipped program never loads _FoamEdgeIntensity. It is applied as the
+//                    final foam gain here; the Colhen material's value of 1 preserves the
+//                    reconstructed result while making the exposed 0..2 control functional.
 
 #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
 #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
@@ -129,12 +131,19 @@ half4 WaterFragment(Varyings i) : SV_Target
     WaterFlowUVs(i.uv, uvA, uvB);
 
     // High-spec foam is a 3-tap of _DistortionTexture: tapA.R, tapB.G, tapA.yx.B.
-    // The previous reconstruction swapped R/G, which broke the open-water speckles.
+    // Low-spec samples RGB once at tapA, matching SubShader 1's shorter program.
     float2 distA = TRANSFORM_TEX(uvA, _DistortionTexture);
     float2 distB = TRANSFORM_TEX(uvB, _DistortionTexture);
+#if defined(MMN_WATER_LOW)
+    half3 foamSample = SAMPLE_TEXTURE2D(_DistortionTexture, sampler_DistortionTexture, distA).rgb;
+    half s1 = foamSample.r;
+    half s2 = foamSample.g;
+    half s3 = foamSample.b;
+#else
     half s1 = SAMPLE_TEXTURE2D(_DistortionTexture, sampler_DistortionTexture, distA).r;
     half s2 = SAMPLE_TEXTURE2D(_DistortionTexture, sampler_DistortionTexture, distB).g;
     half s3 = SAMPLE_TEXTURE2D(_DistortionTexture, sampler_DistortionTexture, distA.yx).b;
+#endif
 
     float3 viewDirWS = GetWorldSpaceNormalizeViewDir(i.positionWS);
     half3 geomNormalWS = normalize(i.normalWS);
@@ -177,7 +186,7 @@ half4 WaterFragment(Varyings i) : SV_Target
     fresnel6 = fresnel6 * fresnel6 * (oneMinusNdv * oneMinusNdv);
     half fresnelPower = pow(oneMinusNdv, _ReflectionPower);
     half grazing = smoothstep(0.0h, 1.0h, saturate((oneMinusNdv - 0.2h) * 1.428571h));
-    half foamMix = saturate(foam * grazing);
+    half foamMix = saturate(foam * grazing * _FoamEdgeIntensity);
 
     Light mainLight = GetMainLight();
 
@@ -227,9 +236,10 @@ half4 WaterFragment(Varyings i) : SV_Target
     color *= 1.5h;
 #endif
 
-    half alpha = saturate(foam * grazing + opacity);
+    half alpha = saturate(foamMix + opacity);
     alpha = saturate(alpha + specLum * opacitySq);
-    alpha = saturate(alpha + (half)(abs(viewZ) * 0.003333));
+    // Distance may reinforce deep water, but must not make zero-thickness shoreline opaque.
+    alpha = saturate(alpha + (half)(abs(viewZ) * 0.003333) * opacity);
 
     return half4(color, alpha);
 }

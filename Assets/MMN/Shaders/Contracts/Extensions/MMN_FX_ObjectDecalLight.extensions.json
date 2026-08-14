@@ -1,0 +1,11 @@
+{
+  "shader": "MMN/FX/ObjectDecalLight",
+  "propertyExtensions": [
+    {
+      "name": "_EmissionIntensity",
+      "reason": "Current preview HLSL multiplies emission by this name; without it the intensity defaults to 0 and decals go black.",
+      "consumer": "MMN_FX_ObjectDecalLight.shader ForwardLit / imported dungeon materials"
+    }
+  ],
+  "passExtensions": []
+}

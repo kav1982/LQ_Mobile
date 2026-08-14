@@ -1,0 +1,16 @@
+{
+  "shader": "Amplify Impostors/MM_Horizontal Impostor URP",
+  "propertyExtensions": [
+    {
+      "name": "_Color",
+      "reason": "Current preview HLSL still multiplies albedo by _Color; existing materials serialize the tint here.",
+      "consumer": "MM_Horizontal_Impostor_URP.shader ForwardLit / imported dungeon materials"
+    },
+    {
+      "name": "_Cutoff",
+      "reason": "Current preview HLSL still clips with _Cutoff; existing materials serialize the threshold here.",
+      "consumer": "MM_Horizontal_Impostor_URP.shader ForwardLit / imported dungeon materials"
+    }
+  ],
+  "passExtensions": []
+}

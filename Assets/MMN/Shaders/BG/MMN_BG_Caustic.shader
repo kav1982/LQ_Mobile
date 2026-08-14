@@ -17,10 +17,10 @@
 // NOT-IMPLEMENTED: _Global_Night2Day - the game's day/night blend, which fades caustics at night.
 Shader "MMN/BG/Caustic"
 {
-    Properties
+                    Properties
     {
-        [NoScaleOffset] _BaseMap ("BaseMap", 2D) = "white" {}
-        [NoScaleOffset] _MaskMap ("MaskMap", 2D) = "white" {}
+        _BaseMap ("BaseMap", 2D) = "white" {}
+        _MaskMap ("MaskMap", 2D) = "white" {}
         _CausticsColor ("CausticsColor", Color) = (1,1,1,1)
         _AlphaAdd ("AlphaAdd", Range(0, 1)) = 0.2
         _AlphaWaveLength ("AlphaWaveLength", Range(0, 1)) = 0.1

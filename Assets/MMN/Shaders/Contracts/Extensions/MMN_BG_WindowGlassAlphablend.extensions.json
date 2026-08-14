@@ -1,0 +1,16 @@
+{
+  "shader": "MMN/BG/WindowGlassAlphablend",
+  "propertyExtensions": [
+    {
+      "name": "_BaseColor",
+      "reason": "Current preview HLSL still multiplies albedo by this tint; existing materials serialize the value here.",
+      "consumer": "MMN_BG_WindowGlassAlphablend.shader ForwardLit / imported dungeon materials"
+    },
+    {
+      "name": "_EmissionColor",
+      "reason": "Current preview HLSL still adds this emission; existing materials serialize the value here.",
+      "consumer": "MMN_BG_WindowGlassAlphablend.shader ForwardLit / imported dungeon materials"
+    }
+  ],
+  "passExtensions": []
+}

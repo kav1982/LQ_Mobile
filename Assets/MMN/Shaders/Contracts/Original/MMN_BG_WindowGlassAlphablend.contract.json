@@ -1,0 +1,374 @@
+{
+  "customEditor": "",
+  "extractorVersion": "1.1.0",
+  "fallback": "",
+  "keywordNames": [
+    "DEBUG_DISPLAY",
+    "FOG_LINEAR",
+    "STEREO_CUBEMAP_RENDER_ON",
+    "STEREO_INSTANCING_ON",
+    "STEREO_MULTIVIEW_ON",
+    "UNITY_SINGLE_PASS_STEREO",
+    "_SHOWVERTEXALPHA_ON",
+    "_SHOWVERTEXCOLOR_ON"
+  ],
+  "name": "MMN/BG/WindowGlassAlphablend",
+  "properties": [
+    {
+      "attributes": [
+        "Enum(off, 0, front, 1, back, 2)"
+      ],
+      "default": [
+        2,
+        0,
+        0,
+        0
+      ],
+      "description": "BackfaceCull",
+      "flags": 0,
+      "name": "_Cull",
+      "type": "Float"
+    },
+    {
+      "attributes": [],
+      "default": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "description": "레이케스트 하프톤 클립",
+      "flags": 3,
+      "name": "_RaycastHarftoneClip",
+      "range": [
+        0,
+        1
+      ],
+      "type": "Range"
+    },
+    {
+      "attributes": [],
+      "default": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "defaultTextureName": "white",
+      "description": "Base Map (RGB) Smoothness / Alpha (A)",
+      "flags": 129,
+      "name": "_BaseMap",
+      "textureDimension": "2D",
+      "type": "Texture"
+    },
+    {
+      "attributes": [],
+      "default": [
+        1,
+        0.01,
+        5,
+        0
+      ],
+      "description": "Glossiness",
+      "flags": 0,
+      "name": "_Gloss",
+      "range": [
+        0.01,
+        5
+      ],
+      "type": "Range"
+    },
+    {
+      "attributes": [],
+      "default": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "description": "반사 색과 강도",
+      "flags": 16,
+      "name": "_EmissionColorBright",
+      "type": "Color"
+    },
+    {
+      "attributes": [],
+      "default": [
+        1,
+        0,
+        10,
+        0
+      ],
+      "description": "Emission Intensity",
+      "flags": 0,
+      "name": "_EmissionIntensity",
+      "range": [
+        0,
+        10
+      ],
+      "type": "Range"
+    }
+  ],
+  "schemaVersion": 2,
+  "shaderLabExport": {
+    "available": true,
+    "error": null
+  },
+  "source": {
+    "blob": "AssetPackages/0387.blob",
+    "blobSha256": "c8a6b8bf56ea439adf9459402d87809e1023fc183c5c70d26c9ab3129e0c5f14",
+    "chunk": 147,
+    "pathID": 3426510314460700889
+  },
+  "subShaders": [
+    {
+      "lod": 300,
+      "passes": [
+        {
+          "name": "ForwardLit",
+          "programStages": [
+            "Vertex",
+            "Fragment"
+          ],
+          "stateEntries": [
+            {
+              "key": "alphaToMask",
+              "value": "0"
+            },
+            {
+              "key": "culling",
+              "value": "property:_Cull"
+            },
+            {
+              "key": "fogMode",
+              "value": "-1"
+            },
+            {
+              "key": "lighting",
+              "value": "0"
+            },
+            {
+              "key": "offsetFactor",
+              "value": "0"
+            },
+            {
+              "key": "offsetUnits",
+              "value": "0"
+            },
+            {
+              "key": "rtBlend0.blendOp",
+              "value": "0"
+            },
+            {
+              "key": "rtBlend0.blendOpAlpha",
+              "value": "0"
+            },
+            {
+              "key": "rtBlend0.colMask",
+              "value": "15"
+            },
+            {
+              "key": "rtBlend0.destBlend",
+              "value": "10"
+            },
+            {
+              "key": "rtBlend0.destBlendAlpha",
+              "value": "10"
+            },
+            {
+              "key": "rtBlend0.srcBlend",
+              "value": "5"
+            },
+            {
+              "key": "rtBlend0.srcBlendAlpha",
+              "value": "5"
+            },
+            {
+              "key": "rtBlend1.blendOp",
+              "value": "0"
+            },
+            {
+              "key": "rtBlend1.blendOpAlpha",
+              "value": "0"
+            },
+            {
+              "key": "rtBlend1.colMask",
+              "value": "15"
+            },
+            {
+              "key": "rtBlend1.destBlend",
+              "value": "0"
+            },
+            {
+              "key": "rtBlend1.destBlendAlpha",
+              "value": "0"
+            },
+            {
+              "key": "rtBlend1.srcBlend",
+              "value": "1"
+            },
+            {
+              "key": "rtBlend1.srcBlendAlpha",
+              "value": "1"
+            },
+            {
+              "key": "rtSeparateBlend",
+              "value": "0"
+            },
+            {
+              "key": "stencilOp.comp",
+              "value": "8"
+            },
+            {
+              "key": "stencilOp.fail",
+              "value": "0"
+            },
+            {
+              "key": "stencilOp.pass_",
+              "value": "0"
+            },
+            {
+              "key": "stencilOp.zFail",
+              "value": "0"
+            },
+            {
+              "key": "stencilReadMask",
+              "value": "255"
+            },
+            {
+              "key": "stencilRef",
+              "value": "0"
+            },
+            {
+              "key": "stencilWriteMask",
+              "value": "255"
+            },
+            {
+              "key": "zTest",
+              "value": "4"
+            },
+            {
+              "key": "zWrite",
+              "value": "0"
+            }
+          ],
+          "states": {
+            "alphaToMask": 0,
+            "culling": {
+              "property": "_Cull"
+            },
+            "fogMode": -1,
+            "lighting": 0,
+            "offsetFactor": 0,
+            "offsetUnits": 0,
+            "rtBlend0": {
+              "blendOp": 0,
+              "blendOpAlpha": 0,
+              "colMask": 15,
+              "destBlend": 10,
+              "destBlendAlpha": 10,
+              "srcBlend": 5,
+              "srcBlendAlpha": 5
+            },
+            "rtBlend1": {
+              "blendOp": 0,
+              "blendOpAlpha": 0,
+              "colMask": 15,
+              "destBlend": 0,
+              "destBlendAlpha": 0,
+              "srcBlend": 1,
+              "srcBlendAlpha": 1
+            },
+            "rtSeparateBlend": 0,
+            "stencilOp": {
+              "comp": 8,
+              "fail": 0,
+              "pass_": 0,
+              "zFail": 0
+            },
+            "stencilReadMask": 255,
+            "stencilRef": 0,
+            "stencilWriteMask": 255,
+            "zTest": 4,
+            "zWrite": 0
+          },
+          "tagEntries": [
+            {
+              "key": "IGNOREPROJECTOR",
+              "value": "true"
+            },
+            {
+              "key": "LIGHTMODE",
+              "value": "UniversalForward"
+            },
+            {
+              "key": "QUEUE",
+              "value": "Transparent"
+            },
+            {
+              "key": "RenderPipeline",
+              "value": "UniversalPipeline"
+            },
+            {
+              "key": "RenderType",
+              "value": "Transparent"
+            },
+            {
+              "key": "ShaderModel",
+              "value": "4.5"
+            },
+            {
+              "key": "UniversalMaterialType",
+              "value": "SimpleLit"
+            }
+          ],
+          "tags": {
+            "IGNOREPROJECTOR": "true",
+            "LIGHTMODE": "UniversalForward",
+            "QUEUE": "Transparent",
+            "RenderPipeline": "UniversalPipeline",
+            "RenderType": "Transparent",
+            "ShaderModel": "4.5",
+            "UniversalMaterialType": "SimpleLit"
+          },
+          "type": 0,
+          "useName": ""
+        }
+      ],
+      "tagEntries": [
+        {
+          "key": "IGNOREPROJECTOR",
+          "value": "true"
+        },
+        {
+          "key": "QUEUE",
+          "value": "Transparent"
+        },
+        {
+          "key": "RenderPipeline",
+          "value": "UniversalPipeline"
+        },
+        {
+          "key": "RenderType",
+          "value": "Transparent"
+        },
+        {
+          "key": "ShaderModel",
+          "value": "4.5"
+        },
+        {
+          "key": "UniversalMaterialType",
+          "value": "SimpleLit"
+        }
+      ],
+      "tags": {
+        "IGNOREPROJECTOR": "true",
+        "QUEUE": "Transparent",
+        "RenderPipeline": "UniversalPipeline",
+        "RenderType": "Transparent",
+        "ShaderModel": "4.5",
+        "UniversalMaterialType": "SimpleLit"
+      }
+    }
+  ]
+}

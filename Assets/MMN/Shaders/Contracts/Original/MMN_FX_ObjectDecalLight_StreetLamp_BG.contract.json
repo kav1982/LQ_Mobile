@@ -1,0 +1,519 @@
+{
+  "customEditor": "",
+  "extractorVersion": "1.1.0",
+  "fallback": "",
+  "keywordNames": [
+    "FOG_LINEAR",
+    "STEREO_CUBEMAP_RENDER_ON",
+    "STEREO_INSTANCING_ON",
+    "STEREO_MULTIVIEW_ON",
+    "UNITY_SINGLE_PASS_STEREO",
+    "_RAYCAST_ON"
+  ],
+  "name": "MMN/FX/ObjectDecalLight_StreetLamp_BG",
+  "properties": [
+    {
+      "attributes": [],
+      "default": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "description": "라이트 색상",
+      "flags": 272,
+      "name": "_EmissionColor",
+      "type": "Color"
+    },
+    {
+      "attributes": [
+        "Enum(Always, 0, NightOnly, 1, DayOnly, 2)"
+      ],
+      "default": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "description": "언제 라이트가 켜지게 할까요?",
+      "flags": 0,
+      "name": "_Night2DayEnum",
+      "type": "Float"
+    },
+    {
+      "attributes": [],
+      "default": [
+        0.01,
+        0.06,
+        0,
+        0
+      ],
+      "description": "광원 중심의 거리(min, max)",
+      "flags": 0,
+      "name": "_FalloffRange",
+      "type": "Vector"
+    },
+    {
+      "attributes": [
+        "Header(Rendering Options)",
+        "Space(10)",
+        "Enum(UnityEngine.Rendering.BlendMode)"
+      ],
+      "default": [
+        5,
+        0,
+        0,
+        0
+      ],
+      "description": "Blend Src",
+      "flags": 0,
+      "name": "_BlendSrc",
+      "type": "Float"
+    },
+    {
+      "attributes": [
+        "Enum(UnityEngine.Rendering.BlendMode)"
+      ],
+      "default": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "description": "Blend Dst",
+      "flags": 0,
+      "name": "_BlendDst",
+      "type": "Float"
+    },
+    {
+      "attributes": [
+        "Header(Fog)",
+        "Space(10)",
+        "Toggle"
+      ],
+      "default": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "description": "안개 적용하기",
+      "flags": 0,
+      "name": "_ReceiveFog",
+      "type": "Float"
+    },
+    {
+      "attributes": [
+        "Toggle(_RAYCAST_ON)"
+      ],
+      "default": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "description": "_Raycast",
+      "flags": 1,
+      "name": "_Raycast",
+      "type": "Float"
+    },
+    {
+      "attributes": [],
+      "default": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "description": "트랜지션 밸류",
+      "flags": 1,
+      "name": "_TransitionValue",
+      "type": "Float"
+    },
+    {
+      "attributes": [],
+      "default": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "description": "raycastHarftoneClip",
+      "flags": 3,
+      "name": "_RaycastHarftoneClip",
+      "range": [
+        0,
+        1
+      ],
+      "type": "Range"
+    },
+    {
+      "attributes": [],
+      "default": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "description": "raycastMinimumAlpha",
+      "flags": 1,
+      "name": "_RaycastMinimumAlpha",
+      "range": [
+        0,
+        1
+      ],
+      "type": "Range"
+    },
+    {
+      "attributes": [],
+      "default": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "description": "nearPlaneAlpha",
+      "flags": 1,
+      "name": "_NearPlaneAlpha",
+      "range": [
+        0,
+        1
+      ],
+      "type": "Range"
+    },
+    {
+      "attributes": [],
+      "default": [
+        0.1,
+        1,
+        2,
+        4
+      ],
+      "description": "nearPlaneAlphaEdge",
+      "flags": 1,
+      "name": "_NearPlaneAlphaEdge",
+      "type": "Vector"
+    },
+    {
+      "attributes": [
+        "ToggleUI"
+      ],
+      "default": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "description": "nearPlaneInvertDistance",
+      "flags": 1,
+      "name": "_NearPlaneInvertDistance",
+      "range": [
+        0,
+        1
+      ],
+      "type": "Range"
+    },
+    {
+      "attributes": [
+        "ToggleUI"
+      ],
+      "default": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "description": "nearPlaneDither",
+      "flags": 1,
+      "name": "_NearPlaneDitherMode",
+      "range": [
+        0,
+        1
+      ],
+      "type": "Range"
+    },
+    {
+      "attributes": [
+        "ToggleUI"
+      ],
+      "default": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "description": "nearPlaneDirectionMode",
+      "flags": 1,
+      "name": "_NearPlaneDirectionMode",
+      "range": [
+        0,
+        1
+      ],
+      "type": "Range"
+    },
+    {
+      "attributes": [],
+      "default": [
+        0,
+        0.5,
+        0,
+        0
+      ],
+      "description": "nearPlaneDirectionValue",
+      "flags": 1,
+      "name": "_NearPlaneDirectionValue",
+      "type": "Vector"
+    },
+    {
+      "attributes": [],
+      "default": [
+        0,
+        0,
+        0,
+        10
+      ],
+      "description": "xyz: position, w: size",
+      "flags": 1,
+      "name": "_LightPositionWS",
+      "type": "Vector"
+    }
+  ],
+  "schemaVersion": 2,
+  "shaderLabExport": {
+    "available": true,
+    "error": null
+  },
+  "source": {
+    "blob": "AssetPackages/Starter/0031.blob",
+    "blobSha256": "1bb07ff5cfb6bed4bec14f20cd3dbf4899a6e70405860c02bcdd6721551ff5ab",
+    "chunk": 95,
+    "pathID": -2395178829801336327
+  },
+  "subShaders": [
+    {
+      "lod": 100,
+      "passes": [
+        {
+          "name": "Base",
+          "programStages": [
+            "Vertex",
+            "Fragment"
+          ],
+          "stateEntries": [
+            {
+              "key": "alphaToMask",
+              "value": "0"
+            },
+            {
+              "key": "culling",
+              "value": "1"
+            },
+            {
+              "key": "fogMode",
+              "value": "-1"
+            },
+            {
+              "key": "lighting",
+              "value": "0"
+            },
+            {
+              "key": "offsetFactor",
+              "value": "0"
+            },
+            {
+              "key": "offsetUnits",
+              "value": "0"
+            },
+            {
+              "key": "rtBlend0.blendOp",
+              "value": "0"
+            },
+            {
+              "key": "rtBlend0.blendOpAlpha",
+              "value": "0"
+            },
+            {
+              "key": "rtBlend0.colMask",
+              "value": "15"
+            },
+            {
+              "key": "rtBlend0.destBlend",
+              "value": "property:_BlendDst"
+            },
+            {
+              "key": "rtBlend0.destBlendAlpha",
+              "value": "property:_BlendDst"
+            },
+            {
+              "key": "rtBlend0.srcBlend",
+              "value": "property:_BlendSrc"
+            },
+            {
+              "key": "rtBlend0.srcBlendAlpha",
+              "value": "property:_BlendSrc"
+            },
+            {
+              "key": "rtBlend1.blendOp",
+              "value": "0"
+            },
+            {
+              "key": "rtBlend1.blendOpAlpha",
+              "value": "0"
+            },
+            {
+              "key": "rtBlend1.colMask",
+              "value": "15"
+            },
+            {
+              "key": "rtBlend1.destBlend",
+              "value": "0"
+            },
+            {
+              "key": "rtBlend1.destBlendAlpha",
+              "value": "0"
+            },
+            {
+              "key": "rtBlend1.srcBlend",
+              "value": "1"
+            },
+            {
+              "key": "rtBlend1.srcBlendAlpha",
+              "value": "1"
+            },
+            {
+              "key": "rtSeparateBlend",
+              "value": "0"
+            },
+            {
+              "key": "stencilOp.comp",
+              "value": "8"
+            },
+            {
+              "key": "stencilOp.fail",
+              "value": "0"
+            },
+            {
+              "key": "stencilOp.pass_",
+              "value": "0"
+            },
+            {
+              "key": "stencilOp.zFail",
+              "value": "0"
+            },
+            {
+              "key": "stencilReadMask",
+              "value": "255"
+            },
+            {
+              "key": "stencilRef",
+              "value": "0"
+            },
+            {
+              "key": "stencilWriteMask",
+              "value": "255"
+            },
+            {
+              "key": "zTest",
+              "value": "8"
+            },
+            {
+              "key": "zWrite",
+              "value": "0"
+            }
+          ],
+          "states": {
+            "alphaToMask": 0,
+            "culling": 1,
+            "fogMode": -1,
+            "lighting": 0,
+            "offsetFactor": 0,
+            "offsetUnits": 0,
+            "rtBlend0": {
+              "blendOp": 0,
+              "blendOpAlpha": 0,
+              "colMask": 15,
+              "destBlend": {
+                "property": "_BlendDst"
+              },
+              "destBlendAlpha": {
+                "property": "_BlendDst"
+              },
+              "srcBlend": {
+                "property": "_BlendSrc"
+              },
+              "srcBlendAlpha": {
+                "property": "_BlendSrc"
+              }
+            },
+            "rtBlend1": {
+              "blendOp": 0,
+              "blendOpAlpha": 0,
+              "colMask": 15,
+              "destBlend": 0,
+              "destBlendAlpha": 0,
+              "srcBlend": 1,
+              "srcBlendAlpha": 1
+            },
+            "rtSeparateBlend": 0,
+            "stencilOp": {
+              "comp": 8,
+              "fail": 0,
+              "pass_": 0,
+              "zFail": 0
+            },
+            "stencilReadMask": 255,
+            "stencilRef": 0,
+            "stencilWriteMask": 255,
+            "zTest": 8,
+            "zWrite": 0
+          },
+          "tagEntries": [
+            {
+              "key": "LIGHTMODE",
+              "value": "Decal"
+            },
+            {
+              "key": "QUEUE",
+              "value": "Transparent"
+            },
+            {
+              "key": "RenderPipeline",
+              "value": "UniversalPipeline"
+            },
+            {
+              "key": "RenderType",
+              "value": "Transparent"
+            }
+          ],
+          "tags": {
+            "LIGHTMODE": "Decal",
+            "QUEUE": "Transparent",
+            "RenderPipeline": "UniversalPipeline",
+            "RenderType": "Transparent"
+          },
+          "type": 0,
+          "useName": ""
+        }
+      ],
+      "tagEntries": [
+        {
+          "key": "QUEUE",
+          "value": "Transparent"
+        },
+        {
+          "key": "RenderPipeline",
+          "value": "UniversalPipeline"
+        },
+        {
+          "key": "RenderType",
+          "value": "Transparent"
+        }
+      ],
+      "tags": {
+        "QUEUE": "Transparent",
+        "RenderPipeline": "UniversalPipeline",
+        "RenderType": "Transparent"
+      }
+    }
+  ]
+}
