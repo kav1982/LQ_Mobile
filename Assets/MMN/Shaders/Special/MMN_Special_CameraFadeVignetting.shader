@@ -2,6 +2,7 @@ Shader "MMN/Repro/CameraFade & Vignetting"
 {
     Properties
     {
+        [PerRendererData] _MainTex ("Sprite Texture", 2D) = "white" {}
         [Enum(Fade, 0, Vignetting, 1)] _ScreenFXMode ("Screen FX Mode", Float) = 1
         _VignettingSmooth ("Vignetting Smooth", Range(0, 1)) = 0.18
         _VignettingRange ("Vignetting Range", Range(0, 1)) = 0.567

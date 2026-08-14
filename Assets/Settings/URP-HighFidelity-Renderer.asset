@@ -1,91 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-4991622008612776909
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b3d386ba5cd94485973aee1479b272e, type: 3}
-  m_Name: MMN SkyLit
-  m_EditorClassIdentifier: 
-  m_Active: 1
-  settings:
-    passTag: SkyLit
-    Event: 400
-    filterSettings:
-      RenderQueueType: 1
-      LayerMask:
-        serializedVersion: 2
-        m_Bits: 4294967295
-      PassNames:
-      - SkyLit
-    overrideMaterial: {fileID: 0}
-    overrideMaterialPassIndex: 0
-    overrideShader: {fileID: 0}
-    overrideShaderPassIndex: 0
-    overrideMode: 1
-    overrideDepthState: 0
-    depthCompareFunction: 4
-    enableWrite: 1
-    stencilSettings:
-      overrideStencilState: 0
-      stencilReference: 0
-      stencilCompareFunction: 8
-      passOperation: 0
-      failOperation: 0
-      zFailOperation: 0
-    cameraSettings:
-      overrideCamera: 0
-      restoreCamera: 1
-      offset: {x: 0, y: 0, z: 0, w: 0}
-      cameraFieldOfView: 60
---- !u!114 &-3470529530096898891
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b3d386ba5cd94485973aee1479b272e, type: 3}
-  m_Name: MMN Decal
-  m_EditorClassIdentifier: 
-  m_Active: 1
-  settings:
-    passTag: Decal
-    Event: 400
-    filterSettings:
-      RenderQueueType: 1
-      LayerMask:
-        serializedVersion: 2
-        m_Bits: 4294967295
-      PassNames:
-      - Decal
-    overrideMaterial: {fileID: 0}
-    overrideMaterialPassIndex: 0
-    overrideShader: {fileID: 0}
-    overrideShaderPassIndex: 0
-    overrideMode: 1
-    overrideDepthState: 0
-    depthCompareFunction: 4
-    enableWrite: 1
-    stencilSettings:
-      overrideStencilState: 0
-      stencilReference: 0
-      stencilCompareFunction: 8
-      passOperation: 0
-      failOperation: 0
-      zFailOperation: 0
-    cameraSettings:
-      overrideCamera: 0
-      restoreCamera: 1
-      offset: {x: 0, y: 0, z: 0, w: 0}
-      cameraFieldOfView: 60
 --- !u!114 &-1878332245247344467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -102,11 +16,11 @@ MonoBehaviour:
   m_Settings:
     AOMethod: 1
     Downsample: 0
-    AfterOpaque: 0
-    Source: 1
-    NormalSamples: 1
+    AfterOpaque: 1
+    Source: 0
+    NormalSamples: 2
     Intensity: 0.5
-    DirectLightingStrength: 0.25
+    DirectLightingStrength: 0.409
     Radius: 0.25
     Samples: 0
     BlurQuality: 0
@@ -140,10 +54,8 @@ MonoBehaviour:
   m_RendererFeatures:
   - {fileID: -1878332245247344467}
   - {fileID: 2508897259998685214}
-  - {fileID: -4991622008612776909}
-  - {fileID: -3470529530096898891}
-  - {fileID: 8765143819298831334}
-  m_RendererFeatureMap: adc0de57c6d2eee51e282ce8c364d12233149ddb3a32babab52c12b0c733d6cfe67b842add0ba479
+  - {fileID: 7482102052609050793}
+  m_RendererFeatureMap: adc0de57c6d2eee51e282ce8c364d122
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
@@ -206,7 +118,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Active: 1
   settings:
-    passTag: BG
+    passTag: MMN BG
     Event: 250
     filterSettings:
       RenderQueueType: 0
@@ -235,7 +147,7 @@ MonoBehaviour:
       restoreCamera: 1
       offset: {x: 0, y: 0, z: 0, w: 0}
       cameraFieldOfView: 60
---- !u!114 &8765143819298831334
+--- !u!114 &7482102052609050793
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -244,37 +156,90 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b3d386ba5cd94485973aee1479b272e, type: 3}
-  m_Name: MMN Water
+  m_Script: {fileID: 11500000, guid: 7fb97d47071715f4891c44ed3b3e4f25, type: 3}
+  m_Name: MMN Post Processing
   m_EditorClassIdentifier: 
   m_Active: 1
-  settings:
-    passTag: Water
-    Event: 400
-    filterSettings:
-      RenderQueueType: 1
-      LayerMask:
-        serializedVersion: 2
-        m_Bits: 4294967295
-      PassNames:
-      - Water
-    overrideMaterial: {fileID: 0}
-    overrideMaterialPassIndex: 0
-    overrideShader: {fileID: 0}
-    overrideShaderPassIndex: 0
-    overrideMode: 1
-    overrideDepthState: 0
-    depthCompareFunction: 4
-    enableWrite: 1
-    stencilSettings:
-      overrideStencilState: 0
-      stencilReference: 0
-      stencilCompareFunction: 8
-      passOperation: 0
-      failOperation: 0
-      zFailOperation: 0
-    cameraSettings:
-      overrideCamera: 0
-      restoreCamera: 1
-      offset: {x: 0, y: 0, z: 0, w: 0}
-      cameraFieldOfView: 60
+  cameraFilter:
+    gameCameras: 1
+    sceneView: 1
+    previewCameras: 1
+    overlayCameras: 1
+    requirePostProcessing: 1
+  volumeStack:
+    overrideVolumeStack: 0
+    bloom:
+      enabled: 1
+      threshold: 1
+      intensity: 1
+      scatter: 0.292
+      clamp: 65472
+      tint: {r: 1, g: 1, b: 1, a: 1}
+      highQualityFiltering: 1
+      downscale: 0
+      maxIterations: 6
+      dirtTexture: {fileID: 0}
+      dirtIntensity: 0
+    vignette:
+      enabled: 1
+      color: {r: 0, g: 0, b: 0, a: 1}
+      center: {x: 0.5, y: 0.5}
+      intensity: 0.296
+      smoothness: 0.573
+      rounded: 0
+    tonemapping:
+      enabled: 1
+      mode: 1
+    depthOfField:
+      enabled: 0
+      mode: 1
+      focusDistance: 10
+      gaussianStart: 5
+      gaussianEnd: 20
+      gaussianMaxRadius: 1
+      highQualitySampling: 0
+      aperture: 5.6
+      focalLength: 50
+      bladeCount: 5
+      bladeCurvature: 1
+      bladeRotation: 0
+    motionBlur:
+      enabled: 0
+      mode: 0
+      quality: 1
+      intensity: 0.292
+      clamp: 0.05
+  fullScreenComposite:
+    cameraFade:
+      enabled: 1
+      mode: 1
+      color: {r: 0, g: 0, b: 0, a: 0.702}
+      vignettingRange: 0.347
+      vignettingSmoothness: 1
+      colorIntensity: 1
+      alphaIntensity: 1
+    screenEffect:
+      enabled: 0
+      mode: 0
+      progress: 0.164
+      inverse: 1
+      color: {r: 0.6205252, g: 0.78616345, b: 0.7758152, a: 1}
+      softness: 0.028
+      waveAmplitude: 0.114
+      waveFrequency: 12
+      vignettingRange: 0.567
+      vignettingSmoothness: 0.18
+    injectionPoint: 600
+  premiumBlur:
+    enabled: 1
+    downsample: 2
+    iterations: 2
+    kernelSize: 4
+    sampleSpacing: 4
+    sigma: 2
+    maskTexture: {fileID: 0}
+    levelFrom: 0
+    levelTo: 0.5
+    injectionPoint: 600
+  compositeShader: {fileID: 4800000, guid: 2993735de303c3a4495c7af56a244a83, type: 3}
+  blurShader: {fileID: 4800000, guid: d8417dd84f1b30049af4138fcd457476, type: 3}
