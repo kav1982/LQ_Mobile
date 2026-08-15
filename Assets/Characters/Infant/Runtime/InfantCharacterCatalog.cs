@@ -24,11 +24,19 @@ namespace Characters.Infant
         FacialAnimation,
     }
 
+    public enum InfantCharacterGender
+    {
+        Shared,
+        Female,
+        Male,
+    }
+
     [Serializable]
     public sealed class InfantCharacterEntry
     {
         public string displayName;
         public InfantCharacterCategory category;
+        public InfantCharacterGender gender;
         public string sourcePath;
         public GameObject prefab;
         public AnimationClip animation;

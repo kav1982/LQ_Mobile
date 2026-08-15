@@ -5,6 +5,7 @@ Shader "Characters/Infant/Reconstructed/EyeBase"
         _BaseMap ("Eye Base Palette", 2D) = "white" {}
         _AlphaOverride ("Alpha", Range(0,1)) = 0.5
         _Cutoff ("Alpha Cutoff", Range(0,1)) = 0.01
+        [HideInInspector] _StencilRef ("Eye Stencil Reference", Float) = 1
     }
     SubShader
     {
@@ -16,6 +17,12 @@ Shader "Characters/Infant/Reconstructed/EyeBase"
             Blend SrcAlpha OneMinusSrcAlpha
             Cull Off
             ZWrite On
+            Stencil
+            {
+                Ref [_StencilRef]
+                Comp Always
+                Pass Replace
+            }
             HLSLPROGRAM
             #pragma vertex Vert
             #pragma fragment Frag

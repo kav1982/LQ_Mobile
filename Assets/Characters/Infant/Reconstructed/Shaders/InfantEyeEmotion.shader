@@ -12,6 +12,7 @@ Shader "Characters/Infant/Reconstructed/EyeEmotion"
         _EyePositionOffset ("Eye Position Offset", Vector) = (0,0,0,0)
         _EyeRotationOffset ("Eye Rotation", Float) = 0
         _Cutoff ("Alpha Cutoff", Range(0,1)) = 0.02
+        [HideInInspector] _StencilRef ("Eye Stencil Reference", Float) = 1
     }
     SubShader
     {
@@ -23,6 +24,12 @@ Shader "Characters/Infant/Reconstructed/EyeEmotion"
             Blend SrcAlpha OneMinusSrcAlpha
             Cull Off
             ZWrite Off
+            Stencil
+            {
+                Ref [_StencilRef]
+                Comp Equal
+                Pass Keep
+            }
             HLSLPROGRAM
             #pragma vertex Vert
             #pragma fragment Frag

@@ -105,11 +105,21 @@ namespace Characters.Infant.Editor
             {
                 displayName = displayName,
                 category = category,
+                gender = InferGender(path, displayName),
                 sourcePath = path,
                 prefab = prefab,
                 animation = animation,
                 texture = texture,
             };
+        }
+
+        static InfantCharacterGender InferGender(string path, string displayName)
+        {
+            string value = (path + "/" + displayName).Replace('\\', '/').ToLowerInvariant();
+            if (value.Contains("_male") || value.Contains("male_")) return InfantCharacterGender.Male;
+            if (value.Contains("_female") || value.Contains("female_")) return InfantCharacterGender.Female;
+            if (value.Contains("infantmale")) return InfantCharacterGender.Male;
+            return InfantCharacterGender.Shared;
         }
 
         static bool TryClassifyPrefab(string path, out InfantCharacterCategory category)

@@ -14,6 +14,7 @@ Shader "Characters/Infant/Reconstructed/EyePupil"
         [HDR] _EmissionColor ("Emission Color", Color) = (0,0,0,1)
         _EmissionIntensity ("Emission Intensity", Range(0,10)) = 1
         _Cutoff ("Alpha Cutoff", Range(0,1)) = 0.05
+        [HideInInspector] _StencilRef ("Eye Stencil Reference", Float) = 1
     }
     SubShader
     {
@@ -23,7 +24,13 @@ Shader "Characters/Infant/Reconstructed/EyePupil"
             Name "Forward"
             Tags { "LightMode"="UniversalForward" }
             Cull Off
-            ZWrite On
+            ZWrite Off
+            Stencil
+            {
+                Ref [_StencilRef]
+                Comp Equal
+                Pass Keep
+            }
 
             HLSLPROGRAM
             #pragma vertex Vert

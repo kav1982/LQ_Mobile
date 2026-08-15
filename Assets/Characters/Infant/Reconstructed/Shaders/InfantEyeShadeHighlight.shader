@@ -6,6 +6,7 @@ Shader "Characters/Infant/Reconstructed/EyeShadeHighlight"
         _ShadeColor ("Shade / Highlight Color", Color) = (0,0,0,1)
         [Toggle] _HasBaseMap ("Use Shade Mask", Float) = 1
         _Cutoff ("Alpha Cutoff", Range(0,1)) = 0.01
+        [HideInInspector] _StencilRef ("Eye Stencil Reference", Float) = 1
     }
     SubShader
     {
@@ -17,6 +18,12 @@ Shader "Characters/Infant/Reconstructed/EyeShadeHighlight"
             Blend SrcAlpha OneMinusSrcAlpha
             Cull Off
             ZWrite Off
+            Stencil
+            {
+                Ref [_StencilRef]
+                Comp Equal
+                Pass Keep
+            }
             HLSLPROGRAM
             #pragma vertex Vert
             #pragma fragment Frag

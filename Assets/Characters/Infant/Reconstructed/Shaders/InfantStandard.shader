@@ -16,6 +16,7 @@ Shader "Characters/Infant/Reconstructed/Standard"
         _OutlineColor ("Outline Color", Color) = (1,1,1,1)
         [Enum(UnityEngine.Rendering.CullMode)] _CullType ("Cull", Float) = 2
         [Toggle] _ZWrite ("Z Write", Float) = 1
+        [Toggle] _UseBaseMapAlpha ("Use Base Map Alpha", Float) = 1
         _Cutoff ("Alpha Cutoff", Range(0,1)) = 0.05
     }
 
@@ -49,6 +50,7 @@ Shader "Characters/Infant/Reconstructed/Standard"
                 half4 _DyeColor3;
                 half _AlphaOverride;
                 half _IsDyable;
+                half _UseBaseMapAlpha;
                 half _Cutoff;
             CBUFFER_END
 
@@ -69,7 +71,8 @@ Shader "Characters/Infant/Reconstructed/Standard"
                 half4 sample = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, input.uv);
                 half3 decoded = DecodeInfantDyeMap(sample.rgb, _DyeColor1.rgb, _DyeColor2.rgb, _DyeColor3.rgb);
                 half3 baseColor = lerp(sample.rgb, decoded, saturate(_IsDyable)) * _TintColor.rgb;
-                half alpha = sample.a * _TintColor.a * _AlphaOverride;
+                half textureAlpha = lerp(1.0h, sample.a, saturate(_UseBaseMapAlpha));
+                half alpha = textureAlpha * _TintColor.a * _AlphaOverride;
                 clip(alpha - _Cutoff);
                 half3 color = baseColor * GetInfantLighting(input.normalWS, input.shadowCoord);
                 return half4(MixFog(color, input.fogFactor), alpha);
