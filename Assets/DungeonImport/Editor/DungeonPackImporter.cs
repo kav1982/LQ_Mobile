@@ -70,7 +70,7 @@ namespace DungeonImport.Editor
                     var texMap = ImportTextures(dir, man, outRoot);
                     foreach (var kv in texMap) globalTex[kv.Key] = kv.Value;
                     totalTex += texMap.Count;
-                    totalMat += ImportMaterials(dir, man, globalTex, missingShaders, matByKey, matByPathId, outRoot);
+                    totalMat += ImportMaterials(dir, man, globalTex, missingShaders, matByKey, matByPathId, outRoot, dungeon);
                 }
 
                 foreach (var (id, dir, man) in manifests)
@@ -78,7 +78,7 @@ namespace DungeonImport.Editor
                     // shared_materials is textures/mats only; skip empty hierarchies.
                     if (string.Equals(id, "shared_materials", StringComparison.OrdinalIgnoreCase))
                         continue;
-                    var meshByKey = ImportMeshes(dir, man, outRoot);
+                    var meshByKey = ImportMeshes(dir, man, outRoot, dungeon);
                     totalMesh += meshByKey.Count;
                     totalNodes += BuildRoomPrefab(id, man, meshByKey, matByKey, matByPathId, outRoot, dungeon);
                 }
@@ -149,7 +149,8 @@ namespace DungeonImport.Editor
 
         static int ImportMaterials(string pkgDir, Dictionary<string, object> man,
             Dictionary<string, Texture2D> texMap, SortedSet<string> missingShaders,
-            Dictionary<string, Material> byKey, Dictionary<long, Material> byPathId, string outRoot)
+            Dictionary<string, Material> byKey, Dictionary<long, Material> byPathId, string outRoot,
+            string dungeon = null)
         {
             int count = 0;
             var list = Get<List<object>>(man, "materials") ?? new List<object>();
@@ -162,7 +163,7 @@ namespace DungeonImport.Editor
                 string jsonPath = $"{pkgDir}/materials/{file}";
                 if (!File.Exists(jsonPath)) continue;
 
-                var mat = CreateMaterial(jsonPath, texMap, missingShaders, outRoot);
+                var mat = CreateMaterial(jsonPath, texMap, missingShaders, outRoot, dungeon);
                 if (mat == null) continue;
                 byKey[key] = mat;
                 long pid = ToL(entry.TryGetValue("pathID", out var p) ? p : null);
@@ -173,7 +174,7 @@ namespace DungeonImport.Editor
         }
 
         static Material CreateMaterial(string jsonPath, Dictionary<string, Texture2D> texMap,
-            SortedSet<string> missingShaders, string outRoot)
+            SortedSet<string> missingShaders, string outRoot, string dungeon = null)
         {
             var d = MiniJson.Deserialize(File.ReadAllText(jsonPath, Encoding.UTF8)) as Dictionary<string, object>;
             if (d == null) return null;
@@ -203,12 +204,16 @@ namespace DungeonImport.Editor
             }
             else
             {
+                // A previous import stuffed 2D PNGs into unity_Lightmaps / ShadowMasks
+                // (Texture2DArray). Setting the shader then throws and aborts the rest.
+                ClearNon2DTextureSlots(mat);
                 mat.shader = shader;
             }
 
             // The dumped property blocks carry leftovers from other shaders, so each value is only
             // applied when this shader declares that name with a compatible type.
             var types = PropertyTypes(shader);
+            var texDims = TextureDimensions(shader);
 
             if (Get<Dictionary<string, object>>(d, "floats") is Dictionary<string, object> floats)
                 foreach (var kv in floats)
@@ -231,16 +236,42 @@ namespace DungeonImport.Editor
                     string prop = kv.Key;
                     var te = kv.Value as Dictionary<string, object>;
                     if (te == null) continue;
+                    // Dumped leftovers include unity_Lightmaps / ShadowMasks. Those slots are
+                    // Texture2DArray on URP; assigning a 2D PNG throws and aborts the rest.
+                    if (prop.StartsWith("unity_", StringComparison.Ordinal)) continue;
                     if (!types.TryGetValue(prop, out var pt) || pt != ShaderPropertyType.Texture) continue;
+                    if (texDims.TryGetValue(prop, out var dim)
+                        && dim != TextureDimension.Tex2D && dim != TextureDimension.Any)
+                        continue;
 
-                    var tex = ResolveTexture(te, texMap, name);
-                    if (tex != null) mat.SetTexture(prop, tex);
+                    var tex = ResolveTexture(te, texMap, name, prop);
+                    if (tex != null)
+                        mat.SetTexture(prop, tex);
+                    else if (IsEmptyTexEnv(te))
+                        mat.SetTexture(prop, null);
 
                     var scale = ToVector2(Get<List<object>>(te, "scale"));
                     var offset = ToVector2(Get<List<object>>(te, "offset"));
                     if (scale.HasValue && scale.Value != Vector2.zero) mat.SetTextureScale(prop, scale.Value);
                     if (offset.HasValue) mat.SetTextureOffset(prop, offset.Value);
                 }
+
+            if (mat.HasProperty("_BaseMap") && mat.GetTexture("_BaseMap") == null
+                && mat.HasProperty("_MainTex") && mat.GetTexture("_MainTex") != null)
+                mat.SetTexture("_BaseMap", mat.GetTexture("_MainTex"));
+
+            ClearNon2DTextureSlots(mat);
+
+            // GreyMaze plaster albedos are nearly flat; the shipped bake is vertex AO, not
+            // lightmaps (renderer lightmapIndex is always 65535). A little lambert wrap makes
+            // those walls read as volume under the preview sun.
+            if (IsPaleGreyMazePreview(dungeon, name))
+            {
+                if (mat.HasProperty("_ShadowDim") && mat.GetFloat("_ShadowDim") < 0.05f)
+                    mat.SetFloat("_ShadowDim", 0.28f);
+                if (mat.HasProperty("_halfLambertWeight") && mat.GetFloat("_halfLambertWeight") < 0.05f)
+                    mat.SetFloat("_halfLambertWeight", 0.22f);
+            }
 
             // TreeLeaves uses `_AlphaTest`; SimpleLit / Grass use `_ALPHATEST`. Either float means
             // cutout. TreeLeaves also clips unconditionally in HLSL, but SimpleLit needs the
@@ -276,8 +307,43 @@ namespace DungeonImport.Editor
             return map;
         }
 
+        static Dictionary<string, TextureDimension> TextureDimensions(Shader shader)
+        {
+            var map = new Dictionary<string, TextureDimension>();
+            int n = shader.GetPropertyCount();
+            for (int i = 0; i < n; i++)
+            {
+                if (shader.GetPropertyType(i) != ShaderPropertyType.Texture) continue;
+                map[shader.GetPropertyName(i)] = shader.GetPropertyTextureDimension(i);
+            }
+            return map;
+        }
+
+        static bool IsEmptyTexEnv(Dictionary<string, object> te)
+        {
+            if (!string.IsNullOrEmpty(Get<string>(te, "png"))) return false;
+            if (!string.IsNullOrEmpty(Get<string>(te, "texture"))) return false;
+            return ToL(te.TryGetValue("pathID", out var p) ? p : null) == 0;
+        }
+
+        static void ClearNon2DTextureSlots(Material mat)
+        {
+            if (mat == null || mat.shader == null) return;
+            var shader = mat.shader;
+            int n = shader.GetPropertyCount();
+            for (int i = 0; i < n; i++)
+            {
+                if (shader.GetPropertyType(i) != ShaderPropertyType.Texture) continue;
+                var dim = shader.GetPropertyTextureDimension(i);
+                if (dim == TextureDimension.Tex2D || dim == TextureDimension.Any) continue;
+                string prop = shader.GetPropertyName(i);
+                if (mat.HasProperty(prop))
+                    mat.SetTexture(prop, null);
+            }
+        }
+
         static Texture2D ResolveTexture(Dictionary<string, object> te, Dictionary<string, Texture2D> texMap,
-            string materialName = null)
+            string materialName = null, string prop = null)
         {
             string png = Get<string>(te, "png");
             if (!string.IsNullOrEmpty(png))
@@ -287,17 +353,21 @@ namespace DungeonImport.Editor
             }
             string tname = Get<string>(te, "texture");
             if (!string.IsNullOrEmpty(tname) && texMap.TryGetValue(tname, out var t2)) return t2;
-            // Shared vine / grass mats often keep a texture pathID whose PNG was resolved late;
-            // fall back to the material name (Vine_01 → Vine_01.png) when the slot is still empty.
-            if (!string.IsNullOrEmpty(materialName) && texMap.TryGetValue(materialName, out var t3))
+            // Vine / grass mats often keep a texture pathID whose PNG was resolved late.
+            // Only fill albedo slots — stuffing the same PNG into unity_Lightmaps /
+            // _EmissionMap throws (Texture2DArray) or paints every surface white.
+            bool albedo = prop == "_BaseMap" || prop == "_MainTex";
+            if (albedo && !string.IsNullOrEmpty(materialName) && texMap.TryGetValue(materialName, out var t3))
                 return t3;
             return null;
         }
 
-        static Dictionary<string, Mesh> ImportMeshes(string pkgDir, Dictionary<string, object> man, string outRoot)
+        static Dictionary<string, Mesh> ImportMeshes(string pkgDir, Dictionary<string, object> man, string outRoot,
+            string dungeon = null)
         {
             var map = new Dictionary<string, Mesh>();
             var list = Get<List<object>>(man, "meshes") ?? new List<object>();
+            bool boostAo = IsGreyMaze(dungeon);
             foreach (var o in list)
             {
                 var entry = o as Dictionary<string, object>;
@@ -316,7 +386,10 @@ namespace DungeonImport.Editor
                 }
                 try
                 {
-                    map[key] = ImportMMesh(src, dst);
+                    var mesh = ImportMMesh(src, dst);
+                    if (boostAo)
+                        BoostVertexAo(mesh);
+                    map[key] = mesh;
                 }
                 catch (Exception e)
                 {
@@ -324,6 +397,46 @@ namespace DungeonImport.Editor
                 }
             }
             return map;
+        }
+
+        static bool IsGreyMaze(string dungeon)
+        {
+            return string.Equals(dungeon, "GreyMaze", StringComparison.OrdinalIgnoreCase);
+        }
+
+        static bool IsPaleGreyMazePreview(string dungeon, string materialName)
+        {
+            if (!IsGreyMaze(dungeon) || string.IsNullOrEmpty(materialName)) return false;
+            if (materialName.IndexOf("Wall_04", StringComparison.OrdinalIgnoreCase) >= 0
+                || materialName.IndexOf("Wall_06", StringComparison.OrdinalIgnoreCase) >= 0
+                || materialName.IndexOf("Pattern_", StringComparison.OrdinalIgnoreCase) >= 0)
+                return false;
+            return materialName.IndexOf("Wall_", StringComparison.OrdinalIgnoreCase) >= 0
+                || materialName.IndexOf("Floor_", StringComparison.OrdinalIgnoreCase) >= 0
+                || materialName.IndexOf("Ceiling_", StringComparison.OrdinalIgnoreCase) >= 0;
+        }
+
+        /// <summary>
+        /// GreyMaze ships AO in vertex colours (no lightmaps). Expanding midtones makes that
+        /// bake readable on the near-flat plaster albedos.
+        /// </summary>
+        static void BoostVertexAo(Mesh mesh)
+        {
+            if (mesh == null || mesh.name.EndsWith(" ao", StringComparison.Ordinal)) return;
+            var cols = mesh.colors;
+            if (cols == null || cols.Length == 0) return;
+            const float gamma = 1.55f;
+            for (int i = 0; i < cols.Length; i++)
+            {
+                var c = cols[i];
+                c.r = Mathf.Pow(Mathf.Clamp01(c.r), gamma);
+                c.g = Mathf.Pow(Mathf.Clamp01(c.g), gamma);
+                c.b = Mathf.Pow(Mathf.Clamp01(c.b), gamma);
+                cols[i] = c;
+            }
+            mesh.SetColors(cols);
+            mesh.name += " ao";
+            EditorUtility.SetDirty(mesh);
         }
 
         static Mesh ImportMMesh(string path, string assetPath)
@@ -548,11 +661,10 @@ namespace DungeonImport.Editor
 
             // Modules are all authored around the origin, so they get spread along X to sit side
             // by side. Prefer an In_Room_00 / Room_00 for the camera frame.
+            var authoredById = LoadAuthoredLightManifests(dungeon);
+
             var ordered = prefabs
-                .OrderByDescending(p => p.name.IndexOf("In_Room_00", StringComparison.OrdinalIgnoreCase) >= 0
-                                        || (p.name.IndexOf("Room_00", StringComparison.OrdinalIgnoreCase) >= 0
-                                            && p.name.IndexOf("CampFire", StringComparison.OrdinalIgnoreCase) < 0
-                                            && p.name.IndexOf("Out_", StringComparison.OrdinalIgnoreCase) < 0))
+                .OrderByDescending(p => PreviewRoomRank(p.name))
                 .ThenBy(p => p.name, StringComparer.OrdinalIgnoreCase)
                 .ToList();
 
@@ -585,7 +697,8 @@ namespace DungeonImport.Editor
                 }
                 if (float.IsNaN(floorTop) && have) floorTop = b.min.y;
 
-                lights += AddBrazierLights(inst, floorTop);
+                lights += AddAuthoredLights(inst, authoredById);
+                lights += AddBrazierLights(inst, floorTop, dungeon);
 
                 if (!haveFirst && have)
                 {
@@ -597,14 +710,14 @@ namespace DungeonImport.Editor
             }
             if (float.IsNaN(firstFloorTop)) firstFloorTop = first.min.y;
 
-            ApplyInteriorEnvironment(scene, first, haveFirst, firstFloorTop);
+            ApplyInteriorEnvironment(scene, first, haveFirst, firstFloorTop, dungeon);
 
             if (!EditorSceneManager.SaveScene(scene, scenePath))
             {
                 Debug.LogError($"[{dungeon}] failed to save scene to {scenePath}");
                 return;
             }
-            Debug.Log($"[{dungeon}] scene saved to {scenePath}; {prefabs.Count} room(s), {lights} brazier light(s)");
+            Debug.Log($"[{dungeon}] scene saved to {scenePath}; {prefabs.Count} room(s), {lights} light(s)");
         }
 
         /// <summary>
@@ -679,9 +792,91 @@ namespace DungeonImport.Editor
                 || name.IndexOf("FX_CandleLight", StringComparison.OrdinalIgnoreCase) >= 0;
         }
 
-        static int AddBrazierLights(GameObject instance, float floorTop)
+        /// <summary>
+        /// Prefer a regular Room_00 for the preview camera. "BossRoom_00" contains the
+        /// substring Room_00 and used to steal the frame, parking the camera in a 60-unit cave.
+        /// </summary>
+        static int PreviewRoomRank(string name)
         {
-            const float floorBrightness = 0.5f;
+            if (string.IsNullOrEmpty(name)) return 0;
+            if (name.IndexOf("CampFire", StringComparison.OrdinalIgnoreCase) >= 0) return 0;
+            if (name.IndexOf("Out_", StringComparison.OrdinalIgnoreCase) >= 0) return 0;
+            if (name.IndexOf("BossRoom", StringComparison.OrdinalIgnoreCase) >= 0) return 0;
+            bool room00 = name.IndexOf("In_Room_00", StringComparison.OrdinalIgnoreCase) >= 0
+                || name.IndexOf("_Room_00", StringComparison.OrdinalIgnoreCase) >= 0
+                || name.EndsWith("Room_00", StringComparison.OrdinalIgnoreCase);
+            if (!room00) return 0;
+            return name.IndexOf("Abyss", StringComparison.OrdinalIgnoreCase) >= 0 ? 1 : 2;
+        }
+
+        static string PrefabToPackageId(string prefabName)
+        {
+            string n = prefabName ?? "";
+            if (n.StartsWith("Mesh_", StringComparison.OrdinalIgnoreCase)) n = n.Substring(5);
+            if (n.StartsWith("Dungeon_", StringComparison.OrdinalIgnoreCase)) n = n.Substring(8);
+            if (n.StartsWith("AbyssGreyMaze_", StringComparison.OrdinalIgnoreCase))
+                return "greymaze_abyss_" + n.Substring("AbyssGreyMaze_".Length).ToLowerInvariant();
+            if (n.StartsWith("GreyMaze_", StringComparison.OrdinalIgnoreCase))
+                return "greymaze_" + n.Substring("GreyMaze_".Length).ToLowerInvariant();
+            return n.ToLowerInvariant();
+        }
+
+        static Dictionary<string, Dictionary<string, object>> LoadAuthoredLightManifests(string dungeon)
+        {
+            var map = new Dictionary<string, Dictionary<string, object>>(StringComparer.OrdinalIgnoreCase);
+            string roomsDir = $"Assets/{dungeon}/_import_pack/Rooms";
+            if (!Directory.Exists(roomsDir)) return map;
+            foreach (var manPath in Directory.GetFiles(roomsDir, "package.json", SearchOption.AllDirectories))
+            {
+                var man = MiniJson.Deserialize(File.ReadAllText(manPath, Encoding.UTF8)) as Dictionary<string, object>;
+                string id = Get<string>(man, "id");
+                if (string.IsNullOrEmpty(id)) continue;
+                if (Get<List<object>>(man, "authoredLights") == null) continue;
+                map[id] = man;
+            }
+            return map;
+        }
+
+        static int AddAuthoredLights(GameObject instance, Dictionary<string, Dictionary<string, object>> authoredById)
+        {
+            if (authoredById == null) return 0;
+            if (!authoredById.TryGetValue(PrefabToPackageId(instance.name), out var man)) return 0;
+            int n = 0;
+            foreach (var o in Get<List<object>>(man, "authoredLights") ?? new List<object>())
+            {
+                var a = o as Dictionary<string, object>;
+                if (a == null) continue;
+                var pos = ToVector3(Get<List<object>>(a, "position"));
+                if (!pos.HasValue) continue;
+
+                var go = new GameObject(Get<string>(a, "name") ?? "Authored Light");
+                go.transform.SetParent(instance.transform, false);
+                go.transform.localPosition = pos.Value;
+                var rot = ToQuaternion(Get<List<object>>(a, "rotation"));
+                if (rot.HasValue) go.transform.localRotation = rot.Value;
+
+                var l = go.AddComponent<Light>();
+                int type = Mathf.RoundToInt(ToF(a.TryGetValue("type", out var tv) ? tv : 2));
+                l.type = type == 0 ? LightType.Spot : type == 1 ? LightType.Directional : LightType.Point;
+                l.color = ToColor(Get<List<object>>(a, "color")) ?? Color.white;
+                l.intensity = ToF(a.TryGetValue("intensity", out var iv) ? iv : 1);
+                l.range = ToF(a.TryGetValue("range", out var rv) ? rv : 8);
+                // Client GreyMaze lamps are 3–5 unit pools. Mid-room preview cameras
+                // sit outside that, so the dungeon reads as ambient-only. Stretch
+                // the falloff so the authored colour actually reaches the walls.
+                if (l.type == LightType.Point)
+                    l.range = Mathf.Max(l.range * 3.5f, 14f);
+                l.spotAngle = ToF(a.TryGetValue("spotAngle", out var sv) ? sv : 30);
+                l.innerSpotAngle = ToF(a.TryGetValue("innerSpotAngle", out var isv) ? isv : 0);
+                l.shadows = LightShadows.None;
+                n++;
+            }
+            return n;
+        }
+
+        static int AddBrazierLights(GameObject instance, float floorTop, string dungeon = null)
+        {
+            float floorBrightness = 0.5f;
             int n = 0;
             var renderers = instance.GetComponentsInChildren<Renderer>();
             foreach (var t in instance.GetComponentsInChildren<Transform>())
@@ -725,17 +920,24 @@ namespace DungeonImport.Editor
         /// far enough that the brazier point lights, which carry the mood in the shipped dungeon,
         /// actually read against the pale stone instead of being swamped by fill.
         /// </summary>
-        static void ApplyInteriorEnvironment(Scene scene, Bounds bounds, bool haveBounds, float floorTop)
+        static void ApplyInteriorEnvironment(Scene scene, Bounds bounds, bool haveBounds, float floorTop,
+            string dungeon = null)
         {
+            bool grey = IsGreyMaze(dungeon);
             RenderSettings.fog = true;
             RenderSettings.fogMode = FogMode.ExponentialSquared;
             RenderSettings.fogColor = new Color(0.660f, 0.726f, 0.774f, 1f);
             RenderSettings.fogDensity = 0.01f;
 
             RenderSettings.ambientMode = AmbientMode.Trilight;
-            RenderSettings.ambientSkyColor = new Color(0.204f, 0.218f, 0.248f);
-            RenderSettings.ambientEquatorColor = new Color(0.110f, 0.120f, 0.128f);
-            RenderSettings.ambientGroundColor = new Color(0.045f, 0.041f, 0.034f);
+            // GreyMaze plaster is paler than Gothic stone; keep the same hue
+            // ratios but a bit lower so the authored cool lamps can read.
+            RenderSettings.ambientSkyColor = grey
+                ? new Color(0.140f, 0.150f, 0.172f) : new Color(0.204f, 0.218f, 0.248f);
+            RenderSettings.ambientEquatorColor = grey
+                ? new Color(0.075f, 0.082f, 0.090f) : new Color(0.110f, 0.120f, 0.128f);
+            RenderSettings.ambientGroundColor = grey
+                ? new Color(0.032f, 0.030f, 0.026f) : new Color(0.045f, 0.041f, 0.034f);
             RenderSettings.ambientIntensity = 1f;
             RenderSettings.subtractiveShadowColor = new Color(0.420f, 0.478f, 0.627f);
             RenderSettings.skybox = null;
@@ -746,7 +948,9 @@ namespace DungeonImport.Editor
             light.type = LightType.Directional;
             light.color = new Color(0.82f, 0.87f, 1f);
             light.intensity = 0.28f;
-            light.shadows = LightShadows.Soft;
+            // GreyMaze rooms are closed shells. Soft shadows from a sun outside put every
+            // interior face in the umbra, so N·L never shows and the dir light looks dead.
+            light.shadows = grey ? LightShadows.None : LightShadows.Soft;
             light.shadowStrength = 0.8f;
             light.bounceIntensity = 0f;
             lightGo.transform.rotation = Quaternion.Euler(52f, 205f, 0f);
@@ -765,11 +969,18 @@ namespace DungeonImport.Editor
 
             if (haveBounds)
             {
-                // Room_00 is an enclosed shell, so an exterior framing would only show back faces.
-                camGo.transform.position = new Vector3(bounds.center.x + bounds.size.x * 0.34f,
-                                                      floorTop + 4f, bounds.max.z - 4f);
-                camGo.transform.LookAt(new Vector3(bounds.center.x - bounds.size.x * 0.1f,
-                                                   floorTop + 4f, bounds.min.z + 6f));
+                // Stay inside the shell at eye height. A high "Floor" mesh (or a 60-unit
+                // boss room) used to park the camera near the ceiling / outside wall.
+                float eyeY = float.IsNaN(floorTop) ? bounds.center.y : floorTop + 2.2f;
+                eyeY = Mathf.Clamp(eyeY, bounds.min.y + 1.5f, bounds.center.y + 2.2f);
+                camGo.transform.position = new Vector3(
+                    bounds.center.x,
+                    eyeY,
+                    bounds.center.z + bounds.extents.z * 0.28f);
+                camGo.transform.LookAt(new Vector3(
+                    bounds.center.x,
+                    eyeY,
+                    bounds.center.z - bounds.extents.z * 0.18f));
             }
         }
 
