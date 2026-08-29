@@ -173,6 +173,18 @@ namespace DungeonImport.Editor
             return count;
         }
 
+        static Shader FindMmnShader(string wanted)
+        {
+            if (string.IsNullOrEmpty(wanted)) return null;
+            foreach (var guid in AssetDatabase.FindAssets("t:Shader", new[] { "Assets/MMN" }))
+            {
+                string p = AssetDatabase.GUIDToAssetPath(guid);
+                var s = AssetDatabase.LoadAssetAtPath<Shader>(p);
+                if (s != null && s.name == wanted) return s;
+            }
+            return Shader.Find(wanted);
+        }
+
         static Material CreateMaterial(string jsonPath, Dictionary<string, Texture2D> texMap,
             SortedSet<string> missingShaders, string outRoot, string dungeon = null)
         {
@@ -183,11 +195,11 @@ namespace DungeonImport.Editor
             string key = Get<string>(d, "key") ?? name;
             string wanted = Get<string>(d, "shader");
 
-            Shader shader = string.IsNullOrEmpty(wanted) ? null : Shader.Find(wanted);
+            Shader shader = FindMmnShader(wanted);
             if (shader == null)
             {
                 if (!string.IsNullOrEmpty(wanted)) missingShaders.Add(wanted);
-                shader = Shader.Find("MMN/BG/SimpleLit");
+                shader = FindMmnShader("MMN/BG/SimpleLit");
             }
             if (shader == null)
             {
@@ -216,10 +228,16 @@ namespace DungeonImport.Editor
             var texDims = TextureDimensions(shader);
 
             if (Get<Dictionary<string, object>>(d, "floats") is Dictionary<string, object> floats)
+            {
                 foreach (var kv in floats)
                     if (types.TryGetValue(kv.Key, out var pt)
                         && (pt == ShaderPropertyType.Float || pt == ShaderPropertyType.Range || pt == ShaderPropertyType.Int))
                         mat.SetFloat(kv.Key, ToF(kv.Value));
+                // Original cutout shaders expose `_AlphaClip`; SimpleLit uses `_ALPHATEST`.
+                if (ToF(floats.TryGetValue("_AlphaClip", out var ac) ? ac : 0) > 0.5f
+                    && mat.HasProperty("_ALPHATEST") && !types.ContainsKey("_AlphaClip"))
+                    mat.SetFloat("_ALPHATEST", 1f);
+            }
 
             if (Get<Dictionary<string, object>>(d, "colors") is Dictionary<string, object> colors)
                 foreach (var kv in colors)
