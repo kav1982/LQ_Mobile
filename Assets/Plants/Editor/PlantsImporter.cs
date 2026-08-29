@@ -27,15 +27,15 @@ namespace Plants.Editor
 
         static readonly Dictionary<string, float> CellSize = new Dictionary<string, float>(StringComparer.OrdinalIgnoreCase)
         {
-            { "tree", 16f },
-            { "bush", 8f },
-            { "grass", 6f },
-            { "flower", 6f },
-            { "vine", 8f },
-            { "mushroom", 5f },
-            { "wood", 12f },
-            { "plant", 8f },
-            { "other", 8f },
+            { "tree", 9f },
+            { "bush", 4.5f },
+            { "grass", 3.5f },
+            { "flower", 3.5f },
+            { "vine", 4.5f },
+            { "mushroom", 3f },
+            { "wood", 7f },
+            { "plant", 4.5f },
+            { "other", 4.5f },
         };
 
         [MenuItem("Tools/Plants/1. Import Plant Assets")]
@@ -276,7 +276,7 @@ namespace Plants.Editor
             {
                 if (!grouped.TryGetValue(cat, out var list) || list.Count == 0) continue;
                 float cell = CellSize.TryGetValue(cat, out var cs) ? cs : 8f;
-                int cols = Mathf.Max(8, Mathf.CeilToInt(Mathf.Sqrt(list.Count * 1.6f)));
+                int cols = Mathf.Max(10, Mathf.CeilToInt(Mathf.Sqrt(list.Count * 2.2f)));
                 var row = new GameObject(cat);
                 row.transform.SetParent(root.transform, false);
                 row.transform.position = new Vector3(0f, 0f, z);
@@ -298,7 +298,7 @@ namespace Plants.Editor
 
                 int rows = Mathf.CeilToInt(list.Count / (float)cols);
                 maxX = Mathf.Max(maxX, cols * cell);
-                z += rows * cell + cell;
+                z += rows * cell + cell * 0.35f;
             }
 
             var ground = GameObject.CreatePrimitive(PrimitiveType.Plane);
