@@ -1,0 +1,239 @@
+{
+  "id": "skybox",
+  "category": "Rooms",
+  "title": "IceCanyon Skybox（天空盒）",
+  "source": {
+    "seedBundle": "dedicated_bundle_200a377a",
+    "blob": "AssetPackages/0196.blob",
+    "chunk": 210,
+    "closureBundles": 10
+  },
+  "beachAABB": null,
+  "meshes": [
+    {
+      "name": "Sphere001",
+      "vertexCount": 296,
+      "submeshCount": 1,
+      "flags": 5,
+      "indexCounts": [
+        1440
+      ],
+      "file": "Sphere001.mmesh",
+      "pathID": 7938893203123876195,
+      "key": "Sphere001",
+      "boundsMin": [
+        -500.0,
+        -500.0,
+        0.0
+      ],
+      "boundsMax": [
+        500.0,
+        500.0,
+        500.0
+      ]
+    }
+  ],
+  "materials": [
+    {
+      "name": "IceCanyon_Clouds",
+      "key": "IceCanyon_Clouds",
+      "pathID": -1459455341487220571,
+      "shader": "MMN/BG/Sky_Clouds",
+      "file": "IceCanyon_Clouds.json"
+    },
+    {
+      "name": "IceCanyon_Star",
+      "key": "IceCanyon_Star",
+      "pathID": 1356938311177266285,
+      "shader": "MMN/BG/Sky_CloudMaskedUnlit",
+      "file": "IceCanyon_Star.json"
+    }
+  ],
+  "textures": [
+    "Clouds_02.png",
+    "Clouds_03.png",
+    "Clouds_Rain.png",
+    "FX_Noise_40.png",
+    "SkyStar2.png"
+  ],
+  "textureSettings": {
+    "Clouds_02.png": {
+      "colorSpace": 1,
+      "mipCount": 1,
+      "wrapU": 0,
+      "wrapV": 0,
+      "filterMode": 1,
+      "aniso": 1
+    },
+    "Clouds_03.png": {
+      "colorSpace": 1,
+      "mipCount": 12,
+      "wrapU": 0,
+      "wrapV": 0,
+      "filterMode": 1,
+      "aniso": 1
+    },
+    "Clouds_Rain.png": {
+      "colorSpace": 1,
+      "mipCount": 1,
+      "wrapU": 0,
+      "wrapV": 0,
+      "filterMode": 1,
+      "aniso": 1
+    },
+    "FX_Noise_40.png": {
+      "colorSpace": 1,
+      "mipCount": 9,
+      "wrapU": 0,
+      "wrapV": 0,
+      "filterMode": 1,
+      "aniso": 1
+    },
+    "SkyStar2.png": {
+      "colorSpace": 1,
+      "mipCount": 11,
+      "wrapU": 0,
+      "wrapV": 0,
+      "filterMode": 1,
+      "aniso": 1
+    }
+  },
+  "hierarchy": [
+    {
+      "name": "IceCanyon_Clouds",
+      "pathID": -6913480635845023608,
+      "parent": -1293022658637100600,
+      "active": true,
+      "localPosition": [
+        668.0,
+        -234.0,
+        369.0
+      ],
+      "worldPosition": [
+        668.0,
+        -234.0,
+        369.0
+      ],
+      "localRotation": [
+        -0.7071068286895752,
+        -0.0,
+        -0.0,
+        0.7071068286895752
+      ],
+      "localScale": [
+        3.587507963180542,
+        3.5875091552734375,
+        3.5875091552734375
+      ],
+      "meshKey": "Sphere001",
+      "meshName": "Sphere001",
+      "meshBinding": "pptr",
+      "duplicateSlot": false,
+      "materialPathIDs": [
+        -1459455341487220571
+      ],
+      "materialKeys": [
+        "IceCanyon_Clouds"
+      ],
+      "materialNames": [
+        "IceCanyon_Clouds"
+      ],
+      "hasRenderer": true,
+      "components": [
+        "Transform",
+        "MeshFilter",
+        "MeshRenderer"
+      ]
+    },
+    {
+      "name": "IceCanyon_Clouds",
+      "pathID": -1293022658637100600,
+      "parent": null,
+      "active": true,
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "worldPosition": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "localRotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "localScale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "meshKey": null,
+      "meshName": null,
+      "meshBinding": null,
+      "duplicateSlot": false,
+      "materialPathIDs": [],
+      "materialKeys": [],
+      "materialNames": [],
+      "hasRenderer": false,
+      "components": [
+        "Transform"
+      ]
+    },
+    {
+      "name": "IceCanyon_Star",
+      "pathID": 6956181476336725805,
+      "parent": -1293022658637100600,
+      "active": true,
+      "localPosition": [
+        668.0,
+        -234.0,
+        369.0
+      ],
+      "worldPosition": [
+        668.0,
+        -234.0,
+        369.0
+      ],
+      "localRotation": [
+        -0.7071068286895752,
+        -0.0,
+        -0.0,
+        0.7071068286895752
+      ],
+      "localScale": [
+        3.6000001430511475,
+        3.6000001430511475,
+        3.6000001430511475
+      ],
+      "meshKey": "Sphere001",
+      "meshName": "Sphere001",
+      "meshBinding": "pptr",
+      "duplicateSlot": false,
+      "materialPathIDs": [
+        1356938311177266285
+      ],
+      "materialKeys": [
+        "IceCanyon_Star"
+      ],
+      "materialNames": [
+        "IceCanyon_Star"
+      ],
+      "hasRenderer": true,
+      "components": [
+        "Transform",
+        "MeshFilter",
+        "MeshRenderer"
+      ]
+    }
+  ],
+  "shaders": [
+    "MMN/BG/Sky_CloudMaskedUnlit",
+    "MMN/BG/Sky_Clouds"
+  ],
+  "unresolvedMaterials": [],
+  "nodesMissingMesh": []
+}
