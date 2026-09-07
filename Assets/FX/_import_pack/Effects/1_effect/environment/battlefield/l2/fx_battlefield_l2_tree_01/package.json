@@ -1,0 +1,481 @@
+{
+  "id": "1_effect/environment/battlefield/l2/fx_battlefield_l2_tree_01",
+  "category": "Effects",
+  "title": "fx_battlefield_l2_tree_01",
+  "originalPath": "1_effect/environment/battlefield/l2/fx_battlefield_l2_tree_01.prefab",
+  "source": {
+    "seedBundle": "dedicated_bundle_41cde654",
+    "blob": "AssetPackages/0325.blob",
+    "chunk": 306,
+    "closureBundles": 8
+  },
+  "meshes": [
+    {
+      "name": "FX_Mesh_ShaderParticle_Quad_01_Max50",
+      "vertexCount": 200,
+      "submeshCount": 1,
+      "flags": 23,
+      "indexCounts": [
+        300
+      ],
+      "file": "FX_Mesh_ShaderParticle_Quad_01_Max50.mmesh",
+      "pathID": -5427224913205909022,
+      "key": "FX_Mesh_ShaderParticle_Quad_01_Max50",
+      "boundsMin": [
+        -0.5,
+        -0.5,
+        0.0
+      ],
+      "boundsMax": [
+        0.5,
+        0.5,
+        0.0
+      ]
+    }
+  ],
+  "materials": [
+    {
+      "name": "FX_ShaderParticle_Leaf_02",
+      "key": "FX_ShaderParticle_Leaf_02",
+      "pathID": 153675661449838892,
+      "shader": "MMN/FX/FX_MMCustomParticle",
+      "file": "FX_ShaderParticle_Leaf_02.json"
+    },
+    {
+      "name": "FX_Leaf_06_Light",
+      "key": "FX_Leaf_06_Light",
+      "pathID": 8344364877003843585,
+      "shader": "MMN/FX/Amplify shader/FX_Dissolve_Div_01",
+      "file": "FX_Leaf_06_Light.json"
+    }
+  ],
+  "textures": [
+    "FX_Leaf_01.png",
+    "FX_Leaf_05.png"
+  ],
+  "textureSettings": {
+    "FX_Leaf_01.png": {
+      "colorSpace": 0,
+      "mipCount": 6,
+      "wrapU": 1,
+      "wrapV": 1,
+      "filterMode": 1,
+      "aniso": 16
+    },
+    "FX_Leaf_05.png": {
+      "colorSpace": 1,
+      "mipCount": 10,
+      "wrapU": 0,
+      "wrapV": 0,
+      "filterMode": 1,
+      "aniso": 1
+    }
+  },
+  "hierarchy": [
+    {
+      "name": "Leaf_02",
+      "pathID": 4249922974269227510,
+      "parent": 4757034426458799871,
+      "active": false,
+      "localPosition": [
+        0.0,
+        14.0,
+        0.0
+      ],
+      "worldPosition": [
+        0.0,
+        14.0,
+        0.0
+      ],
+      "localRotation": [
+        0.7071068286895752,
+        0.0,
+        0.0,
+        0.7071068286895752
+      ],
+      "localScale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "meshKey": "FX_Mesh_ShaderParticle_Quad_01_Max50",
+      "meshName": "FX_Mesh_ShaderParticle_Quad_01_Max50",
+      "meshBinding": "pptr",
+      "materialPathIDs": [
+        153675661449838892
+      ],
+      "materialKeys": [
+        "FX_ShaderParticle_Leaf_02"
+      ],
+      "materialNames": [
+        "FX_ShaderParticle_Leaf_02"
+      ],
+      "hasRenderer": true,
+      "components": [
+        "Transform",
+        "MeshFilter",
+        "MeshRenderer",
+        "MonoBehaviour"
+      ]
+    },
+    {
+      "name": "FX_Leaf_06_Light",
+      "pathID": 4448943288991537684,
+      "parent": 4757034426458799871,
+      "active": true,
+      "localPosition": [
+        0.0,
+        16.0,
+        0.0
+      ],
+      "worldPosition": [
+        0.0,
+        16.0,
+        0.0
+      ],
+      "localRotation": [
+        -0.7071068286895752,
+        0.0,
+        0.0,
+        0.7071068286895752
+      ],
+      "localScale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "meshKey": null,
+      "meshName": null,
+      "meshBinding": null,
+      "materialPathIDs": [],
+      "materialKeys": [],
+      "materialNames": [
+        "FX_Leaf_06_Light"
+      ],
+      "hasRenderer": false,
+      "components": [
+        "Transform",
+        "ParticleSystem",
+        "ParticleSystemRenderer"
+      ],
+      "particle": {
+        "duration": 10.0,
+        "looping": true,
+        "prewarm": true,
+        "simulationSpeed": 1.0,
+        "scalingMode": 0,
+        "simulationSpace": 0,
+        "playOnAwake": true,
+        "maxParticles": 22,
+        "startLifetime": {
+          "min": 4.0,
+          "max": 7.0,
+          "mode": 3
+        },
+        "startSpeed": {
+          "min": 0.0,
+          "max": 0.0,
+          "mode": 0
+        },
+        "startSize": {
+          "min": 0.4,
+          "max": 1.15,
+          "mode": 3
+        },
+        "size3D": false,
+        "startSizeY": {
+          "min": 0.0,
+          "max": 1.0,
+          "mode": 3
+        },
+        "startSizeZ": {
+          "min": 0.0,
+          "max": 1.0,
+          "mode": 3
+        },
+        "rotation3D": false,
+        "startRotationX": {
+          "min": 0.0,
+          "max": 0.0,
+          "mode": 3
+        },
+        "startRotationY": {
+          "min": 0.0,
+          "max": 0.0,
+          "mode": 3
+        },
+        "startRotationZ": {
+          "min": -0.0,
+          "max": 6.28319,
+          "mode": 3
+        },
+        "gravityModifier": {
+          "min": 0.0,
+          "max": 0.0,
+          "mode": 0
+        },
+        "startColor": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "emissionRate": {
+          "min": 10.0,
+          "max": 10.0,
+          "mode": 0
+        },
+        "emissionEnabled": true,
+        "bursts": [],
+        "shape": {
+          "enabled": true,
+          "type": "ConeVolume",
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "position": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "radius": 18.0,
+          "radiusThickness": 1.0,
+          "angle": 0.0,
+          "arc": 360.0,
+          "alignToDirection": false,
+          "randomDirection": 0.0
+        },
+        "sizeOverLifetime": true,
+        "sizeCurve": {
+          "min": 1.0,
+          "max": 1.0,
+          "mode": 1,
+          "keys": [
+            [
+              0.0,
+              0.0,
+              20.11046,
+              20.11046,
+              0.0,
+              0.16307,
+              0
+            ],
+            [
+              0.07516,
+              1.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0
+            ],
+            [
+              0.65,
+              1.0,
+              0.0,
+              0.0,
+              0.33333,
+              0.33333,
+              0
+            ],
+            [
+              1.0,
+              0.0,
+              -6.89548,
+              -6.89548,
+              0.09659,
+              0.33333,
+              0
+            ]
+          ]
+        },
+        "colorOverLifetime": true,
+        "colorGradient": {
+          "colorKeys": [
+            [
+              0.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ]
+          ],
+          "alphaKeys": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.03,
+              1.0
+            ],
+            [
+              0.75,
+              1.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ]
+        },
+        "velocityOverLifetime": {
+          "enabled": true,
+          "space": 1,
+          "x": {
+            "min": -4.0,
+            "max": 1.0,
+            "mode": 3
+          },
+          "y": {
+            "min": -3.0,
+            "max": -1.0,
+            "mode": 3
+          },
+          "z": {
+            "min": -3.0,
+            "max": 1.0,
+            "mode": 3
+          },
+          "speedModifier": {
+            "min": 1.0,
+            "max": 1.0,
+            "mode": 0
+          }
+        },
+        "forceOverLifetime": null,
+        "noise": null,
+        "rotationOverLifetime": {
+          "enabled": true,
+          "separateAxes": false,
+          "x": {
+            "min": 0.0,
+            "max": 0.0,
+            "mode": 3
+          },
+          "y": {
+            "min": 0.0,
+            "max": 0.0,
+            "mode": 3
+          },
+          "z": {
+            "min": -5.23599,
+            "max": 5.23599,
+            "mode": 3
+          }
+        },
+        "textureSheet": {
+          "enabled": true,
+          "mode": 0,
+          "tilesX": 2,
+          "tilesY": 2,
+          "animationType": 1,
+          "rowIndex": 1,
+          "cycles": 1,
+          "frameOverTime": {
+            "min": 0.9999,
+            "max": 0.9999,
+            "mode": 0
+          },
+          "startFrame": {
+            "min": 0.0,
+            "max": 0.0,
+            "mode": 0
+          }
+        },
+        "customData": null,
+        "renderer": {
+          "renderMode": "Billboard",
+          "alignment": 0,
+          "sortMode": 0,
+          "lengthScale": 2.0,
+          "meshPathID": 0,
+          "materialPathIDs": [
+            8344364877003843585
+          ],
+          "sortingFudge": 500000.0,
+          "pivot": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "flip": [
+            0.5,
+            0.5,
+            0.0
+          ],
+          "normalDirection": 1.0,
+          "minParticleSize": 0.0,
+          "maxParticleSize": 1000000.0,
+          "enableGPUInstancing": false,
+          "useCustomVertexStreams": false,
+          "vertexStreams": [
+            0,
+            1,
+            3,
+            4,
+            5
+          ],
+          "materialKeys": [
+            "FX_Leaf_06_Light"
+          ]
+        }
+      }
+    },
+    {
+      "name": "FX_Battlefield_L2_Tree_01",
+      "pathID": 4757034426458799871,
+      "parent": null,
+      "active": true,
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "worldPosition": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "localRotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "localScale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "meshKey": null,
+      "meshName": null,
+      "meshBinding": null,
+      "materialPathIDs": [],
+      "materialKeys": [],
+      "materialNames": [],
+      "hasRenderer": false,
+      "components": [
+        "Transform",
+        "LODGroup"
+      ]
+    }
+  ],
+  "shaders": [
+    "MMN/FX/Amplify shader/FX_Dissolve_Div_01",
+    "MMN/FX/FX_MMCustomParticle"
+  ],
+  "unresolvedMaterials": []
+}

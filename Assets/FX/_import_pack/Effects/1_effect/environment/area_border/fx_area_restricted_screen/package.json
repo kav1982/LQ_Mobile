@@ -1,0 +1,165 @@
+{
+  "id": "1_effect/environment/area_border/fx_area_restricted_screen",
+  "category": "Effects",
+  "title": "fx_area_restricted_screen",
+  "originalPath": "1_effect/environment/area_border/fx_area_restricted_screen.prefab",
+  "source": {
+    "seedBundle": "dedicated_bundle_74194b6a",
+    "blob": "AssetPackages/0447.blob",
+    "chunk": 328,
+    "closureBundles": 7
+  },
+  "meshes": [
+    {
+      "name": "FX_Mesh_Plane_04",
+      "vertexCount": 25,
+      "submeshCount": 1,
+      "flags": 21,
+      "indexCounts": [
+        96
+      ],
+      "file": "FX_Mesh_Plane_04.mmesh",
+      "pathID": 8605913004033901408,
+      "key": "FX_Mesh_Plane_04",
+      "boundsMin": [
+        -0.635,
+        -0.635,
+        -0.0
+      ],
+      "boundsMax": [
+        0.635,
+        0.635,
+        -0.0
+      ]
+    }
+  ],
+  "materials": [
+    {
+      "name": "FX_WallLimit_01",
+      "key": "FX_WallLimit_01",
+      "pathID": 478785931625500952,
+      "shader": "MMN/FX/Amplify shader/FX_Dissolve_Div_Distortion_2C_AddNoise",
+      "file": "FX_WallLimit_01.json"
+    }
+  ],
+  "textures": [
+    "FX_Gradation_03_09.png",
+    "FX_Noise_25.png",
+    "FX_Noise_36_2.png"
+  ],
+  "textureSettings": {
+    "FX_Gradation_03_09.png": {
+      "colorSpace": 1,
+      "mipCount": 1,
+      "wrapU": 1,
+      "wrapV": 1,
+      "filterMode": 1,
+      "aniso": 1
+    },
+    "FX_Noise_25.png": {
+      "colorSpace": 0,
+      "mipCount": 1,
+      "wrapU": 0,
+      "wrapV": 0,
+      "filterMode": 1,
+      "aniso": 1
+    },
+    "FX_Noise_36_2.png": {
+      "colorSpace": 1,
+      "mipCount": 1,
+      "wrapU": 0,
+      "wrapV": 0,
+      "filterMode": 1,
+      "aniso": 1
+    }
+  },
+  "hierarchy": [
+    {
+      "name": "FX_WallLimit_01",
+      "pathID": -8220533504753033150,
+      "parent": 7804356642086658447,
+      "active": true,
+      "localPosition": [
+        0.0,
+        4.0,
+        0.0
+      ],
+      "worldPosition": [
+        0.0,
+        4.0,
+        0.0
+      ],
+      "localRotation": [
+        0.0,
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "localScale": [
+        20.0,
+        8.0,
+        1.0
+      ],
+      "meshKey": "FX_Mesh_Plane_04",
+      "meshName": "FX_Mesh_Plane_04",
+      "meshBinding": "pptr",
+      "materialPathIDs": [
+        478785931625500952
+      ],
+      "materialKeys": [
+        "FX_WallLimit_01"
+      ],
+      "materialNames": [
+        "FX_WallLimit_01"
+      ],
+      "hasRenderer": true,
+      "components": [
+        "Transform",
+        "MeshFilter",
+        "MeshRenderer",
+        "MeshCollider"
+      ]
+    },
+    {
+      "name": "FX_Area_Restricted_screen",
+      "pathID": 7804356642086658447,
+      "parent": null,
+      "active": true,
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "worldPosition": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "localRotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "localScale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "meshKey": null,
+      "meshName": null,
+      "meshBinding": null,
+      "materialPathIDs": [],
+      "materialKeys": [],
+      "materialNames": [],
+      "hasRenderer": false,
+      "components": [
+        "Transform"
+      ]
+    }
+  ],
+  "shaders": [
+    "MMN/FX/Amplify shader/FX_Dissolve_Div_Distortion_2C_AddNoise"
+  ],
+  "unresolvedMaterials": []
+}

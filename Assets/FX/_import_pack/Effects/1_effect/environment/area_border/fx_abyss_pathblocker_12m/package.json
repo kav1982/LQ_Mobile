@@ -1,0 +1,142 @@
+{
+  "id": "1_effect/environment/area_border/fx_abyss_pathblocker_12m",
+  "category": "Effects",
+  "title": "fx_abyss_pathblocker_12m",
+  "originalPath": "1_effect/environment/area_border/fx_abyss_pathblocker_12m.prefab",
+  "source": {
+    "seedBundle": "dedicated_bundle_2c569fbd",
+    "blob": "AssetPackages/0447.blob",
+    "chunk": 592,
+    "closureBundles": 6
+  },
+  "meshes": [],
+  "materials": [
+    {
+      "name": "FX_WallLimit_02",
+      "key": "FX_WallLimit_02",
+      "pathID": -1812255859619206425,
+      "shader": "MMN/FX/Amplify shader/FX_Dissolve_Div_Distortion_2C_AddNoise",
+      "file": "FX_WallLimit_02.json"
+    }
+  ],
+  "textures": [
+    "FX_Gradation_03_07.png",
+    "FX_Noise_17.png",
+    "FX_Noise_36_2.png"
+  ],
+  "textureSettings": {
+    "FX_Gradation_03_07.png": {
+      "colorSpace": 1,
+      "mipCount": 10,
+      "wrapU": 1,
+      "wrapV": 1,
+      "filterMode": 1,
+      "aniso": 1
+    },
+    "FX_Noise_17.png": {
+      "colorSpace": 0,
+      "mipCount": 1,
+      "wrapU": 0,
+      "wrapV": 0,
+      "filterMode": 1,
+      "aniso": 1
+    },
+    "FX_Noise_36_2.png": {
+      "colorSpace": 1,
+      "mipCount": 1,
+      "wrapU": 0,
+      "wrapV": 0,
+      "filterMode": 1,
+      "aniso": 1
+    }
+  },
+  "hierarchy": [
+    {
+      "name": "FX_Abyss_PathBlocker_12m",
+      "pathID": -6157280789493929340,
+      "parent": null,
+      "active": true,
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "worldPosition": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "localRotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "localScale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "meshKey": null,
+      "meshName": null,
+      "meshBinding": null,
+      "materialPathIDs": [],
+      "materialKeys": [],
+      "materialNames": [],
+      "hasRenderer": false,
+      "components": [
+        "Transform"
+      ]
+    },
+    {
+      "name": "FX_WallLimit_01 (1)",
+      "pathID": 1648287147062452786,
+      "parent": -6157280789493929340,
+      "active": true,
+      "localPosition": [
+        0.0,
+        4.0,
+        0.0
+      ],
+      "worldPosition": [
+        0.0,
+        4.0,
+        0.0
+      ],
+      "localRotation": [
+        -0.0,
+        -0.0,
+        0.7071068286895752,
+        0.7071068286895752
+      ],
+      "localScale": [
+        8.0,
+        13.0,
+        1.0
+      ],
+      "meshKey": null,
+      "meshName": "builtin:Quad",
+      "meshBinding": "builtin",
+      "materialPathIDs": [
+        -1812255859619206425
+      ],
+      "materialKeys": [
+        "FX_WallLimit_02"
+      ],
+      "materialNames": [
+        "FX_WallLimit_02"
+      ],
+      "hasRenderer": true,
+      "components": [
+        "Transform",
+        "MeshFilter",
+        "MeshRenderer",
+        "MeshCollider"
+      ]
+    }
+  ],
+  "shaders": [
+    "MMN/FX/Amplify shader/FX_Dissolve_Div_Distortion_2C_AddNoise"
+  ],
+  "unresolvedMaterials": []
+}
