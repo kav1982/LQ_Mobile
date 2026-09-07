@@ -1,0 +1,110 @@
+{
+ "name": "MMN/FX/SkyFallingStar",
+ "source": {
+  "blob": "AssetPackages/0323.blob",
+  "chunk": 543,
+  "pathID": 7838612847208729135
+ },
+ "customEditor": "",
+ "fallback": "",
+ "properties": [
+  {
+   "name": "_MainTex",
+   "description": "Particle Texture",
+   "type": "Texture",
+   "flags": 0,
+   "attributes": [],
+   "default": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "texDim": "2D",
+   "defaultTextureName": "white"
+  },
+  {
+   "name": "_Intensity_Color",
+   "description": "Intensity_Color",
+   "type": "Float",
+   "flags": 0,
+   "attributes": [],
+   "default": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  }
+ ],
+ "subShaders": [
+  {
+   "lod": 300,
+   "tags": {
+    "IGNOREPROJECTOR": "true",
+    "QUEUE": "Transparent-400",
+    "RenderPipeline": "UniversalPipeline",
+    "RenderType": "Transparent",
+    "ShaderModel": "4.5",
+    "UniversalMaterialType": "SimpleLit"
+   },
+   "passes": [
+    {
+     "name": "ForwardLit",
+     "type": 0,
+     "useName": "",
+     "tags": {
+      "IGNOREPROJECTOR": "true",
+      "LIGHTMODE": "SkyLit",
+      "QUEUE": "Transparent-400",
+      "RenderPipeline": "UniversalPipeline",
+      "RenderType": "Transparent",
+      "ShaderModel": "4.5",
+      "UniversalMaterialType": "SimpleLit"
+     },
+     "stateName": "ForwardLit",
+     "states": {
+      "rtBlend0": {
+       "srcBlend": 5.0,
+       "destBlend": 1.0,
+       "srcBlendAlpha": 5.0,
+       "destBlendAlpha": 1.0,
+       "blendOp": 0.0,
+       "blendOpAlpha": 0.0,
+       "colMask": 15.0
+      },
+      "rtBlend1": {
+       "srcBlend": 1.0,
+       "destBlend": 0.0,
+       "srcBlendAlpha": 1.0,
+       "destBlendAlpha": 0.0,
+       "blendOp": 0.0,
+       "blendOpAlpha": 0.0,
+       "colMask": 15.0
+      },
+      "rtSeparateBlend": 0.0,
+      "zTest": 4.0,
+      "zWrite": 0.0,
+      "culling": 0.0,
+      "offsetFactor": 0.0,
+      "offsetUnits": 0.0,
+      "alphaToMask": 0.0,
+      "stencilOp": {
+       "pass_": 0.0,
+       "fail": 0.0,
+       "zFail": 0.0,
+       "comp": 8.0
+      },
+      "stencilRef": 0.0,
+      "stencilReadMask": 255.0,
+      "stencilWriteMask": 255.0,
+      "fogMode": -1.0,
+      "lighting": 0.0
+     },
+     "programs": [],
+     "gpuProgramTypes": []
+    }
+   ]
+  }
+ ]
+}

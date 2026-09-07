@@ -1,0 +1,156 @@
+{
+ "name": "MMN/FX/EffectLightDecal",
+ "source": {
+  "blob": "AssetPackages/Starter/0031.blob",
+  "chunk": 90,
+  "pathID": -1720741638452560952
+ },
+ "customEditor": "",
+ "fallback": "",
+ "properties": [
+  {
+   "name": "_EffectLightColor",
+   "description": "EffectLightColor",
+   "type": "Color",
+   "flags": 0,
+   "attributes": [],
+   "default": [
+    1.0,
+    1.0,
+    1.0,
+    1.0
+   ]
+  },
+  {
+   "name": "_EffectLightIntensity",
+   "description": "EffectLightIntensity",
+   "type": "Float",
+   "flags": 0,
+   "attributes": [],
+   "default": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "_BrightnessLimit",
+   "description": "BrightnessLimit",
+   "type": "Float",
+   "flags": 0,
+   "attributes": [],
+   "default": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "_IsParticle",
+   "description": "IsParticle",
+   "type": "Float",
+   "flags": 0,
+   "attributes": [
+    "Toggle"
+   ],
+   "default": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "_worldPosition",
+   "description": "worldPosition",
+   "type": "Vector",
+   "flags": 1,
+   "attributes": [],
+   "default": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "_worldScaleAndRotY",
+   "description": "worldScaleAndRotY",
+   "type": "Vector",
+   "flags": 1,
+   "attributes": [],
+   "default": [
+    1.0,
+    1.0,
+    1.0,
+    0.0
+   ]
+  }
+ ],
+ "subShaders": [
+  {
+   "lod": 100,
+   "tags": {
+    "QUEUE": "Transparent",
+    "RenderPipeline": "UniversalPipeline",
+    "RenderType": "Transparent"
+   },
+   "passes": [
+    {
+     "name": "Base",
+     "type": 0,
+     "useName": "",
+     "tags": {
+      "LIGHTMODE": "EffectLightDecal",
+      "QUEUE": "Transparent",
+      "RenderPipeline": "UniversalPipeline",
+      "RenderType": "Transparent"
+     },
+     "stateName": "Base",
+     "states": {
+      "rtBlend0": {
+       "srcBlend": 1.0,
+       "destBlend": 1.0,
+       "srcBlendAlpha": 1.0,
+       "destBlendAlpha": 1.0,
+       "blendOp": 0.0,
+       "blendOpAlpha": 0.0,
+       "colMask": 15.0
+      },
+      "rtBlend1": {
+       "srcBlend": 1.0,
+       "destBlend": 0.0,
+       "srcBlendAlpha": 1.0,
+       "destBlendAlpha": 0.0,
+       "blendOp": 0.0,
+       "blendOpAlpha": 0.0,
+       "colMask": 15.0
+      },
+      "rtSeparateBlend": 0.0,
+      "zTest": 8.0,
+      "zWrite": 0.0,
+      "culling": 1.0,
+      "offsetFactor": 0.0,
+      "offsetUnits": 0.0,
+      "alphaToMask": 0.0,
+      "stencilOp": {
+       "pass_": 0.0,
+       "fail": 0.0,
+       "zFail": 0.0,
+       "comp": 8.0
+      },
+      "stencilRef": 0.0,
+      "stencilReadMask": 255.0,
+      "stencilWriteMask": 255.0,
+      "fogMode": -1.0,
+      "lighting": 0.0
+     },
+     "programs": [],
+     "gpuProgramTypes": []
+    }
+   ]
+  }
+ ]
+}

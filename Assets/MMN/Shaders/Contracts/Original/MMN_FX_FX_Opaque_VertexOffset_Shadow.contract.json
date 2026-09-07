@@ -1,0 +1,427 @@
+{
+ "name": "MMN/FX/FX_Opaque_VertexOffset_Shadow",
+ "source": {
+  "blob": "AssetPackages/0387.blob",
+  "chunk": 301,
+  "pathID": -5245517182213478512
+ },
+ "customEditor": "MM.Client.Editor.ShaderGUI.MMN_FxOpaqueShaderGUI",
+ "fallback": "",
+ "properties": [
+  {
+   "name": "_CullMode",
+   "description": "Cull Mode",
+   "type": "Float",
+   "flags": 1,
+   "attributes": [
+    "Enum(UnityEngine.Rendering.CullMode)",
+    "Header(Z Buffer)",
+    "Space(10)"
+   ],
+   "default": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "_LightReceive",
+   "description": "LightReceive",
+   "type": "Range",
+   "flags": 1,
+   "attributes": [
+    "ToggleUI",
+    "Space(10)"
+   ],
+   "default": [
+    0.0,
+    0.0,
+    1.0,
+    0.0
+   ],
+   "range": [
+    0.0,
+    1.0
+   ]
+  },
+  {
+   "name": "_LightRatio",
+   "description": "lightRatio",
+   "type": "Range",
+   "flags": 1,
+   "attributes": [],
+   "default": [
+    1.0,
+    0.0,
+    1.0,
+    0.0
+   ],
+   "range": [
+    0.0,
+    1.0
+   ]
+  },
+  {
+   "name": "_FogReceive",
+   "description": "FogReceive",
+   "type": "Range",
+   "flags": 1,
+   "attributes": [
+    "ToggleUI"
+   ],
+   "default": [
+    0.0,
+    0.0,
+    1.0,
+    0.0
+   ],
+   "range": [
+    0.0,
+    1.0
+   ]
+  },
+  {
+   "name": "_ZTest",
+   "description": "Z Test",
+   "type": "Float",
+   "flags": 1,
+   "attributes": [
+    "Enum(UnityEngine.Rendering.CompareFunction)"
+   ],
+   "default": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "_OffsetMode",
+   "description": "오프셋 모드 설정",
+   "type": "Float",
+   "flags": 0,
+   "attributes": [
+    "Enum(ParticleSystem, 0, Generic, 1)"
+   ],
+   "default": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "_MainTex",
+   "description": " 메인 텍스처 (RGB : 색상 / A : 알파 컷오프)",
+   "type": "Texture",
+   "flags": 0,
+   "attributes": [
+    "Header(Base Color Settings)",
+    "Space()"
+   ],
+   "default": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "texDim": "2D",
+   "defaultTextureName": "white"
+  },
+  {
+   "name": "_Color",
+   "description": "기본 컬러",
+   "type": "Color",
+   "flags": 0,
+   "attributes": [],
+   "default": [
+    1.0,
+    1.0,
+    1.0,
+    1.0
+   ]
+  },
+  {
+   "name": "_Intensity_Color",
+   "description": "기본 컬러 강도",
+   "type": "Float",
+   "flags": 0,
+   "attributes": [],
+   "default": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "_AlphaCutoff",
+   "description": "알파 컷오프 (메인 텍스처 A 채널 사용)",
+   "type": "Range",
+   "flags": 0,
+   "attributes": [],
+   "default": [
+    0.5,
+    0.0,
+    1.0,
+    0.0
+   ],
+   "range": [
+    0.0,
+    1.0
+   ]
+  },
+  {
+   "name": "_FresnelColor",
+   "description": "프레넬 컬러",
+   "type": "Color",
+   "flags": 0,
+   "attributes": [
+    "Header(Fresnel)",
+    "Space(10)"
+   ],
+   "default": [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ]
+  },
+  {
+   "name": "_FresnelRange",
+   "description": "프레넬 범위",
+   "type": "Range",
+   "flags": 0,
+   "attributes": [
+    "PowerSlider(2)"
+   ],
+   "default": [
+    2.0,
+    0.0,
+    10.0,
+    0.0
+   ],
+   "range": [
+    0.0,
+    10.0
+   ]
+  },
+  {
+   "name": "_FresnelPower",
+   "description": "프레넬 파워",
+   "type": "Range",
+   "flags": 0,
+   "attributes": [
+    "PowerSlider(2)"
+   ],
+   "default": [
+    10.0,
+    0.0,
+    20.0,
+    0.0
+   ],
+   "range": [
+    0.0,
+    20.0
+   ]
+  },
+  {
+   "name": "_Sphereofinfluence",
+   "description": "움직임 영향력 범위",
+   "type": "Range",
+   "flags": 0,
+   "attributes": [
+    "Space(10)",
+    "Header(Vertex Movment Settings)",
+    "Space()"
+   ],
+   "default": [
+    0.9,
+    0.0,
+    0.9,
+    0.0
+   ],
+   "range": [
+    0.0,
+    0.9
+   ]
+  },
+  {
+   "name": "_VelocityVector",
+   "description": "움직일 방향 축 설정",
+   "type": "Vector",
+   "flags": 0,
+   "attributes": [],
+   "default": [
+    0.0,
+    1.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "_TimeSpeed",
+   "description": "움직임 속도",
+   "type": "Float",
+   "flags": 0,
+   "attributes": [],
+   "default": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "_Threshold",
+   "description": "움직임 강도",
+   "type": "Float",
+   "flags": 0,
+   "attributes": [],
+   "default": [
+    10.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "_SinScope",
+   "description": "움직임 노이즈 조절",
+   "type": "Float",
+   "flags": 0,
+   "attributes": [],
+   "default": [
+    20.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  }
+ ],
+ "subShaders": [
+  {
+   "lod": 0,
+   "tags": {
+    "QUEUE": "Geometry",
+    "RenderPipeline": "UniversalPipeline",
+    "RenderType": "Opaque",
+    "ShaderModel": "4.5"
+   },
+   "passes": [
+    {
+     "name": "Base",
+     "type": 0,
+     "useName": "",
+     "tags": {
+      "QUEUE": "Geometry",
+      "RenderPipeline": "UniversalPipeline",
+      "RenderType": "Opaque",
+      "ShaderModel": "4.5"
+     },
+     "stateName": "Base",
+     "states": {
+      "rtBlend0": {
+       "srcBlend": 1.0,
+       "destBlend": 0.0,
+       "srcBlendAlpha": 1.0,
+       "destBlendAlpha": 0.0,
+       "blendOp": 0.0,
+       "blendOpAlpha": 0.0,
+       "colMask": 15.0
+      },
+      "rtBlend1": {
+       "srcBlend": 1.0,
+       "destBlend": 0.0,
+       "srcBlendAlpha": 1.0,
+       "destBlendAlpha": 0.0,
+       "blendOp": 0.0,
+       "blendOpAlpha": 0.0,
+       "colMask": 15.0
+      },
+      "rtSeparateBlend": 0.0,
+      "zTest": {
+       "prop": "_ZTest"
+      },
+      "zWrite": 1.0,
+      "culling": {
+       "prop": "_CullMode"
+      },
+      "offsetFactor": 0.0,
+      "offsetUnits": 0.0,
+      "alphaToMask": 0.0,
+      "stencilOp": {
+       "pass_": 0.0,
+       "fail": 0.0,
+       "zFail": 0.0,
+       "comp": 8.0
+      },
+      "stencilRef": 0.0,
+      "stencilReadMask": 255.0,
+      "stencilWriteMask": 255.0,
+      "fogMode": -1.0,
+      "lighting": 0.0
+     },
+     "programs": [],
+     "gpuProgramTypes": []
+    },
+    {
+     "name": "ShadowCaster",
+     "type": 0,
+     "useName": "",
+     "tags": {
+      "LIGHTMODE": "SHADOWCASTER",
+      "QUEUE": "Geometry",
+      "RenderPipeline": "UniversalPipeline",
+      "RenderType": "Opaque",
+      "ShaderModel": "4.5"
+     },
+     "stateName": "ShadowCaster",
+     "states": {
+      "rtBlend0": {
+       "srcBlend": 1.0,
+       "destBlend": 0.0,
+       "srcBlendAlpha": 1.0,
+       "destBlendAlpha": 0.0,
+       "blendOp": 0.0,
+       "blendOpAlpha": 0.0,
+       "colMask": 0.0
+      },
+      "rtBlend1": {
+       "srcBlend": 1.0,
+       "destBlend": 0.0,
+       "srcBlendAlpha": 1.0,
+       "destBlendAlpha": 0.0,
+       "blendOp": 0.0,
+       "blendOpAlpha": 0.0,
+       "colMask": 15.0
+      },
+      "rtSeparateBlend": 0.0,
+      "zTest": 4.0,
+      "zWrite": 1.0,
+      "culling": {
+       "prop": "_CullMode"
+      },
+      "offsetFactor": 0.0,
+      "offsetUnits": 0.0,
+      "alphaToMask": 0.0,
+      "stencilOp": {
+       "pass_": 0.0,
+       "fail": 0.0,
+       "zFail": 0.0,
+       "comp": 8.0
+      },
+      "stencilRef": 0.0,
+      "stencilReadMask": 255.0,
+      "stencilWriteMask": 255.0,
+      "fogMode": -1.0,
+      "lighting": 0.0
+     },
+     "programs": [],
+     "gpuProgramTypes": []
+    }
+   ]
+  }
+ ]
+}

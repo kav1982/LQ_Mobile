@@ -1,0 +1,162 @@
+{
+ "name": "MMN/CutScene/Prop_Portal",
+ "source": {
+  "blob": "AssetPackages/0387.blob",
+  "chunk": 176,
+  "pathID": -231375009776802470
+ },
+ "customEditor": "",
+ "fallback": "",
+ "properties": [
+  {
+   "name": "_StencilRef",
+   "description": "Stencil Ref",
+   "type": "Float",
+   "flags": 0,
+   "attributes": [
+    "Header(Stencil Options)",
+    "Space"
+   ],
+   "default": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "_StencilComp",
+   "description": "Stencil Comp",
+   "type": "Float",
+   "flags": 0,
+   "attributes": [
+    "MaterialEnum(UnityEngine.Rendering.CompareFunction)"
+   ],
+   "default": [
+    8.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "_StencilPass",
+   "description": "Stencil Pass",
+   "type": "Float",
+   "flags": 0,
+   "attributes": [
+    "MaterialEnum(UnityEngine.Rendering.StencilOp)"
+   ],
+   "default": [
+    2.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "_ZWrite",
+   "description": "ZWrite",
+   "type": "Float",
+   "flags": 0,
+   "attributes": [
+    "Header(Rendering Options)",
+    "Space",
+    "MaterialEnum(Off, 0, On, 1)"
+   ],
+   "default": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "_Cull",
+   "description": "Cull",
+   "type": "Float",
+   "flags": 0,
+   "attributes": [
+    "MaterialEnum(Off, 0, Front, 1, Back, 2)"
+   ],
+   "default": [
+    2.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  }
+ ],
+ "subShaders": [
+  {
+   "lod": 100,
+   "tags": {
+    "QUEUE": "Geometry+1",
+    "RenderType": "Transparent"
+   },
+   "passes": [
+    {
+     "name": "Base",
+     "type": 0,
+     "useName": "",
+     "tags": {
+      "LIGHTMODE": "BG",
+      "QUEUE": "Geometry+1",
+      "RenderType": "Transparent"
+     },
+     "stateName": "Base",
+     "states": {
+      "rtBlend0": {
+       "srcBlend": 5.0,
+       "destBlend": 10.0,
+       "srcBlendAlpha": 5.0,
+       "destBlendAlpha": 10.0,
+       "blendOp": 0.0,
+       "blendOpAlpha": 0.0,
+       "colMask": 15.0
+      },
+      "rtBlend1": {
+       "srcBlend": 1.0,
+       "destBlend": 0.0,
+       "srcBlendAlpha": 1.0,
+       "destBlendAlpha": 0.0,
+       "blendOp": 0.0,
+       "blendOpAlpha": 0.0,
+       "colMask": 15.0
+      },
+      "rtSeparateBlend": 0.0,
+      "zTest": 4.0,
+      "zWrite": {
+       "prop": "_ZWrite"
+      },
+      "culling": {
+       "prop": "_Cull"
+      },
+      "offsetFactor": 0.0,
+      "offsetUnits": 0.0,
+      "alphaToMask": 0.0,
+      "stencilOp": {
+       "pass_": {
+        "prop": "_StencilPass"
+       },
+       "fail": 0.0,
+       "zFail": 0.0,
+       "comp": {
+        "prop": "_StencilComp"
+       }
+      },
+      "stencilRef": {
+       "prop": "_StencilRef"
+      },
+      "stencilReadMask": 255.0,
+      "stencilWriteMask": 255.0,
+      "fogMode": -1.0,
+      "lighting": 0.0
+     },
+     "programs": [],
+     "gpuProgramTypes": []
+    }
+   ]
+  }
+ ]
+}
