@@ -39,13 +39,7 @@ Shader "MMN/BG/SimpleLitLOD"
             #pragma multi_compile_fragment _ _ADDITIONAL_LIGHT_SHADOWS
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
-            TEXTURE2D(_BaseMap); SAMPLER(sampler_BaseMap);
-            TEXTURE2D(_EmissionMap); SAMPLER(sampler_EmissionMap);
-            CBUFFER_START(UnityPerMaterial)
-                float4 _BaseMap_ST; half4 _BaseColor; half _AlbedoTintStrength; half _Cutoff; half _ALPHATEST;
-                half _VertexColorWeight; half _ShowVertexColor; half _ShowVertexAlpha;
-                half4 _EmissionColor; half _EmissionIntensity;
-            CBUFFER_END
+            #include "MMN_BG_SimpleLitLODInput.hlsl"
             struct Attr { float4 positionOS:POSITION; float3 normalOS:NORMAL; float4 color:COLOR; float2 uv:TEXCOORD0; };
             struct Var { float4 positionCS:SV_POSITION; float2 uv:TEXCOORD0; float3 normalWS:TEXCOORD1; float3 positionWS:TEXCOORD2; float4 color:TEXCOORD3; float fog:TEXCOORD4; };
             Var vert(Attr v){
@@ -94,6 +88,7 @@ Shader "MMN/BG/SimpleLitLOD"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/CommonMaterial.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Shadows.hlsl"
+            #include "MMN_BG_SimpleLitLODInput.hlsl"
             float3 _LightDirection;
             float3 _LightPosition;
             float4 vert(float4 positionOS:POSITION, float3 normalOS:NORMAL):SV_POSITION{
@@ -124,6 +119,7 @@ Shader "MMN/BG/SimpleLitLOD"
             #pragma vertex vert
             #pragma fragment frag
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+            #include "MMN_BG_SimpleLitLODInput.hlsl"
             float4 vert(float4 p:POSITION):SV_POSITION{return TransformWorldToHClip(TransformObjectToWorld(p.xyz));}
             half4 frag():SV_Target{return 0;}
             ENDHLSL
@@ -137,6 +133,7 @@ Shader "MMN/BG/SimpleLitLOD"
             #pragma vertex vert
             #pragma fragment frag
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+            #include "MMN_BG_SimpleLitLODInput.hlsl"
             float4 vert(float4 p:POSITION):SV_POSITION{return TransformWorldToHClip(TransformObjectToWorld(p.xyz));}
             half4 frag():SV_Target{return 0;}
             ENDHLSL

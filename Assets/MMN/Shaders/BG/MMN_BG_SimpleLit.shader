@@ -103,24 +103,7 @@ Shader "MMN/BG/SimpleLit"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
 
-            TEXTURE2D(_BaseMap); SAMPLER(sampler_BaseMap);
-            TEXTURE2D(_EmissionMap); SAMPLER(sampler_EmissionMap);
-
-            CBUFFER_START(UnityPerMaterial)
-                float4 _BaseMap_ST;
-                half4 _BaseColor;
-                half _AlbedoTintStrength;
-                half _Cutoff;
-                half _ALPHATEST;
-                half _VertexColorWeight;
-                half _ShowVertexColor;
-                half _ShowVertexAlpha;
-                half4 _EmissionColor;
-                half _EmissionIntensity;
-                half _ShadowDim;
-                half _Smoothness;
-                half _halfLambertWeight;
-            CBUFFER_END
+            #include "MMN_BG_SimpleLitInput.hlsl"
 
             struct Attributes
             {
@@ -215,23 +198,7 @@ Shader "MMN/BG/SimpleLit"
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/CommonMaterial.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Shadows.hlsl"
 
-            TEXTURE2D(_BaseMap); SAMPLER(sampler_BaseMap);
-
-            CBUFFER_START(UnityPerMaterial)
-                float4 _BaseMap_ST;
-                half4 _BaseColor;
-                half _AlbedoTintStrength;
-                half _Cutoff;
-                half _ALPHATEST;
-                half _VertexColorWeight;
-                half _ShowVertexColor;
-                half _ShowVertexAlpha;
-                half4 _EmissionColor;
-                half _EmissionIntensity;
-                half _ShadowDim;
-                half _Smoothness;
-                half _halfLambertWeight;
-            CBUFFER_END
+            #include "MMN_BG_SimpleLitInput.hlsl"
 
             float3 _LightDirection;
             float3 _LightPosition;
@@ -292,23 +259,7 @@ Shader "MMN/BG/SimpleLit"
             #pragma fragment frag
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
 
-            TEXTURE2D(_BaseMap); SAMPLER(sampler_BaseMap);
-
-            CBUFFER_START(UnityPerMaterial)
-                float4 _BaseMap_ST;
-                half4 _BaseColor;
-                half _AlbedoTintStrength;
-                half _Cutoff;
-                half _ALPHATEST;
-                half _VertexColorWeight;
-                half _ShowVertexColor;
-                half _ShowVertexAlpha;
-                half4 _EmissionColor;
-                half _EmissionIntensity;
-                half _ShadowDim;
-                half _Smoothness;
-                half _halfLambertWeight;
-            CBUFFER_END
+            #include "MMN_BG_SimpleLitInput.hlsl"
 
             struct Attributes
             {
@@ -349,23 +300,7 @@ Shader "MMN/BG/SimpleLit"
             #pragma fragment frag
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
 
-            TEXTURE2D(_BaseMap); SAMPLER(sampler_BaseMap);
-
-            CBUFFER_START(UnityPerMaterial)
-                float4 _BaseMap_ST;
-                half4 _BaseColor;
-                half _AlbedoTintStrength;
-                half _Cutoff;
-                half _ALPHATEST;
-                half _VertexColorWeight;
-                half _ShowVertexColor;
-                half _ShowVertexAlpha;
-                half4 _EmissionColor;
-                half _EmissionIntensity;
-                half _ShadowDim;
-                half _Smoothness;
-                half _halfLambertWeight;
-            CBUFFER_END
+            #include "MMN_BG_SimpleLitInput.hlsl"
 
             struct Attributes { float4 positionOS : POSITION; float2 uv : TEXCOORD0; };
             struct Varyings { float4 positionCS : SV_POSITION; float2 uv : TEXCOORD0; };
@@ -397,6 +332,7 @@ Shader "MMN/BG/SimpleLit"
             #pragma vertex vert
             #pragma fragment frag
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+            #include "MMN_BG_SimpleLitInput.hlsl"
 
             float4 vert(float4 positionOS : POSITION) : SV_POSITION
             {
