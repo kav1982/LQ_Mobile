@@ -1,0 +1,805 @@
+{
+  "id": "1_effect/environment/dungeon/runda/fx_runda_bossroom_waterfall_02_dropwater",
+  "category": "Effects",
+  "title": "fx_runda_bossroom_waterfall_02_dropwater",
+  "originalPath": "1_effect/environment/dungeon/runda/fx_runda_bossroom_waterfall_02_dropwater.prefab",
+  "source": {
+    "seedBundle": "dedicated_bundle_1771c0ee",
+    "blob": "AssetPackages/0325.blob",
+    "chunk": 333,
+    "closureBundles": 13
+  },
+  "meshes": [
+    {
+      "name": "FX_Mesh_ShaderParticle_Quad_01_Max20",
+      "vertexCount": 80,
+      "submeshCount": 1,
+      "flags": 23,
+      "indexCounts": [
+        120
+      ],
+      "file": "FX_Mesh_ShaderParticle_Quad_01_Max20.mmesh",
+      "pathID": 3122310267157198948,
+      "key": "FX_Mesh_ShaderParticle_Quad_01_Max20",
+      "boundsMin": [
+        -0.5,
+        -0.5,
+        0.0
+      ],
+      "boundsMax": [
+        0.5,
+        0.5,
+        0.0
+      ]
+    }
+  ],
+  "materials": [
+    {
+      "name": "FX_Water_Trail_01_1_Ray",
+      "key": "FX_Water_Trail_01_1_Ray",
+      "pathID": 8353637392997619878,
+      "shader": "MMN/FX/Amplify shader/FX_Dissolve_Div_Distortion_2C_AddNoise",
+      "file": "FX_Water_Trail_01_1_Ray.json"
+    },
+    {
+      "name": "FX_ShaderParticle_Water_Particle_01_3",
+      "key": "FX_ShaderParticle_Water_Particle_01_3",
+      "pathID": 5649452080669135723,
+      "shader": "MMN/FX/FX_MMCustomParticle",
+      "file": "FX_ShaderParticle_Water_Particle_01_3.json"
+    },
+    {
+      "name": "FX_ShaderParticle_Waterfall_08_3",
+      "key": "FX_ShaderParticle_Waterfall_08_3",
+      "pathID": 2146442790820892471,
+      "shader": "MMN/FX/FX_MMCustomParticle",
+      "file": "FX_ShaderParticle_Waterfall_08_3.json"
+    },
+    {
+      "name": "FX_ShaderParticle_Smoke_03",
+      "key": "FX_ShaderParticle_Smoke_03",
+      "pathID": 5073884702380272595,
+      "shader": "MMN/FX/FX_MMCustomParticle",
+      "file": "FX_ShaderParticle_Smoke_03.json"
+    }
+  ],
+  "textures": [
+    "FX_Noise_53_1_rotate.png",
+    "FX_SmokeCut_01_02_Alp.png",
+    "FX_Smoke_Ani_01.png",
+    "FX_T_CrackGrad_Line01.png",
+    "FX_Water_00_Alp.png"
+  ],
+  "textureSettings": {
+    "FX_Noise_53_1_rotate.png": {
+      "colorSpace": 1,
+      "mipCount": 1,
+      "wrapU": 0,
+      "wrapV": 0,
+      "filterMode": 1,
+      "aniso": 1
+    },
+    "FX_SmokeCut_01_02_Alp.png": {
+      "colorSpace": 1,
+      "mipCount": 1,
+      "wrapU": 1,
+      "wrapV": 1,
+      "filterMode": 1,
+      "aniso": 1
+    },
+    "FX_Smoke_Ani_01.png": {
+      "colorSpace": 1,
+      "mipCount": 1,
+      "wrapU": 1,
+      "wrapV": 1,
+      "filterMode": 1,
+      "aniso": 1
+    },
+    "FX_T_CrackGrad_Line01.png": {
+      "colorSpace": 1,
+      "mipCount": 9,
+      "wrapU": 0,
+      "wrapV": 0,
+      "filterMode": 1,
+      "aniso": 1
+    },
+    "FX_Water_00_Alp.png": {
+      "colorSpace": 0,
+      "mipCount": 7,
+      "wrapU": 0,
+      "wrapV": 0,
+      "filterMode": 1,
+      "aniso": 1
+    }
+  },
+  "hierarchy": [
+    {
+      "name": "FX_Water_Trail_01_1_Ray",
+      "pathID": -8438110508062163108,
+      "parent": 7384548978666378411,
+      "active": true,
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "worldPosition": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "localRotation": [
+        0.7071068286895752,
+        0.0,
+        0.0,
+        0.7071068286895752
+      ],
+      "localScale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "meshKey": null,
+      "meshName": null,
+      "meshBinding": null,
+      "materialPathIDs": [],
+      "materialKeys": [],
+      "materialNames": [
+        "FX_Water_Trail_01_1_Ray"
+      ],
+      "hasRenderer": false,
+      "components": [
+        "Transform",
+        "ParticleSystem",
+        "ParticleSystemRenderer"
+      ],
+      "particle": {
+        "duration": 5.0,
+        "looping": false,
+        "prewarm": false,
+        "simulationSpeed": 1.0,
+        "scalingMode": 0,
+        "simulationSpace": 0,
+        "playOnAwake": true,
+        "maxParticles": 1000,
+        "startLifetime": {
+          "min": 5.0,
+          "max": 5.0,
+          "mode": 0
+        },
+        "startSpeed": {
+          "min": 0.0,
+          "max": 0.0,
+          "mode": 0
+        },
+        "startSize": {
+          "min": 1.0,
+          "max": 1.0,
+          "mode": 0
+        },
+        "size3D": true,
+        "startSizeY": {
+          "min": 9.0,
+          "max": 9.0,
+          "mode": 0
+        },
+        "startSizeZ": {
+          "min": 1.0,
+          "max": 1.0,
+          "mode": 0
+        },
+        "rotation3D": false,
+        "startRotationX": {
+          "min": 0.0,
+          "max": 0.0,
+          "mode": 0
+        },
+        "startRotationY": {
+          "min": 0.0,
+          "max": 0.0,
+          "mode": 0
+        },
+        "startRotationZ": {
+          "min": 0.0,
+          "max": 0.0,
+          "mode": 0
+        },
+        "gravityModifier": {
+          "min": 0.0,
+          "max": 0.0,
+          "mode": 0
+        },
+        "startColor": [
+          1.0,
+          1.0,
+          1.0,
+          0.58824
+        ],
+        "emissionRate": {
+          "min": 0.0,
+          "max": 0.0,
+          "mode": 0
+        },
+        "emissionEnabled": true,
+        "bursts": [
+          {
+            "time": 0.0,
+            "countMin": 1.0,
+            "countMax": 1.0,
+            "cycles": 1,
+            "interval": 0.01,
+            "probability": 1.0
+          }
+        ],
+        "shape": {
+          "enabled": false,
+          "type": "Cone",
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "position": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "radius": 1.0,
+          "radiusThickness": 1.0,
+          "angle": 25.0,
+          "arc": 360.0,
+          "alignToDirection": false,
+          "randomDirection": 0.0
+        },
+        "sizeOverLifetime": false,
+        "sizeCurve": null,
+        "colorOverLifetime": false,
+        "colorGradient": null,
+        "velocityOverLifetime": null,
+        "forceOverLifetime": null,
+        "noise": null,
+        "rotationOverLifetime": null,
+        "textureSheet": null,
+        "customData": null,
+        "renderer": {
+          "renderMode": "Stretch",
+          "alignment": 0,
+          "sortMode": 0,
+          "lengthScale": 2.0,
+          "meshPathID": 0,
+          "materialPathIDs": [
+            8353637392997619878
+          ],
+          "sortingFudge": 10000.0,
+          "pivot": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "flip": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "normalDirection": 1.0,
+          "minParticleSize": 0.0,
+          "maxParticleSize": 100.0,
+          "enableGPUInstancing": true,
+          "useCustomVertexStreams": false,
+          "vertexStreams": [
+            0,
+            1,
+            3,
+            4
+          ],
+          "materialKeys": [
+            "FX_Water_Trail_01_1_Ray"
+          ]
+        }
+      }
+    },
+    {
+      "name": "FX_Runda_BossRoom_Waterfall_02_DropWater",
+      "pathID": -5071816983006313879,
+      "parent": null,
+      "active": true,
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "worldPosition": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "localRotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "localScale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "meshKey": null,
+      "meshName": null,
+      "meshBinding": null,
+      "materialPathIDs": [],
+      "materialKeys": [],
+      "materialNames": [],
+      "hasRenderer": false,
+      "components": [
+        "Transform",
+        "ParticleSystem",
+        "ParticleSystemRenderer",
+        "LODGroup"
+      ],
+      "particle": {
+        "duration": 5.0,
+        "looping": true,
+        "prewarm": false,
+        "simulationSpeed": 1.0,
+        "scalingMode": 0,
+        "simulationSpace": 0,
+        "playOnAwake": true,
+        "maxParticles": 1000,
+        "startLifetime": {
+          "min": 5.0,
+          "max": 5.0,
+          "mode": 0
+        },
+        "startSpeed": {
+          "min": 5.0,
+          "max": 5.0,
+          "mode": 0
+        },
+        "startSize": {
+          "min": 1.0,
+          "max": 1.0,
+          "mode": 0
+        },
+        "size3D": false,
+        "startSizeY": {
+          "min": 1.0,
+          "max": 1.0,
+          "mode": 0
+        },
+        "startSizeZ": {
+          "min": 1.0,
+          "max": 1.0,
+          "mode": 0
+        },
+        "rotation3D": false,
+        "startRotationX": {
+          "min": 0.0,
+          "max": 0.0,
+          "mode": 0
+        },
+        "startRotationY": {
+          "min": 0.0,
+          "max": 0.0,
+          "mode": 0
+        },
+        "startRotationZ": {
+          "min": 0.0,
+          "max": 0.0,
+          "mode": 0
+        },
+        "gravityModifier": {
+          "min": 0.0,
+          "max": 0.0,
+          "mode": 0
+        },
+        "startColor": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "emissionRate": {
+          "min": 10.0,
+          "max": 10.0,
+          "mode": 0
+        },
+        "emissionEnabled": false,
+        "bursts": [],
+        "shape": {
+          "enabled": false,
+          "type": "Cone",
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "position": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "radius": 1.0,
+          "radiusThickness": 1.0,
+          "angle": 25.0,
+          "arc": 360.0,
+          "alignToDirection": false,
+          "randomDirection": 0.0
+        },
+        "sizeOverLifetime": false,
+        "sizeCurve": null,
+        "colorOverLifetime": false,
+        "colorGradient": null,
+        "velocityOverLifetime": null,
+        "forceOverLifetime": null,
+        "noise": null,
+        "rotationOverLifetime": null,
+        "textureSheet": null,
+        "customData": null,
+        "renderer": {
+          "renderMode": "Billboard",
+          "alignment": 0,
+          "sortMode": 0,
+          "lengthScale": 2.0,
+          "meshPathID": 0,
+          "materialPathIDs": [
+            0
+          ],
+          "sortingFudge": 0.0,
+          "pivot": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "flip": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "normalDirection": 1.0,
+          "minParticleSize": 0.0,
+          "maxParticleSize": 0.5,
+          "enableGPUInstancing": true,
+          "useCustomVertexStreams": false,
+          "vertexStreams": [
+            0,
+            1,
+            3,
+            4
+          ],
+          "materialKeys": []
+        }
+      }
+    },
+    {
+      "name": "FX_ShaderParticle_Water_Particle_01_3",
+      "pathID": -2711870938293437605,
+      "parent": 7384548978666378411,
+      "active": true,
+      "localPosition": [
+        0.0,
+        1.899999976158142,
+        0.0
+      ],
+      "worldPosition": [
+        0.0,
+        1.9,
+        0.0
+      ],
+      "localRotation": [
+        -0.7071068286895752,
+        -0.0,
+        -0.0,
+        0.7071068286895752
+      ],
+      "localScale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "meshKey": "FX_Mesh_ShaderParticle_Quad_01_Max20",
+      "meshName": "FX_Mesh_ShaderParticle_Quad_01_Max20",
+      "meshBinding": "pptr",
+      "materialPathIDs": [
+        5649452080669135723
+      ],
+      "materialKeys": [
+        "FX_ShaderParticle_Water_Particle_01_3"
+      ],
+      "materialNames": [
+        "FX_ShaderParticle_Water_Particle_01_3"
+      ],
+      "hasRenderer": true,
+      "components": [
+        "Transform",
+        "MeshFilter",
+        "MeshRenderer",
+        "MonoBehaviour"
+      ]
+    },
+    {
+      "name": "FX_ShaderParticle_Waterfall_08_3",
+      "pathID": -1424893009944854008,
+      "parent": 7384548978666378411,
+      "active": true,
+      "localPosition": [
+        0.0,
+        1.899999976158142,
+        -0.0
+      ],
+      "worldPosition": [
+        0.0,
+        1.9,
+        0.0
+      ],
+      "localRotation": [
+        -0.7071068286895752,
+        -0.0,
+        -0.0,
+        0.7071068286895752
+      ],
+      "localScale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "meshKey": "FX_Mesh_ShaderParticle_Quad_01_Max20",
+      "meshName": "FX_Mesh_ShaderParticle_Quad_01_Max20",
+      "meshBinding": "pptr",
+      "materialPathIDs": [
+        2146442790820892471
+      ],
+      "materialKeys": [
+        "FX_ShaderParticle_Waterfall_08_3"
+      ],
+      "materialNames": [
+        "FX_ShaderParticle_Waterfall_08_3"
+      ],
+      "hasRenderer": true,
+      "components": [
+        "Transform",
+        "MeshFilter",
+        "MeshRenderer",
+        "MonoBehaviour"
+      ]
+    },
+    {
+      "name": "FX_ShaderParticle_Smoke_03",
+      "pathID": 1197440446668925397,
+      "parent": 7384548978666378411,
+      "active": true,
+      "localPosition": [
+        0.0,
+        1.7000000476837158,
+        0.0
+      ],
+      "worldPosition": [
+        0.0,
+        1.7,
+        0.0
+      ],
+      "localRotation": [
+        -0.7071068286895752,
+        -0.0,
+        -0.0,
+        0.7071068286895752
+      ],
+      "localScale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "meshKey": "FX_Mesh_ShaderParticle_Quad_01_Max20",
+      "meshName": "FX_Mesh_ShaderParticle_Quad_01_Max20",
+      "meshBinding": "pptr",
+      "materialPathIDs": [
+        5073884702380272595
+      ],
+      "materialKeys": [
+        "FX_ShaderParticle_Smoke_03"
+      ],
+      "materialNames": [
+        "FX_ShaderParticle_Smoke_03"
+      ],
+      "hasRenderer": true,
+      "components": [
+        "Transform",
+        "MeshFilter",
+        "MeshRenderer",
+        "MonoBehaviour"
+      ]
+    },
+    {
+      "name": "Offset",
+      "pathID": 7384548978666378411,
+      "parent": -5071816983006313879,
+      "active": true,
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "worldPosition": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "localRotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "localScale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "meshKey": null,
+      "meshName": null,
+      "meshBinding": null,
+      "materialPathIDs": [],
+      "materialKeys": [],
+      "materialNames": [],
+      "hasRenderer": false,
+      "components": [
+        "Transform",
+        "ParticleSystem",
+        "ParticleSystemRenderer"
+      ],
+      "particle": {
+        "duration": 5.0,
+        "looping": true,
+        "prewarm": false,
+        "simulationSpeed": 1.0,
+        "scalingMode": 0,
+        "simulationSpace": 0,
+        "playOnAwake": true,
+        "maxParticles": 1000,
+        "startLifetime": {
+          "min": 5.0,
+          "max": 5.0,
+          "mode": 0
+        },
+        "startSpeed": {
+          "min": 5.0,
+          "max": 5.0,
+          "mode": 0
+        },
+        "startSize": {
+          "min": 1.0,
+          "max": 1.0,
+          "mode": 0
+        },
+        "size3D": false,
+        "startSizeY": {
+          "min": 1.0,
+          "max": 1.0,
+          "mode": 0
+        },
+        "startSizeZ": {
+          "min": 1.0,
+          "max": 1.0,
+          "mode": 0
+        },
+        "rotation3D": false,
+        "startRotationX": {
+          "min": 0.0,
+          "max": 0.0,
+          "mode": 0
+        },
+        "startRotationY": {
+          "min": 0.0,
+          "max": 0.0,
+          "mode": 0
+        },
+        "startRotationZ": {
+          "min": 0.0,
+          "max": 0.0,
+          "mode": 0
+        },
+        "gravityModifier": {
+          "min": 0.0,
+          "max": 0.0,
+          "mode": 0
+        },
+        "startColor": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "emissionRate": {
+          "min": 10.0,
+          "max": 10.0,
+          "mode": 0
+        },
+        "emissionEnabled": false,
+        "bursts": [],
+        "shape": {
+          "enabled": false,
+          "type": "Cone",
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "position": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "radius": 1.0,
+          "radiusThickness": 1.0,
+          "angle": 25.0,
+          "arc": 360.0,
+          "alignToDirection": false,
+          "randomDirection": 0.0
+        },
+        "sizeOverLifetime": false,
+        "sizeCurve": null,
+        "colorOverLifetime": false,
+        "colorGradient": null,
+        "velocityOverLifetime": null,
+        "forceOverLifetime": null,
+        "noise": null,
+        "rotationOverLifetime": null,
+        "textureSheet": null,
+        "customData": null,
+        "renderer": {
+          "renderMode": "Billboard",
+          "alignment": 0,
+          "sortMode": 0,
+          "lengthScale": 2.0,
+          "meshPathID": 0,
+          "materialPathIDs": [
+            0
+          ],
+          "sortingFudge": 0.0,
+          "pivot": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "flip": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "normalDirection": 1.0,
+          "minParticleSize": 0.0,
+          "maxParticleSize": 0.5,
+          "enableGPUInstancing": true,
+          "useCustomVertexStreams": false,
+          "vertexStreams": [
+            0,
+            1,
+            3,
+            4
+          ],
+          "materialKeys": []
+        }
+      }
+    }
+  ],
+  "shaders": [
+    "MMN/FX/Amplify shader/FX_Dissolve_Div_Distortion_2C_AddNoise",
+    "MMN/FX/FX_MMCustomParticle"
+  ],
+  "unresolvedMaterials": []
+}
