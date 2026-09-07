@@ -1,0 +1,155 @@
+{
+  "id": "1_effect/environment/town/stelladome/fx_spotlight_stelladome",
+  "category": "Effects",
+  "title": "fx_spotlight_stelladome",
+  "originalPath": "1_effect/environment/town/stelladome/fx_spotlight_stelladome.prefab",
+  "source": {
+    "seedBundle": "dedicated_bundle_6bee6622",
+    "blob": "AssetPackages/0200.blob",
+    "chunk": 132,
+    "closureBundles": 6
+  },
+  "meshes": [
+    {
+      "name": "FX_Mesh_Cone_01",
+      "vertexCount": 148,
+      "submeshCount": 1,
+      "flags": 21,
+      "indexCounts": [
+        648
+      ],
+      "file": "FX_Mesh_Cone_01.mmesh",
+      "pathID": -2944471080299454681,
+      "key": "FX_Mesh_Cone_01",
+      "boundsMin": [
+        -1.0,
+        -1.0,
+        -0.0
+      ],
+      "boundsMax": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    }
+  ],
+  "materials": [
+    {
+      "name": "FX_Spotlight_03_3",
+      "key": "FX_Spotlight_03_3",
+      "pathID": 4889322144493243655,
+      "shader": "MMN/FX/Amplify shader/FX_Dissolve_Div_Offset_Fresnel",
+      "file": "FX_Spotlight_03_3.json"
+    }
+  ],
+  "textures": [
+    "FX_Gradation_06_06.png",
+    "FX_Gradation_06_09.png"
+  ],
+  "textureSettings": {
+    "FX_Gradation_06_06.png": {
+      "colorSpace": 1,
+      "mipCount": 1,
+      "wrapU": 1,
+      "wrapV": 1,
+      "filterMode": 1,
+      "aniso": 1
+    },
+    "FX_Gradation_06_09.png": {
+      "colorSpace": 0,
+      "mipCount": 1,
+      "wrapU": 1,
+      "wrapV": 1,
+      "filterMode": 1,
+      "aniso": 1
+    }
+  },
+  "hierarchy": [
+    {
+      "name": "FX_Spotlight_StellaDome",
+      "pathID": -889215106033692616,
+      "parent": null,
+      "active": true,
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "worldPosition": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "localRotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "localScale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "meshKey": null,
+      "meshName": null,
+      "meshBinding": null,
+      "materialPathIDs": [],
+      "materialKeys": [],
+      "materialNames": [],
+      "hasRenderer": false,
+      "components": [
+        "Transform"
+      ]
+    },
+    {
+      "name": "Mesh_Spotlight_Fresnel",
+      "pathID": 772952659830873819,
+      "parent": -889215106033692616,
+      "active": true,
+      "localPosition": [
+        0.0,
+        22.0,
+        0.0
+      ],
+      "worldPosition": [
+        0.0,
+        22.0,
+        0.0
+      ],
+      "localRotation": [
+        0.7071068286895752,
+        0.0,
+        0.0,
+        0.7071068286895752
+      ],
+      "localScale": [
+        4.5,
+        4.5,
+        23.0
+      ],
+      "meshKey": "FX_Mesh_Cone_01",
+      "meshName": "FX_Mesh_Cone_01",
+      "meshBinding": "pptr",
+      "materialPathIDs": [
+        4889322144493243655
+      ],
+      "materialKeys": [
+        "FX_Spotlight_03_3"
+      ],
+      "materialNames": [
+        "FX_Spotlight_03_3"
+      ],
+      "hasRenderer": true,
+      "components": [
+        "Transform",
+        "MeshRenderer",
+        "MeshFilter"
+      ]
+    }
+  ],
+  "shaders": [
+    "MMN/FX/Amplify shader/FX_Dissolve_Div_Offset_Fresnel"
+  ],
+  "unresolvedMaterials": []
+}

@@ -1,0 +1,1174 @@
+{
+  "id": "1_effect/environment/town/dunbarton/fx_dunbarton_sparrow_02",
+  "category": "Effects",
+  "title": "fx_dunbarton_sparrow_02",
+  "originalPath": "1_effect/environment/town/dunbarton/fx_dunbarton_sparrow_02.prefab",
+  "source": {
+    "seedBundle": "dedicated_bundle_6bed39d7",
+    "blob": "AssetPackages/0448.blob",
+    "chunk": 137,
+    "closureBundles": 6
+  },
+  "meshes": [
+    {
+      "name": "FX_Mesh_Sparrow_01",
+      "vertexCount": 274,
+      "submeshCount": 1,
+      "flags": 23,
+      "indexCounts": [
+        924
+      ],
+      "file": "FX_Mesh_Sparrow_01.mmesh",
+      "pathID": -126982758279406994,
+      "key": "FX_Mesh_Sparrow_01",
+      "boundsMin": [
+        -0.082,
+        -0.043,
+        0.0
+      ],
+      "boundsMax": [
+        0.082,
+        0.097,
+        0.088
+      ]
+    }
+  ],
+  "materials": [
+    {
+      "name": "FX_Sparrow_02",
+      "key": "FX_Sparrow_02",
+      "pathID": 2798215696287039104,
+      "shader": "MMN/FX/Amplify shader/FX_Opaque_VertexOffset",
+      "file": "FX_Sparrow_02.json"
+    }
+  ],
+  "textures": [
+    "Monster_Sparrow_00.png"
+  ],
+  "textureSettings": {
+    "Monster_Sparrow_00.png": {
+      "colorSpace": 1,
+      "mipCount": 8,
+      "wrapU": 0,
+      "wrapV": 0,
+      "filterMode": 1,
+      "aniso": 1
+    }
+  },
+  "hierarchy": [
+    {
+      "name": "FX_Dunbarton_Sparrow_02",
+      "pathID": -2825295819052647904,
+      "parent": null,
+      "active": true,
+      "localPosition": [
+        -48.99300003051758,
+        91.55000305175781,
+        22.54800033569336
+      ],
+      "worldPosition": [
+        -48.993,
+        91.55,
+        22.548
+      ],
+      "localRotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "localScale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "meshKey": null,
+      "meshName": null,
+      "meshBinding": null,
+      "materialPathIDs": [],
+      "materialKeys": [],
+      "materialNames": [
+        "FX_Sparrow_02"
+      ],
+      "hasRenderer": false,
+      "components": [
+        "Transform",
+        "ParticleSystem",
+        "ParticleSystemRenderer",
+        "LODGroup"
+      ],
+      "particle": {
+        "duration": 60.0,
+        "looping": true,
+        "prewarm": false,
+        "simulationSpeed": 1.0,
+        "scalingMode": 1,
+        "simulationSpace": 0,
+        "playOnAwake": true,
+        "maxParticles": 1000,
+        "startLifetime": {
+          "min": 8.0,
+          "max": 8.0,
+          "mode": 0
+        },
+        "startSpeed": {
+          "min": 5.0,
+          "max": 7.0,
+          "mode": 3
+        },
+        "startSize": {
+          "min": 1.0,
+          "max": 1.0,
+          "mode": 0
+        },
+        "size3D": false,
+        "startSizeY": {
+          "min": 1.0,
+          "max": 1.0,
+          "mode": 0
+        },
+        "startSizeZ": {
+          "min": 1.0,
+          "max": 1.0,
+          "mode": 0
+        },
+        "rotation3D": true,
+        "startRotationX": {
+          "min": -1.5708,
+          "max": -1.5708,
+          "mode": 0
+        },
+        "startRotationY": {
+          "min": 0.0,
+          "max": 0.0,
+          "mode": 0
+        },
+        "startRotationZ": {
+          "min": 0.0,
+          "max": 0.0,
+          "mode": 0
+        },
+        "gravityModifier": {
+          "min": 0.0,
+          "max": 0.0,
+          "mode": 0
+        },
+        "startColor": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "emissionRate": {
+          "min": 0.0,
+          "max": 0.0,
+          "mode": 0
+        },
+        "emissionEnabled": true,
+        "bursts": [
+          {
+            "time": 0.0,
+            "countMin": 5.0,
+            "countMax": 5.0,
+            "cycles": 1,
+            "interval": 0.01,
+            "probability": 1.0
+          }
+        ],
+        "shape": {
+          "enabled": true,
+          "type": "Cone",
+          "scale": [
+            1.0,
+            0.2,
+            1.0
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "position": [
+            -0.5,
+            0.0,
+            0.0
+          ],
+          "radius": 0.4,
+          "radiusThickness": 0.0,
+          "angle": 20.0,
+          "arc": 360.0,
+          "alignToDirection": false,
+          "randomDirection": 0.0
+        },
+        "sizeOverLifetime": true,
+        "sizeCurve": {
+          "min": 1.0,
+          "max": 1.0,
+          "mode": 1,
+          "keys": [
+            [
+              0.84395,
+              1.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0
+            ],
+            [
+              1.0,
+              0.0,
+              -9.68921,
+              -9.68921,
+              0.21077,
+              0.0,
+              0
+            ]
+          ]
+        },
+        "colorOverLifetime": false,
+        "colorGradient": null,
+        "velocityOverLifetime": {
+          "enabled": true,
+          "space": 0,
+          "x": {
+            "min": 10.0,
+            "max": 10.0,
+            "mode": 1,
+            "keys": [
+              [
+                0.35689,
+                0.0,
+                -0.24398,
+                -0.24398,
+                0.0,
+                0.16515,
+                0
+              ],
+              [
+                0.75226,
+                1.0,
+                3.26773,
+                3.26773,
+                0.18825,
+                0.0,
+                0
+              ]
+            ]
+          },
+          "y": {
+            "min": 0.0,
+            "max": 0.0,
+            "mode": 1,
+            "keys": [
+              [
+                0.0,
+                0.4652,
+                -2.10783,
+                -2.10783,
+                0.0,
+                0.21223,
+                0
+              ],
+              [
+                0.4913,
+                -0.25389,
+                0.19109,
+                0.19109,
+                0.17992,
+                0.23789,
+                0
+              ],
+              [
+                1.0,
+                1.0,
+                3.69489,
+                3.69489,
+                0.1637,
+                0.33333,
+                0
+              ]
+            ]
+          },
+          "z": {
+            "min": 0.0,
+            "max": 0.0,
+            "mode": 1,
+            "keys": [
+              [
+                0.0,
+                -0.85124,
+                0.51833,
+                0.51833,
+                0.0,
+                0.18602,
+                0
+              ],
+              [
+                0.35992,
+                0.19229,
+                4.98822,
+                4.98822,
+                0.17992,
+                0.33333,
+                0
+              ],
+              [
+                1.0,
+                0.02066,
+                -0.02398,
+                -0.02398,
+                0.22971,
+                0.33333,
+                0
+              ]
+            ]
+          },
+          "speedModifier": {
+            "min": 1.0,
+            "max": 1.0,
+            "mode": 0
+          }
+        },
+        "forceOverLifetime": null,
+        "noise": null,
+        "rotationOverLifetime": null,
+        "textureSheet": null,
+        "customData": {
+          "enabled": true,
+          "mode0": 1,
+          "count0": 4,
+          "mode1": 0,
+          "count1": 4,
+          "vector0": [
+            {
+              "min": 25.0,
+              "max": 35.0,
+              "mode": 3
+            },
+            {
+              "min": 0.0,
+              "max": 0.0,
+              "mode": 0
+            },
+            {
+              "min": 0.0,
+              "max": 0.0,
+              "mode": 0
+            },
+            {
+              "min": 0.0,
+              "max": 0.0,
+              "mode": 0
+            }
+          ],
+          "vector1": [
+            {
+              "min": 0.0,
+              "max": 0.0,
+              "mode": 0
+            },
+            {
+              "min": 0.0,
+              "max": 0.0,
+              "mode": 0
+            },
+            {
+              "min": 0.0,
+              "max": 0.0,
+              "mode": 0
+            },
+            {
+              "min": 0.0,
+              "max": 0.0,
+              "mode": 0
+            }
+          ]
+        },
+        "renderer": {
+          "renderMode": "Mesh",
+          "alignment": 4,
+          "sortMode": 0,
+          "lengthScale": 2.0,
+          "meshPathID": -126982758279406994,
+          "materialPathIDs": [
+            2798215696287039104
+          ],
+          "sortingFudge": 0.0,
+          "pivot": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "flip": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "normalDirection": 1.0,
+          "minParticleSize": 0.0,
+          "maxParticleSize": 0.5,
+          "enableGPUInstancing": true,
+          "useCustomVertexStreams": true,
+          "vertexStreams": [
+            0,
+            1,
+            3,
+            4,
+            5,
+            19,
+            31,
+            10,
+            32
+          ],
+          "meshKey": "FX_Mesh_Sparrow_01",
+          "meshName": "FX_Mesh_Sparrow_01",
+          "materialKeys": [
+            "FX_Sparrow_02"
+          ]
+        }
+      }
+    },
+    {
+      "name": "FX_Sparrow_02",
+      "pathID": 865135742981636704,
+      "parent": -2825295819052647904,
+      "active": true,
+      "localPosition": [
+        31.51300048828125,
+        2.8299942016601562,
+        -0.4379997253417969
+      ],
+      "worldPosition": [
+        -17.48,
+        94.38,
+        22.11
+      ],
+      "localRotation": [
+        -0.1268015056848526,
+        -0.2565787434577942,
+        -0.03397630527615547,
+        0.9575669169425964
+      ],
+      "localScale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "meshKey": null,
+      "meshName": null,
+      "meshBinding": null,
+      "materialPathIDs": [],
+      "materialKeys": [],
+      "materialNames": [
+        "FX_Sparrow_02"
+      ],
+      "hasRenderer": false,
+      "components": [
+        "Transform",
+        "ParticleSystem",
+        "ParticleSystemRenderer",
+        "LODGroup"
+      ],
+      "particle": {
+        "duration": 40.0,
+        "looping": true,
+        "prewarm": false,
+        "simulationSpeed": 1.0,
+        "scalingMode": 1,
+        "simulationSpace": 0,
+        "playOnAwake": true,
+        "maxParticles": 1000,
+        "startLifetime": {
+          "min": 8.0,
+          "max": 8.0,
+          "mode": 0
+        },
+        "startSpeed": {
+          "min": 5.0,
+          "max": 7.0,
+          "mode": 3
+        },
+        "startSize": {
+          "min": 1.0,
+          "max": 1.0,
+          "mode": 0
+        },
+        "size3D": false,
+        "startSizeY": {
+          "min": 1.0,
+          "max": 1.0,
+          "mode": 0
+        },
+        "startSizeZ": {
+          "min": 1.0,
+          "max": 1.0,
+          "mode": 0
+        },
+        "rotation3D": true,
+        "startRotationX": {
+          "min": -1.5708,
+          "max": -1.5708,
+          "mode": 0
+        },
+        "startRotationY": {
+          "min": 0.0,
+          "max": 0.0,
+          "mode": 0
+        },
+        "startRotationZ": {
+          "min": 0.0,
+          "max": 0.0,
+          "mode": 0
+        },
+        "gravityModifier": {
+          "min": 0.0,
+          "max": 0.0,
+          "mode": 0
+        },
+        "startColor": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "emissionRate": {
+          "min": 0.0,
+          "max": 0.0,
+          "mode": 0
+        },
+        "emissionEnabled": true,
+        "bursts": [
+          {
+            "time": 0.0,
+            "countMin": 10.0,
+            "countMax": 10.0,
+            "cycles": 1,
+            "interval": 0.01,
+            "probability": 1.0
+          }
+        ],
+        "shape": {
+          "enabled": true,
+          "type": "Cone",
+          "scale": [
+            1.0,
+            0.3,
+            1.0
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "position": [
+            -0.5,
+            0.0,
+            0.0
+          ],
+          "radius": 10.0,
+          "radiusThickness": 0.0,
+          "angle": 20.0,
+          "arc": 360.0,
+          "alignToDirection": false,
+          "randomDirection": 0.0
+        },
+        "sizeOverLifetime": true,
+        "sizeCurve": {
+          "min": 1.0,
+          "max": 1.0,
+          "mode": 1,
+          "keys": [
+            [
+              0.84395,
+              1.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0
+            ],
+            [
+              1.0,
+              0.0,
+              -9.68921,
+              -9.68921,
+              0.21077,
+              0.0,
+              0
+            ]
+          ]
+        },
+        "colorOverLifetime": false,
+        "colorGradient": null,
+        "velocityOverLifetime": {
+          "enabled": true,
+          "space": 0,
+          "x": {
+            "min": 10.0,
+            "max": 10.0,
+            "mode": 1,
+            "keys": [
+              [
+                0.35689,
+                0.0,
+                -0.24398,
+                -0.24398,
+                0.0,
+                0.16515,
+                0
+              ],
+              [
+                0.75226,
+                1.0,
+                3.26773,
+                3.26773,
+                0.18825,
+                0.0,
+                0
+              ]
+            ]
+          },
+          "y": {
+            "min": 2.0,
+            "max": 2.0,
+            "mode": 1,
+            "keys": [
+              [
+                0.0,
+                1.0,
+                -4.89199,
+                -4.89199,
+                0.0,
+                0.15241,
+                0
+              ],
+              [
+                0.4913,
+                -0.25389,
+                -0.98394,
+                -0.98394,
+                0.17992,
+                0.18259,
+                0
+              ],
+              [
+                1.0,
+                1.0,
+                3.69489,
+                3.69489,
+                0.1637,
+                0.33333,
+                0
+              ]
+            ]
+          },
+          "z": {
+            "min": 0.0,
+            "max": 0.0,
+            "mode": 1,
+            "keys": [
+              [
+                0.0,
+                -0.85124,
+                0.51833,
+                0.51833,
+                0.0,
+                0.18602,
+                0
+              ],
+              [
+                0.35992,
+                0.19229,
+                4.98822,
+                4.98822,
+                0.17992,
+                0.33333,
+                0
+              ],
+              [
+                1.0,
+                0.02066,
+                -0.02398,
+                -0.02398,
+                0.22971,
+                0.33333,
+                0
+              ]
+            ]
+          },
+          "speedModifier": {
+            "min": 1.0,
+            "max": 1.0,
+            "mode": 0
+          }
+        },
+        "forceOverLifetime": null,
+        "noise": null,
+        "rotationOverLifetime": null,
+        "textureSheet": null,
+        "customData": {
+          "enabled": true,
+          "mode0": 1,
+          "count0": 4,
+          "mode1": 0,
+          "count1": 4,
+          "vector0": [
+            {
+              "min": 25.0,
+              "max": 35.0,
+              "mode": 3
+            },
+            {
+              "min": 0.0,
+              "max": 0.0,
+              "mode": 0
+            },
+            {
+              "min": 0.0,
+              "max": 0.0,
+              "mode": 0
+            },
+            {
+              "min": 0.0,
+              "max": 0.0,
+              "mode": 0
+            }
+          ],
+          "vector1": [
+            {
+              "min": 0.0,
+              "max": 0.0,
+              "mode": 0
+            },
+            {
+              "min": 0.0,
+              "max": 0.0,
+              "mode": 0
+            },
+            {
+              "min": 0.0,
+              "max": 0.0,
+              "mode": 0
+            },
+            {
+              "min": 0.0,
+              "max": 0.0,
+              "mode": 0
+            }
+          ]
+        },
+        "renderer": {
+          "renderMode": "Mesh",
+          "alignment": 4,
+          "sortMode": 0,
+          "lengthScale": 2.0,
+          "meshPathID": -126982758279406994,
+          "materialPathIDs": [
+            2798215696287039104
+          ],
+          "sortingFudge": 0.0,
+          "pivot": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "flip": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "normalDirection": 1.0,
+          "minParticleSize": 0.0,
+          "maxParticleSize": 0.5,
+          "enableGPUInstancing": true,
+          "useCustomVertexStreams": true,
+          "vertexStreams": [
+            0,
+            1,
+            3,
+            4,
+            5,
+            19,
+            31,
+            10,
+            32
+          ],
+          "meshKey": "FX_Mesh_Sparrow_01",
+          "meshName": "FX_Mesh_Sparrow_01",
+          "materialKeys": [
+            "FX_Sparrow_02"
+          ]
+        }
+      }
+    },
+    {
+      "name": "FX_Sparrow_02",
+      "pathID": 6628668004728554740,
+      "parent": -2825295819052647904,
+      "active": true,
+      "localPosition": [
+        43.5,
+        3.4199981689453125,
+        -24.170000076293945
+      ],
+      "worldPosition": [
+        -5.493,
+        94.97,
+        -1.622
+      ],
+      "localRotation": [
+        -0.016917981207370758,
+        0.9993396997451782,
+        -0.013534029014408588,
+        -0.029168667271733284
+      ],
+      "localScale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "meshKey": null,
+      "meshName": null,
+      "meshBinding": null,
+      "materialPathIDs": [],
+      "materialKeys": [],
+      "materialNames": [
+        "FX_Sparrow_02"
+      ],
+      "hasRenderer": false,
+      "components": [
+        "Transform",
+        "ParticleSystem",
+        "ParticleSystemRenderer",
+        "LODGroup"
+      ],
+      "particle": {
+        "duration": 80.0,
+        "looping": true,
+        "prewarm": false,
+        "simulationSpeed": 1.0,
+        "scalingMode": 1,
+        "simulationSpace": 0,
+        "playOnAwake": true,
+        "maxParticles": 1000,
+        "startLifetime": {
+          "min": 8.0,
+          "max": 8.0,
+          "mode": 0
+        },
+        "startSpeed": {
+          "min": 5.0,
+          "max": 7.0,
+          "mode": 3
+        },
+        "startSize": {
+          "min": 1.0,
+          "max": 1.0,
+          "mode": 0
+        },
+        "size3D": false,
+        "startSizeY": {
+          "min": 1.0,
+          "max": 1.0,
+          "mode": 0
+        },
+        "startSizeZ": {
+          "min": 1.0,
+          "max": 1.0,
+          "mode": 0
+        },
+        "rotation3D": true,
+        "startRotationX": {
+          "min": -1.5708,
+          "max": -1.5708,
+          "mode": 0
+        },
+        "startRotationY": {
+          "min": 0.0,
+          "max": 0.0,
+          "mode": 0
+        },
+        "startRotationZ": {
+          "min": 0.0,
+          "max": 0.0,
+          "mode": 0
+        },
+        "gravityModifier": {
+          "min": 0.0,
+          "max": 0.0,
+          "mode": 0
+        },
+        "startColor": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "emissionRate": {
+          "min": 0.0,
+          "max": 0.0,
+          "mode": 0
+        },
+        "emissionEnabled": true,
+        "bursts": [
+          {
+            "time": 0.0,
+            "countMin": 7.0,
+            "countMax": 7.0,
+            "cycles": 1,
+            "interval": 0.01,
+            "probability": 1.0
+          }
+        ],
+        "shape": {
+          "enabled": true,
+          "type": "Cone",
+          "scale": [
+            1.0,
+            0.2,
+            1.0
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "position": [
+            -0.5,
+            0.0,
+            0.0
+          ],
+          "radius": 10.0,
+          "radiusThickness": 0.0,
+          "angle": 20.0,
+          "arc": 360.0,
+          "alignToDirection": false,
+          "randomDirection": 0.0
+        },
+        "sizeOverLifetime": true,
+        "sizeCurve": {
+          "min": 1.0,
+          "max": 1.0,
+          "mode": 1,
+          "keys": [
+            [
+              0.84395,
+              1.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0
+            ],
+            [
+              1.0,
+              0.0,
+              -9.68921,
+              -9.68921,
+              0.21077,
+              0.0,
+              0
+            ]
+          ]
+        },
+        "colorOverLifetime": false,
+        "colorGradient": null,
+        "velocityOverLifetime": {
+          "enabled": true,
+          "space": 0,
+          "x": {
+            "min": 0.0,
+            "max": 0.0,
+            "mode": 1,
+            "keys": [
+              [
+                0.35689,
+                0.0,
+                -0.24398,
+                -0.24398,
+                0.0,
+                0.16515,
+                0
+              ],
+              [
+                0.75226,
+                1.0,
+                3.26773,
+                3.26773,
+                0.18825,
+                0.0,
+                0
+              ]
+            ]
+          },
+          "y": {
+            "min": 1.0,
+            "max": 1.0,
+            "mode": 1,
+            "keys": [
+              [
+                0.0,
+                -0.2381,
+                1.2381,
+                1.2381,
+                0.0,
+                0.33333,
+                0
+              ],
+              [
+                1.0,
+                1.0,
+                1.2381,
+                1.2381,
+                0.33333,
+                0.0,
+                0
+              ]
+            ]
+          },
+          "z": {
+            "min": 0.0,
+            "max": 0.0,
+            "mode": 1,
+            "keys": [
+              [
+                0.0,
+                -0.85124,
+                0.51833,
+                0.51833,
+                0.0,
+                0.18602,
+                0
+              ],
+              [
+                0.35992,
+                0.19229,
+                4.98822,
+                4.98822,
+                0.17992,
+                0.33333,
+                0
+              ],
+              [
+                1.0,
+                0.02066,
+                -0.02398,
+                -0.02398,
+                0.22971,
+                0.33333,
+                0
+              ]
+            ]
+          },
+          "speedModifier": {
+            "min": 1.0,
+            "max": 1.0,
+            "mode": 0
+          }
+        },
+        "forceOverLifetime": null,
+        "noise": null,
+        "rotationOverLifetime": null,
+        "textureSheet": null,
+        "customData": {
+          "enabled": true,
+          "mode0": 1,
+          "count0": 4,
+          "mode1": 0,
+          "count1": 4,
+          "vector0": [
+            {
+              "min": 25.0,
+              "max": 35.0,
+              "mode": 3
+            },
+            {
+              "min": 0.0,
+              "max": 0.0,
+              "mode": 0
+            },
+            {
+              "min": 0.0,
+              "max": 0.0,
+              "mode": 0
+            },
+            {
+              "min": 0.0,
+              "max": 0.0,
+              "mode": 0
+            }
+          ],
+          "vector1": [
+            {
+              "min": 0.0,
+              "max": 0.0,
+              "mode": 0
+            },
+            {
+              "min": 0.0,
+              "max": 0.0,
+              "mode": 0
+            },
+            {
+              "min": 0.0,
+              "max": 0.0,
+              "mode": 0
+            },
+            {
+              "min": 0.0,
+              "max": 0.0,
+              "mode": 0
+            }
+          ]
+        },
+        "renderer": {
+          "renderMode": "Mesh",
+          "alignment": 4,
+          "sortMode": 0,
+          "lengthScale": 2.0,
+          "meshPathID": -126982758279406994,
+          "materialPathIDs": [
+            2798215696287039104
+          ],
+          "sortingFudge": 0.0,
+          "pivot": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "flip": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "normalDirection": 1.0,
+          "minParticleSize": 0.0,
+          "maxParticleSize": 0.5,
+          "enableGPUInstancing": true,
+          "useCustomVertexStreams": true,
+          "vertexStreams": [
+            0,
+            1,
+            3,
+            4,
+            5,
+            19,
+            31,
+            10,
+            32
+          ],
+          "meshKey": "FX_Mesh_Sparrow_01",
+          "meshName": "FX_Mesh_Sparrow_01",
+          "materialKeys": [
+            "FX_Sparrow_02"
+          ]
+        }
+      }
+    }
+  ],
+  "shaders": [
+    "MMN/FX/Amplify shader/FX_Opaque_VertexOffset"
+  ],
+  "unresolvedMaterials": []
+}
