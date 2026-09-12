@@ -20,8 +20,9 @@
 // the way it does:
 //  - _BaseMap / _BumpMap / _SpecGlossMap are never sampled (only _BaseMap_ST and _BaseColor show
 //    up as uniforms). They are leftovers of the SimpleLit template the shader was built from. All
-//    of the terrain colour comes from the four _T2M_Layer_*_Diffuse layers and _T2M_SplatMap_0,
-//    even though the Colhen material does assign a baked basemap to _BaseMap.
+//    of the terrain colour comes from the four _T2M_Layer_*_Diffuse layers and _T2M_SplatMap_0.
+//    Layer RGB is a tint; layer A is a height/debris mask. Detail UVs are world XZ * 0.0025
+//    * uvScale, not mesh UV0.
 //  - _Glossiness / _SpecColor / _SpecularHighlights are also leftovers: the dry-path pixel shader
 //    never loads them. Direct spec is wrap Lambert (lerp(NdotL, half-Lambert, 0.5)); cubemap IBL
 //    only mixes in under _Global_Raining. No shadow map; contact areas are dimmed by

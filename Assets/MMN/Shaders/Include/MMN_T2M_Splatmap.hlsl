@@ -78,20 +78,16 @@ struct Varyings
     float fogFactor : TEXCOORD3;
 };
 
-// Remaps one splat channel through the layer's Vector1/Vector2 window. On the Colhen material the
-// windows are narrow (0.23..1.05, 0.45..1.9, 0.52..1.9), which is what keeps the painted layers
-// from washing into each other over the whole gradient of the splat map.
-half T2M_LayerWeight(half w, half v1, half v2)
+// Official ForwardLit: EdgeColor is a layer tint, not a seam darken.
+// packed as layer.rgb + 0.2 * (edge * 4.2 - 1).
+half3 T2M_EdgeTint(half3 layerRgb, half3 edgeColor)
 {
-    return saturate((w - v1) / max(v2 - v1, 1e-4h));
+    return layerRgb + 0.2h * (edgeColor * 4.2h - 1.0h);
 }
 
-// "交界颜色相乘" (originally 경계면 칼라 멀티플라이): the seam between two layers is darkened by
-// the layer's EdgeColor, which is what hides the linear look of a straight lerp between tilings.
-half3 T2M_EdgeTint(half3 color, half weight, half3 edgeColor)
+half T2M_Ge(half height, half threshold)
 {
-    half band = saturate(weight * (1.0h - weight) * 4.0h);
-    return color * lerp(half3(1.0h, 1.0h, 1.0h), edgeColor, band);
+    return step(threshold, height);
 }
 
 Varyings SplatmapVertex(Attributes v)
@@ -109,28 +105,41 @@ Varyings SplatmapVertex(Attributes v)
 
 half4 SplatmapFragment(Varyings i) : SV_Target
 {
-    // UV0 spans the whole baked terrain, so the splat map is read straight from it while every
-    // detail layer multiplies it up by its own uvScale (50 / 150 / 200 / 100 on Colhen).
-    half4 splat = SAMPLE_TEXTURE2D(_T2M_SplatMap_0, sampler_T2M_SplatMap_0, i.uv);
+    // Splat uses atlas UV0. Detail layers use world XZ * 0.0025 * uvScale (shipped ps_5_0).
+    // Layer RGB is a flat tint; layer A is the height/debris mask used below.
+    half4 splat = saturate(SAMPLE_TEXTURE2D(_T2M_SplatMap_0, sampler_T2M_SplatMap_0, i.uv));
 
+    float2 worldUv = i.positionWS.xz * 0.0025;
     half3 layer0 = SAMPLE_TEXTURE2D(_T2M_Layer_0_Diffuse, sampler_T2M_Layer_0_Diffuse,
-                                    i.uv * _V_T2M_Splat1_uvScale).rgb;
-    half3 layer1 = SAMPLE_TEXTURE2D(_T2M_Layer_1_Diffuse, sampler_T2M_Layer_1_Diffuse,
-                                    i.uv * _V_T2M_Splat2_uvScale).rgb;
-    half3 layer2 = SAMPLE_TEXTURE2D(_T2M_Layer_2_Diffuse, sampler_T2M_Layer_2_Diffuse,
-                                    i.uv * _V_T2M_Splat3_uvScale).rgb;
-    half3 layer3 = SAMPLE_TEXTURE2D(_T2M_Layer_3_Diffuse, sampler_T2M_Layer_3_Diffuse,
-                                    i.uv * _V_T2M_Splat4_uvScale).rgb;
+                                    worldUv * _V_T2M_Splat1_uvScale).rgb;
+    half4 layer1 = SAMPLE_TEXTURE2D(_T2M_Layer_1_Diffuse, sampler_T2M_Layer_1_Diffuse,
+                                    worldUv * _V_T2M_Splat2_uvScale);
+    half4 layer2 = SAMPLE_TEXTURE2D(_T2M_Layer_2_Diffuse, sampler_T2M_Layer_2_Diffuse,
+                                    worldUv * _V_T2M_Splat3_uvScale);
+    half4 layer3 = SAMPLE_TEXTURE2D(_T2M_Layer_3_Diffuse, sampler_T2M_Layer_3_Diffuse,
+                                    worldUv * _V_T2M_Splat4_uvScale);
 
-    half w1 = T2M_LayerWeight(splat.g, _V_T2M_Splat2_Vector1, _V_T2M_Splat2_Vector2);
-    half w2 = T2M_LayerWeight(splat.b, _V_T2M_Splat3_Vector1, _V_T2M_Splat3_Vector2);
-    half w3 = T2M_LayerWeight(splat.a, _V_T2M_Splat4_Vector1, _V_T2M_Splat4_Vector2);
+    half3 splat5 = splat.xzw * splat.xzw;
+    splat5 *= splat5;
+    splat5 *= splat.xzw;
+    half h1 = splat.r * layer1.a + splat5.x;
+    half h2 = splat.b * layer2.a + splat5.y;
+    half h3 = splat.a * layer3.a + splat5.z;
 
-    // Layer 0 (splat R) is the base the others are painted over, in channel order.
-    half3 albedo = layer0;
-    albedo = lerp(albedo, T2M_EdgeTint(layer1, w1, _V_T2M_Splat2_EdgeColor.rgb), w1);
-    albedo = lerp(albedo, T2M_EdgeTint(layer2, w2, _V_T2M_Splat3_EdgeColor.rgb), w2);
-    albedo = lerp(albedo, T2M_EdgeTint(layer3, w3, _V_T2M_Splat4_EdgeColor.rgb), w3);
+    half m1a = T2M_Ge(h1, _V_T2M_Splat2_Vector1 * 0.5h);
+    half m1b = T2M_Ge(h1, _V_T2M_Splat2_Vector2 * 0.5h);
+    half m2a = T2M_Ge(h2, (2.0h - _V_T2M_Splat3_Vector1) * 0.5h);
+    half m2b = T2M_Ge(h2, (2.0h - _V_T2M_Splat3_Vector2) * 0.5h);
+    half m3a = T2M_Ge(h3, (2.0h - _V_T2M_Splat4_Vector2) * 0.5h);
+    half m3b = T2M_Ge(h3, (2.0h - _V_T2M_Splat4_Vector1) * 0.5h);
+
+    half3 albedo = layer1.rgb;
+    half3 tmp = lerp(T2M_EdgeTint(layer1.rgb, _V_T2M_Splat2_EdgeColor.rgb), layer0, m1b);
+    albedo = lerp(layer1.rgb, tmp, m1a);
+    albedo = lerp(albedo, T2M_EdgeTint(layer2.rgb, _V_T2M_Splat3_EdgeColor.rgb), m2b);
+    albedo = lerp(albedo, layer2.rgb, m2a);
+    albedo = lerp(albedo, T2M_EdgeTint(layer3.rgb, _V_T2M_Splat4_EdgeColor.rgb), m3a);
+    albedo = lerp(albedo, layer3.rgb, m3b);
     albedo *= _BaseColor.rgb;
 
     half3 n = normalize(i.normalWS);

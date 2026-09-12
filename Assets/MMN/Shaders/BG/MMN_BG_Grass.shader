@@ -23,6 +23,7 @@ Shader "MMN/BG/Grass"
         _WindMultiply ("Wind Multiply（风细节）", Range(0, 20)) = 2
         _WindSpeedMultiply ("Wind Speed Multiply（风速权重）", Range(0, 40)) = 7
         _GrassPushPower ("GrassPushPower（推力影响）", Float) = 1
+        [Toggle] _VertexAniOff ("强制关闭顶点动画", Float) = 0
         _Surface ("__surface", Float) = 0
         _Blend ("__blend", Float) = 0
         _AlphaClip ("__clip", Float) = 0
@@ -76,6 +77,7 @@ Shader "MMN/BG/Grass"
             half _WindMultiply;
             half _WindSpeedMultiply;
             half _GrassPushPower;
+            half _VertexAniOff;
             half _ShowVertexColor;
             half _AlphaClip;
             half _ALPHATEST;
@@ -84,16 +86,27 @@ Shader "MMN/BG/Grass"
             half _QueueOffset;
         CBUFFER_END
 
-        // Vertex colour A is the blade-tip weight, so the sway pivots at the root.
+        // Official grass packs bend weight in vertex colour R (0 at the root, 1 at the
+        // tip). A is 1 on every vert, so using A as the weight slides the whole clump.
         float3 ApplyWind(float3 positionOS, float4 vcol)
         {
-            float amp = 0.006 * _WindMultiply;
-            float speed = 0.2 * _WindSpeedMultiply;
-            float phase = _Time.y * speed + positionOS.x * 0.9 + positionOS.z * 0.7;
-            float sway = sin(phase) * vcol.a;
-            positionOS.x += sway * amp;
-            positionOS.z += sway * amp * 0.6;
-            return positionOS;
+            if (_VertexAniOff > 0.5)
+                return positionOS;
+            float w = vcol.r;
+            if (w <= 1e-4)
+                return positionOS;
+
+            float3 posWS = TransformObjectToWorld(positionOS);
+            float amp = 0.008 * _WindMultiply;
+            float speed = 0.12 * _WindSpeedMultiply;
+            float phase = _Time.y * speed + posWS.x * 0.18 + posWS.z * 0.14;
+            float wave = sin(phase) + 0.35 * sin(phase * 1.73 + posWS.x * 0.31);
+            float2 dir = float2(0.94, 0.35);
+            float2 disp = dir * (wave * amp * w);
+            posWS.x += disp.x;
+            posWS.z += disp.y;
+            posWS.y -= abs(wave) * amp * w * 0.18;
+            return TransformWorldToObject(posWS);
         }
         ENDHLSL
 
@@ -104,6 +117,7 @@ Shader "MMN/BG/Grass"
             HLSLPROGRAM
             #pragma vertex vert
             #pragma fragment frag
+            #pragma multi_compile_instancing
             #pragma multi_compile_fog
             #pragma multi_compile _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _MAIN_LIGHT_SHADOWS_SCREEN
             #pragma multi_compile _ _SHADOWS_SOFT
@@ -111,7 +125,7 @@ Shader "MMN/BG/Grass"
 
             TEXTURE2D(_BaseMap); SAMPLER(sampler_BaseMap);
 
-            struct Attr { float4 positionOS:POSITION; float3 normalOS:NORMAL; float4 color:COLOR; float2 uv:TEXCOORD0; };
+            struct Attr { float4 positionOS:POSITION; float3 normalOS:NORMAL; float4 color:COLOR; float2 uv:TEXCOORD0; UNITY_VERTEX_INPUT_INSTANCE_ID };
             struct Var
             {
                 float4 positionCS : SV_POSITION;
@@ -125,6 +139,7 @@ Shader "MMN/BG/Grass"
             Var vert(Attr v)
             {
                 Var o;
+                UNITY_SETUP_INSTANCE_ID(v);
                 float3 pos = ApplyWind(v.positionOS.xyz, v.color);
                 VertexPositionInputs p = GetVertexPositionInputs(pos);
                 o.positionCS = p.positionCS;
@@ -183,12 +198,14 @@ Shader "MMN/BG/Grass"
 
             TEXTURE2D(_BaseMap); SAMPLER(sampler_BaseMap);
 
-            struct Attr { float4 positionOS:POSITION; float3 normalOS:NORMAL; float4 color:COLOR; float2 uv:TEXCOORD0; };
+            #pragma multi_compile_instancing
+            struct Attr { float4 positionOS:POSITION; float3 normalOS:NORMAL; float4 color:COLOR; float2 uv:TEXCOORD0; UNITY_VERTEX_INPUT_INSTANCE_ID };
             struct Var { float4 positionCS:SV_POSITION; float2 uv:TEXCOORD0; };
 
             Var vert(Attr v)
             {
                 Var o;
+                UNITY_SETUP_INSTANCE_ID(v);
                 float3 pos = ApplyWind(v.positionOS.xyz, v.color);
                 float3 positionWS = TransformObjectToWorld(pos);
                 float3 normalWS = TransformObjectToWorldNormal(v.normalOS);
@@ -214,15 +231,17 @@ Shader "MMN/BG/Grass"
             HLSLPROGRAM
             #pragma vertex vert
             #pragma fragment frag
+            #pragma multi_compile_instancing
 
             TEXTURE2D(_BaseMap); SAMPLER(sampler_BaseMap);
 
-            struct Attr { float4 positionOS:POSITION; float4 color:COLOR; float2 uv:TEXCOORD0; };
+            struct Attr { float4 positionOS:POSITION; float4 color:COLOR; float2 uv:TEXCOORD0; UNITY_VERTEX_INPUT_INSTANCE_ID };
             struct Var { float4 positionCS:SV_POSITION; float2 uv:TEXCOORD0; };
 
             Var vert(Attr v)
             {
                 Var o;
+                UNITY_SETUP_INSTANCE_ID(v);
                 float3 pos = ApplyWind(v.positionOS.xyz, v.color);
                 o.positionCS = TransformWorldToHClip(TransformObjectToWorld(pos));
                 o.uv = TRANSFORM_TEX(v.uv, _BaseMap);
