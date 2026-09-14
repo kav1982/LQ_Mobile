@@ -11,6 +11,8 @@
 //   TEXCOORD1.x  = Custom1.z AlphaTex offset Y
 //
 // NOT-IMPLEMENTED: original DXBC dissolve / offset / twist maths (no 1:1 transcription).
+// Polar path (_UVType=1, e.g. FX_Housing_Bathtub_*_Ripple): radius follows the Amplify
+// convention (edge = 1), Twist spirals the noise angle, AlphaTex keeps its Clamp wrap.
 // NOT-IMPLEMENTED: FOG_LINEAR, DEBUG_DISPLAY, ShadowCaster, _AlphaCutoff, _EmissionColor.
 Shader "MMN/FX/Amplify shader/FX_Dissolve_Div_Offset"
 {
@@ -170,11 +172,14 @@ Shader "MMN/FX/Amplify shader/FX_Dissolve_Div_Offset"
                 float4 color : COLOR;
             };
 
-            float2 MMN_PolarUV(float2 uv, float4 st)
+            // Amplify / ShaderGraph "Polar Coordinates" convention: radius = length * 2, so
+            // the quad edge is radius 1 (without the *2 the MainTex ring lands outside the
+            // quad and only the corners light up). twist: angle offset per unit radius.
+            float2 MMN_PolarUV(float2 uv, float4 st, float twist)
             {
                 float2 centered = uv - 0.5;
-                float radius = length(centered);
-                float angle = atan2(centered.y, centered.x) * 0.159155;
+                float radius = length(centered) * 2.0;
+                float angle = atan2(centered.y, centered.x) * 0.159155 + radius * twist;
                 return float2(st.x * radius + st.z, angle * st.y + st.w);
             }
 
@@ -202,7 +207,7 @@ Shader "MMN/FX/Amplify shader/FX_Dissolve_Div_Offset"
 
                 float2 noiseCart = i.uv0.xy * _NoiseTex_ST.xy + _NoiseTex_ST.zw;
                 noiseCart.y = noiseCart.x * _Twist + noiseCart.y;
-                float2 noiseUV = lerp(noiseCart, MMN_PolarUV(i.uv0.xy, _NoiseTex_ST), _UVType);
+                float2 noiseUV = lerp(noiseCart, MMN_PolarUV(i.uv0.xy, _NoiseTex_ST, _Twist), _UVType);
                 noiseUV += time * float2(_Noise_X_Speed, _Noise_Y_Speed);
                 half2 noise = SAMPLE_TEXTURE2D(_NoiseTex, sampler_NoiseTex, noiseUV).rg;
                 // Verify path: do not multiply noise into alpha (that punched Worley holes /
@@ -211,18 +216,24 @@ Shader "MMN/FX/Amplify shader/FX_Dissolve_Div_Offset"
                 float2 warp = (noise - 0.5) * warpScale;
 
                 float2 mainCart = i.uv0.xy * _MainTex_ST.xy + _MainTex_ST.zw + warp;
-                float2 mainUV = lerp(mainCart, MMN_PolarUV(i.uv0.xy + warp, _MainTex_ST), _UVType);
+                float2 mainUV = lerp(mainCart, MMN_PolarUV(i.uv0.xy + warp, _MainTex_ST, 0.0), _UVType);
                 half4 mainTex = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, mainUV);
                 half mainAlpha = lerp(mainTex.a, mainTex.g, _Use_G_Channel_Alpha);
 
                 float2 alphaCart = i.uv0.xy * _AlphaTex_ST.xy + _AlphaTex_ST.zw + alphaOffset;
-                float2 alphaUV = lerp(alphaCart, MMN_PolarUV(i.uv0.xy + alphaOffset, _AlphaTex_ST), _UVType);
                 // Gradation cards are imported Clamp on U; Custom1.y travels 1 → -1, which
                 // would otherwise stick on the black edge. Wrap so the soft band can slide.
-                alphaUV = frac(alphaUV);
+                // Polar path keeps the texture's Clamp so the angular arc does not repeat.
+                float2 alphaPolar = MMN_PolarUV(i.uv0.xy + alphaOffset, _AlphaTex_ST, 0.0);
+                float2 alphaUV = lerp(frac(alphaCart), alphaPolar, _UVType);
                 half alphaTex = SAMPLE_TEXTURE2D(_AlphaTex, sampler_AlphaTex, alphaUV).g;
 
-                half mask = mainAlpha * alphaTex - dissolve;
+                // Polar materials (bathtub ripple) rely on the noise as part of the hard
+                // thresholded mask: Twist shears the spots into near-concentric arcs and
+                // _Noise_X_Speed pushes them outward along the radius. Cartesian cards keep
+                // the warp-only path above.
+                half noiseMask = lerp(1.0h, noise.r, _UVType);
+                half mask = mainAlpha * alphaTex * noiseMask - dissolve;
                 half gradeSrc = lerp(mask, (half)mainUV.x, _ColorGradation);
                 half grade = saturate((gradeSrc + _Color_Offset) * _Color_Range);
                 half4 tint = lerp(_SubColor, _MainColor, grade);

@@ -194,6 +194,12 @@ namespace ColhenBeach.Editor
 
             ApplyBeachEnvironment(scene, water, instances);
 
+            // The water's sky term reads the game's _Global_* uniforms; without a setter they are
+            // zero and the sea reflects black.
+            var globalsGo = new GameObject("MMN Global Uniforms");
+            SceneManager.MoveGameObjectToScene(globalsGo, scene);
+            globalsGo.AddComponent<MmnGlobalUniforms>();
+
             string scenePath = outRoot + "/Scenes/ColhenBeach_Preview.unity";
             if (!EditorSceneManager.SaveScene(scene, scenePath))
             {

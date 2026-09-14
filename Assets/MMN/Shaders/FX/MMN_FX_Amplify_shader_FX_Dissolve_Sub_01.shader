@@ -1,7 +1,9 @@
 // NOT-IMPLEMENTED: playable environment-FX shell for MMN/FX/Amplify shader/FX_Dissolve_Sub_01.
 // Properties and render states follow the extracted original contract.
 // Fragment approximates FX_Default (main texture * vertex colour * intensity).
-// Dissolve / distortion / vertex-offset / stencil maths are not transcribed.
+// Dissolve: Custom1.x streamed to TEXCOORD0.z is subtracted from the texture alpha before
+// _Intensity_Alpha hardens the edge (see FX_Fountain_Wave_01 ring ripple).
+// Distortion / vertex-offset / stencil maths are not transcribed.
 Shader "MMN/FX/Amplify shader/FX_Dissolve_Sub_01"
 {
     Properties
@@ -120,8 +122,9 @@ Shader "MMN/FX/Amplify shader/FX_Dissolve_Sub_01"
                 float _EffectAlpha;
             CBUFFER_END
 
-            struct Attributes { float4 positionOS : POSITION; float2 uv : TEXCOORD0; float4 color : COLOR; };
-            struct Varyings { float4 positionCS : SV_POSITION; float2 uv : TEXCOORD0; float4 screenPos : TEXCOORD1; float3 positionWS : TEXCOORD2; float4 color : COLOR; };
+            // uv.z = Custom1.x (dissolve) from the particle vertex stream; 0 when not streamed.
+            struct Attributes { float4 positionOS : POSITION; float4 uv : TEXCOORD0; float4 color : COLOR; };
+            struct Varyings { float4 positionCS : SV_POSITION; float3 uv : TEXCOORD0; float4 screenPos : TEXCOORD1; float3 positionWS : TEXCOORD2; float4 color : COLOR; };
 
             Varyings vert(Attributes v)
             {
@@ -130,19 +133,22 @@ Shader "MMN/FX/Amplify shader/FX_Dissolve_Sub_01"
                 o.positionCS = p.positionCS;
                 o.positionWS = p.positionWS;
                 o.screenPos = p.positionNDC;
-                o.uv = v.uv * _MainTex_ST.xy + _MainTex_ST.zw;
+                o.uv.xy = v.uv.xy * _MainTex_ST.xy + _MainTex_ST.zw;
+                o.uv.z = v.uv.z;
                 o.color = v.color;
                 return o;
             }
 
             half4 frag(Varyings i) : SV_Target
             {
-                half4 tex = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.uv);
+                half4 tex = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.uv.xy);
                 half texAlpha = lerp(tex.a, tex.g, _Use_G_Channel_Alpha);
+                half dissolve = (half)i.uv.z;
                 half3 color = lerp(tex.rgb * i.color.rgb, i.color.rgb, _Use_G_Channel_Alpha);
                 color *= _Intensity_Color;
                 color *= _MainColor.rgb;
-                half alpha = saturate(texAlpha * i.color.a * _Intensity_Alpha * saturate(_EffectAlpha));
+                half alpha = saturate((texAlpha - dissolve) * _Intensity_Alpha)
+                           * i.color.a * saturate(_EffectAlpha);
                 alpha *= MMN_NearPlaneFade(i.positionWS, i.screenPos, _NearPlaneAlpha,
                                            _NearPlaneAlphaEdge, _NearPlaneInvertDistance,
                                            _NearPlaneDirectionMode, _NearPlaneDirectionValue,
