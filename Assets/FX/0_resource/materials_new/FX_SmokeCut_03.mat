@@ -12,8 +12,9 @@ Material:
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
-  - _RAYCAST_ON
-  m_InvalidKeywords: []
+  - _NOISETEX
+  m_InvalidKeywords:
+  - _USE_G_CHANNEL_ALPHA_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -25,17 +26,17 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: eed21446c07abd74482169d6239df480, type: 3}
+        m_Texture: {fileID: 2800000, guid: 22bb206738a941842a7554f7d0568354, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NoiseTex:
-        m_Texture: {fileID: 2800000, guid: 25b52cf1acbf47b4ab624dbcf4304db1, type: 3}
+        m_Texture: {fileID: 2800000, guid: 22bb206738a941842a7554f7d0568354, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
     - _AlphaCutoff: 0.5
-    - _BlendDst: 10
+    - _BlendDst: 1
     - _BlendSrc: 5
     - _ColorGradation: 0
     - _Color_Offset: 0
@@ -43,14 +44,14 @@ Material:
     - _CullMode: 0
     - _EffectAlpha: 1
     - _FogReceive: 1
-    - _Intensity_Alpha: 10
-    - _Intensity_Color: 1
+    - _Intensity_Alpha: 50
+    - _Intensity_Color: 2.5
     - _LerpColor_Intensity: 1
     - _LerpColor_Offset: 0
     - _LerpColor_Range: 0
-    - _LightRatio: 1
-    - _LightReceive: 1
-    - _Mode: 4
+    - _LightRatio: 0
+    - _LightReceive: 0
+    - _Mode: 2
     - _NearPlaneAlpha: 0
     - _NearPlaneDirectionMode: 0
     - _NearPlaneDitherMode: 0
@@ -60,15 +61,15 @@ Material:
     - _Raycast: 0
     - _RaycastHarftoneClip: 0
     - _RaycastMinimumAlpha: 0
-    - _SoftParticle: 1
-    - _SoftParticleFadeOutRange: 7
+    - _SoftParticle: 0
+    - _SoftParticleFadeOutRange: 1
     - _SoftParticleFarFadeDistance: 1
     - _SoftParticleNearFadeDistance: 0
     - _SpawnTransition: 0
     - _TransitionValue: 1
     - _Twist: 0
     - _UVType: 0
-    - _Use_G_Channel_Alpha: 0
+    - _Use_G_Channel_Alpha: 1
     - _ZTest: 4
     m_Colors:
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
