@@ -49,11 +49,11 @@ Shader "MMN/FX/SimpleLit_Prop_Dissolve"
         Pass
         {
             Name "ForwardLit"
-            Blend 1 0
+            Blend One Zero
             BlendOp Add
             ZWrite On
-            ZTest 4
-            Cull 2
+            ZTest LEqual
+            Cull Back
 
             HLSLPROGRAM
             #pragma target 4.5

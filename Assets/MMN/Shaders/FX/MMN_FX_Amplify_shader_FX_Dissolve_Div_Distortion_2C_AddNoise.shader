@@ -99,6 +99,8 @@ Shader "MMN/FX/Amplify shader/FX_Dissolve_Div_Distortion_2C_AddNoise"
             #pragma vertex vert
             #pragma fragment frag
             #pragma shader_feature_local_fragment _RAYCAST_ON
+            #pragma multi_compile_instancing
+            #pragma instancing_options procedural:ParticleInstancingSetup
 
             #define MMN_FX_USE_DEPTH
 
@@ -106,6 +108,7 @@ Shader "MMN/FX/Amplify shader/FX_Dissolve_Div_Distortion_2C_AddNoise"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DeclareDepthTexture.hlsl"
             #include "../Include/MMN_FX_Common.hlsl"
+            #include "../Include/MMN_FX_ParticlesInstancing.hlsl"
 
             TEXTURE2D(_MainTex); SAMPLER(sampler_MainTex);
             TEXTURE2D(_NoiseTex); SAMPLER(sampler_NoiseTex);
@@ -174,6 +177,7 @@ Shader "MMN/FX/Amplify shader/FX_Dissolve_Div_Distortion_2C_AddNoise"
                 float4 uv0 : TEXCOORD0;
                 float4 uv1 : TEXCOORD1;
                 float4 color : COLOR;
+                UNITY_VERTEX_INPUT_INSTANCE_ID
             };
 
             struct Varyings
@@ -198,13 +202,18 @@ Shader "MMN/FX/Amplify shader/FX_Dissolve_Div_Distortion_2C_AddNoise"
             Varyings vert(Attributes v)
             {
                 Varyings o = (Varyings)0;
+                UNITY_SETUP_INSTANCE_ID(v);
+                float4 uv0 = v.uv0;
+                float4 uv1 = v.uv1;
+                float4 color = v.color;
+                MMN_ApplyParticleInstance(uv0, uv1, color);
                 VertexPositionInputs positions = GetVertexPositionInputs(v.positionOS.xyz);
                 o.positionCS = positions.positionCS;
                 o.positionWS = positions.positionWS;
                 o.screenPos = positions.positionNDC;
-                o.uv0 = v.uv0;
-                o.uv1 = v.uv1;
-                o.color = v.color;
+                o.uv0 = uv0;
+                o.uv1 = uv1;
+                o.color = color;
                 return o;
             }
 

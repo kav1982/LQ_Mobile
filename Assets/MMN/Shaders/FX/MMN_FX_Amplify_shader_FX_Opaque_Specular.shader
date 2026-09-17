@@ -50,7 +50,7 @@ Shader "MMN/FX/Amplify shader/FX_Opaque_Specular"
         Pass
         {
             Name "Unlit"
-            Blend 1 0
+            Blend One Zero
             BlendOp Add
             ZWrite On
             ZTest [_ZTest]

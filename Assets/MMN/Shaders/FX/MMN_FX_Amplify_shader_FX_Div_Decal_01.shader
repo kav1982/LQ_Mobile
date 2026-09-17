@@ -77,8 +77,8 @@ Shader "MMN/FX/Amplify shader/FX_Div_Decal_01"
             Blend [_BlendSrc] [_BlendDst]
             BlendOp Add
             ZWrite Off
-            ZTest 8
-            Cull 1
+            ZTest Always
+            Cull Front
 
             HLSLPROGRAM
             #pragma target 4.5

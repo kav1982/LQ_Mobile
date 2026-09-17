@@ -1,7 +1,6 @@
-// NOT-IMPLEMENTED: playable environment-FX shell for MMN/FX/Amplify shader/FX_ExplosionSmoke_03.
-// Properties and render states follow the extracted original contract.
-// Fragment approximates FX_Default (main texture * vertex colour * intensity).
-// Dissolve / distortion / vertex-offset / stencil maths are not transcribed.
+// Transcribed from shipped D3D11 bytecode
+// (_re_work/shader_contracts/MMN_FX_Amplify_shader_FX_ExplosionSmoke_03.asm.txt).
+// tcd0.z dissolve, tcd0.w emissive dissolve, tcd1.x distortion.
 Shader "MMN/FX/Amplify shader/FX_ExplosionSmoke_03"
 {
     Properties
@@ -143,8 +142,8 @@ Shader "MMN/FX/Amplify shader/FX_ExplosionSmoke_03"
                 float _EffectAlpha;
             CBUFFER_END
 
-            struct Attributes { float4 positionOS : POSITION; float2 uv : TEXCOORD0; float4 color : COLOR; };
-            struct Varyings { float4 positionCS : SV_POSITION; float2 uv : TEXCOORD0; float4 screenPos : TEXCOORD1; float3 positionWS : TEXCOORD2; float4 color : COLOR; };
+            struct Attributes { float4 positionOS : POSITION; float4 uv0 : TEXCOORD0; float4 uv1 : TEXCOORD1; float4 uv2 : TEXCOORD2; float4 color : COLOR; };
+            struct Varyings { float4 positionCS : SV_POSITION; float4 uv0 : TEXCOORD0; float4 uv1 : TEXCOORD1; float4 uv2 : TEXCOORD2; float4 screenPos : TEXCOORD3; float3 positionWS : TEXCOORD4; float4 color : COLOR; };
 
             Varyings vert(Attributes v)
             {
@@ -153,17 +152,43 @@ Shader "MMN/FX/Amplify shader/FX_ExplosionSmoke_03"
                 o.positionCS = p.positionCS;
                 o.positionWS = p.positionWS;
                 o.screenPos = p.positionNDC;
-                o.uv = v.uv * _MainTex_ST.xy + _MainTex_ST.zw;
+                o.uv0 = v.uv0;
+                o.uv1 = v.uv1;
+                o.uv2 = v.uv2;
                 o.color = v.color;
                 return o;
             }
 
             half4 frag(Varyings i) : SV_Target
             {
-                half4 tex = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.uv);
-                half texAlpha = lerp(tex.a, tex.g, _Use_G_Channel_Alpha);
-                half3 color = lerp(tex.rgb * i.color.rgb, i.color.rgb, _Use_G_Channel_Alpha);
-                half alpha = saturate(texAlpha * i.color.a * saturate(_EffectAlpha));
+                float2 uv = i.uv0.xy;
+                float2 centered = uv - 0.5;
+                float radius = length(centered);
+                float polarScale = 1.0 + _Use_Polar_UV * (min(pow(max(radius, 1e-5), _Pivot), 1.0) - 1.0);
+                float2 time = _Time.y * float2(_Alp_X_Speed, _Alp_Y_Speed);
+                float2 noiseTime = _Time.y * float2(_Noise_X_Speed, _Noise_Y_Speed);
+                float2 alphaCart = uv * _AlphaTex_ST.xy + _AlphaTex_ST.zw + time;
+                float2 polar = float2(radius * _Polar_Radial, atan2(centered.y, centered.x) * _Polar_Lengh * 0.159155) + time;
+                float2 alphaUV = lerp(alphaCart, polar, _Use_Polar_UV);
+                float2 noiseUV = uv * _NoiseTex_ST.xy + _NoiseTex_ST.zw + noiseTime;
+                half noise = SAMPLE_TEXTURE2D(_NoiseTex, sampler_NoiseTex, noiseUV).g + _Distortion_Offset;
+                alphaUV += noise * i.uv1.x;
+                half alphaTex = SAMPLE_TEXTURE2D(_AlphaTex, sampler_AlphaTex, alphaUV).g;
+                half2 dissolved = polarScale * alphaTex - i.uv0.wz;
+                half smokeGrade = saturate((dissolved.x + _Color_Offset2) * _Color_Range2);
+                half4 smoke = lerp(_Smoke_SubColor, _Smoke_MainColor, smokeGrade);
+                half emissiveMask = saturate(dissolved.y * _Emissiv_Alpha);
+                half emissiveGrade = saturate((dissolved.y + _Color_Offset) * _Color_Range);
+                half4 emissive = lerp(_Emissiv_SubColor, _Emissiv_MainColor, emissiveGrade);
+                smoke.rgb *= i.color.rgb;
+                half3 emissiveMul = half3(i.uv1.zw, i.uv2.x) * _Emissiv_Color;
+                half3 color = lerp(smoke.rgb, emissiveMul * emissive.rgb, emissiveMask);
+                float2 mainUV = uv * _MainTex_ST.xy + _MainTex_ST.zw;
+                half2 mainGA = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, mainUV).ga;
+                half texAlpha = lerp(mainGA.y, mainGA.x, _Use_G_Channel_Alpha);
+                half tintA = lerp(smoke.a, emissive.a, emissiveMask);
+                half alpha = saturate(dissolved.x) * texAlpha * tintA * _Smoke_Alpha * i.color.a;
+                alpha = saturate(alpha) * saturate(_EffectAlpha);
                 alpha *= MMN_NearPlaneFade(i.positionWS, i.screenPos, _NearPlaneAlpha,
                                            _NearPlaneAlphaEdge, _NearPlaneInvertDistance,
                                            _NearPlaneDirectionMode, _NearPlaneDirectionValue,

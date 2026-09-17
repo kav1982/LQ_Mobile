@@ -22,11 +22,11 @@ Shader "MMN/FX/SkyFallingStar"
         Pass
         {
             Name "ForwardLit"
-            Blend 5 1
+            Blend SrcAlpha One
             BlendOp Add
             ZWrite Off
-            ZTest 4
-            Cull 0
+            ZTest LEqual
+            Cull Off
 
             HLSLPROGRAM
             #pragma target 4.5

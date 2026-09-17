@@ -25,10 +25,10 @@ Shader "MMN/CutScene/Prop_Portal"
         Pass
         {
             Name "Base"
-            Blend 5 10
+            Blend SrcAlpha OneMinusSrcAlpha
             BlendOp Add
             ZWrite [_ZWrite]
-            ZTest 4
+            ZTest LEqual
             Cull [_Cull]
 
             HLSLPROGRAM

@@ -9,6 +9,7 @@
 // The fragment maths is transcribed from the shipped D3D11 bytecode, disassembled into
 // _re_work/shader_contracts/MMN_FX_FX_Dissolve_Div_01.asm.txt by _re_work/dump_shader_bytecode.py.
 // Custom1.x is the dissolve threshold (TEXCOORD0.z).
+// _NoiseTex defaults to white; _NOISETEX is on only when a real map is bound.
 //
 // NOT-IMPLEMENTED: the FOG_LINEAR variant (client fog globals divide by zero when unset).
 // NOT-IMPLEMENTED: the DEBUG_DISPLAY variant (URP rendering debugger only).
@@ -89,6 +90,7 @@ Shader "MMN/FX/Amplify shader/FX_Dissolve_Div_01"
             #pragma vertex vert
             #pragma fragment frag
             #pragma shader_feature_local_fragment _RAYCAST_ON
+            #pragma shader_feature_local_fragment _NOISETEX
 
             #define MMN_FX_USE_DEPTH
 
@@ -198,7 +200,12 @@ Shader "MMN/FX/Amplify shader/FX_Dissolve_Div_01"
                 noiseCart.y = noiseCart.x * _Twist + noiseCart.y;
                 float2 noiseUV = lerp(noiseCart, MMN_PolarUV(i.uv0.xy, _NoiseTex_ST), _UVType);
                 noiseUV += time * float2(_Noise_X_Speed, _Noise_Y_Speed);
+                // Shader default is "white" {}. An unbound slot samples as 0 and wipes the mask.
+                #ifdef _NOISETEX
                 half noise = SAMPLE_TEXTURE2D(_NoiseTex, sampler_NoiseTex, noiseUV).g;
+                #else
+                half noise = 1.0h;
+                #endif
 
                 half mask = mainAlpha * noise - dissolve;
                 half gradeSrc = lerp(mask, (half)mainUV.x, _ColorGradation);

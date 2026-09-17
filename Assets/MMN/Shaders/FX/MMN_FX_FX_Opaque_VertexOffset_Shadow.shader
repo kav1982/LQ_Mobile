@@ -38,7 +38,7 @@ Shader "MMN/FX/FX_Opaque_VertexOffset_Shadow"
         Pass
         {
             Name "Base"
-            Blend 1 0
+            Blend One Zero
             BlendOp Add
             ZWrite On
             ZTest [_ZTest]

@@ -42,8 +42,10 @@ half MMN_NearPlaneFade(float3 positionWS, float4 screenPos, half enabled, float4
         return 1.0h;
 
     float dist = length(_WorldSpaceCameraPos - positionWS);
-    float nearFade = saturate((dist - edge.x) / (edge.y - edge.x));
-    float farFade = saturate((edge.w - dist) / (edge.w - edge.z));
+    float nearSpan = max(edge.y - edge.x, 1e-5);
+    float farSpan = max(edge.w - edge.z, 1e-5);
+    float nearFade = saturate((dist - edge.x) / nearSpan);
+    float farFade = saturate((edge.w - dist) / farSpan);
     float fade = min(lerp(1.0, farFade, invertDistance), nearFade);
 
     // _m21 of the view matrix is the world-up component of the camera's backward axis, i.e. how
@@ -85,7 +87,17 @@ half MMN_SoftParticleFade(float4 screenPos, half enabled,
         return 1.0h;
 
     float2 uv = screenPos.xy / screenPos.w;
-    float sceneEye = LinearEyeDepth(SampleSceneDepth(uv), _ZBufferParams);
+    float raw = SampleSceneDepth(uv);
+    // No opaque depth (unbound texture or far-plane clear). Soft fade is only
+    // meant to hide intersections; an empty Scene view would otherwise wipe the FX.
+#if UNITY_REVERSED_Z
+    if (raw < 1e-6)
+        return 1.0h;
+#else
+    if (raw > 0.999999)
+        return 1.0h;
+#endif
+    float sceneEye = LinearEyeDepth(raw, _ZBufferParams);
     float ownEye = LinearEyeDepth(screenPos.z / screenPos.w, _ZBufferParams);
     return (half)saturate((sceneEye - nearFade - ownEye) * (fadeOutRange * farFade));
 }

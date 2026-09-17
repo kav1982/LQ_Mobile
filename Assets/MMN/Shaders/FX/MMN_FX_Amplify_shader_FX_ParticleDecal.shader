@@ -1,7 +1,6 @@
-// NOT-IMPLEMENTED: playable environment-FX shell for MMN/FX/Amplify shader/FX_ParticleDecal.
-// Properties and render states follow the extracted original contract.
-// Fragment approximates FX_Default (main texture * vertex colour * intensity).
-// Dissolve / distortion / vertex-offset / stencil maths are not transcribed.
+// Transcribed from shipped D3D11 bytecode
+// (_re_work/shader_contracts/MMN_FX_Amplify_shader_FX_ParticleDecal.asm.txt).
+// Depth reconstruct + Y-rot box; tcd0.z dissolve, tcd0.w distortion.
 Shader "MMN/FX/Amplify shader/FX_ParticleDecal"
 {
     Properties
@@ -75,8 +74,8 @@ Shader "MMN/FX/Amplify shader/FX_ParticleDecal"
             Blend [_BlendSrc] [_BlendDst]
             BlendOp Add
             ZWrite Off
-            ZTest 8
-            Cull 1
+            ZTest Always
+            Cull Front
 
             HLSLPROGRAM
             #pragma target 4.5
@@ -91,6 +90,9 @@ Shader "MMN/FX/Amplify shader/FX_ParticleDecal"
             TEXTURE2D(_MainTex); SAMPLER(sampler_MainTex);
             TEXTURE2D(_NoiseTex); SAMPLER(sampler_NoiseTex);
             TEXTURE2D(_AddNoiseTex); SAMPLER(sampler_AddNoiseTex);
+
+            float _DimmingFactor;
+            float _IsControlPlayer;
 
             CBUFFER_START(UnityPerMaterial)
                 float4 _EmissionColor;
@@ -144,8 +146,45 @@ Shader "MMN/FX/Amplify shader/FX_ParticleDecal"
                 float _ZTest;
             CBUFFER_END
 
-            struct Attributes { float4 positionOS : POSITION; float2 uv : TEXCOORD0; float4 color : COLOR; };
-            struct Varyings { float4 positionCS : SV_POSITION; float2 uv : TEXCOORD0; float4 screenPos : TEXCOORD1; float3 positionWS : TEXCOORD2; float4 color : COLOR; };
+            struct Attributes
+            {
+                float4 positionOS : POSITION;
+                float4 uv0 : TEXCOORD0;
+                float4 uv1 : TEXCOORD1;
+                float4 uv2 : TEXCOORD2;
+                float4 uv3 : TEXCOORD3;
+                float4 color : COLOR;
+            };
+
+            struct Varyings
+            {
+                float4 positionCS : SV_POSITION;
+                float4 uv0 : TEXCOORD0;
+                float4 uv1 : TEXCOORD1;
+                float4 uv2 : TEXCOORD2;
+                float4 uv3 : TEXCOORD3;
+                float4 screenPos : TEXCOORD4;
+                float3 positionWS : TEXCOORD5;
+                float4 color : COLOR;
+            };
+
+            float2 MMN_RotateY(float2 xz, float rotY)
+            {
+                float s, c;
+                sincos(rotY, s, c);
+                return float2(c * xz.x - s * xz.y, s * xz.x + c * xz.y);
+            }
+
+            float2 MMN_DecalUV(float2 boxXY, float4 st, float twist, float radius, float angle, float t, float2 scroll)
+            {
+                float2 cart = boxXY + 0.5;
+                float2 cartUV = cart * st.xy + st.zw + t * scroll;
+                float2 polarUV;
+                polarUV.x = radius * st.x + st.z;
+                polarUV.y = twist * polarUV.x + angle * st.y + st.w;
+                polarUV += t * scroll;
+                return lerp(cartUV, polarUV, _Type);
+            }
 
             Varyings vert(Attributes v)
             {
@@ -154,20 +193,76 @@ Shader "MMN/FX/Amplify shader/FX_ParticleDecal"
                 o.positionCS = p.positionCS;
                 o.positionWS = p.positionWS;
                 o.screenPos = p.positionNDC;
-                o.uv = v.uv * _MainTex_ST.xy + _MainTex_ST.zw;
+                o.uv0 = v.uv0;
+                o.uv1 = v.uv1;
+                o.uv2 = v.uv2;
+                o.uv3 = v.uv3;
                 o.color = v.color;
                 return o;
             }
 
             half4 frag(Varyings i) : SV_Target
             {
-                half4 tex = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.uv);
-                half texAlpha = lerp(tex.a, tex.g, _Use_G_Channel_Alpha);
-                half3 color = lerp(tex.rgb * i.color.rgb, i.color.rgb, _Use_G_Channel_Alpha);
-                color *= _Intensity_Color;
-                color *= _MainColor.rgb;
-                half alpha = saturate(texAlpha * i.color.a * _Intensity_Alpha * saturate(_EffectAlpha));
-                alpha *= MMN_NearPlaneFade(i.positionWS, i.screenPos, _NearPlaneAlpha,
+                float2 screenUV = i.screenPos.xy / i.screenPos.w;
+                float deviceDepth = SampleSceneDepth(screenUV);
+                float3 worldPos = ComputeWorldSpacePosition(screenUV, deviceDepth, UNITY_MATRIX_I_VP);
+
+                float3 center = float3(i.uv1.z, i.uv2.x, i.uv1.w);
+                float3 scale = i.uv3.xzy * _worldScaleAndRotY.xzy;
+                float rotY = _worldScaleAndRotY.w * 0.017453 + i.uv2.z;
+
+                float3 delta = worldPos.xzy - center.xzy;
+                float3 local = mul(UNITY_MATRIX_I_M, float4(delta, 1.0)).xyz;
+                float3 box = float3(MMN_RotateY(local.xy, rotY), local.z) / scale;
+                half boxMask = (box.x >= -0.5 && box.x < 0.5 &&
+                                box.y >= -0.5 && box.y < 0.5 &&
+                                box.z >= -0.5 && box.z < 0.5) ? 1.0h : 0.0h;
+
+                float radius = length(box.xy) * 2.0;
+                float angle = atan2(box.y, box.x) * 0.159155;
+                float t = MMN_FxTime();
+                float2 cartUV = (box.xy + 0.5) * _MainTex_ST.xy + _MainTex_ST.zw;
+                float2 polarUV = float2(radius * _MainTex_ST.x, angle * _MainTex_ST.y) + _MainTex_ST.zw;
+                float2 mainUV = lerp(cartUV, polarUV, _Type);
+
+                float2 noiseUV = MMN_DecalUV(box.xy, _NoiseTex_ST, _Noise_Twist, radius, angle, t,
+                                             float2(_Noise_X_Speed, _Noise_Y_Speed));
+                half noise = SAMPLE_TEXTURE2D(_NoiseTex, sampler_NoiseTex, noiseUV).g + _Distortion_Offset;
+                float2 distort = noise * float2(_Distortion_X_Power, _Distortion_Y_Power) * i.uv0.w;
+                mainUV += distort;
+
+                half4 main = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, mainUV);
+                half texAlpha = lerp(main.a, main.g, _Use_G_Channel_Alpha);
+
+                float2 addST = i.uv1.xy + _AddNoiseTex_ST.zw;
+                float2 addCart = (box.xy + 0.5) * _AddNoiseTex_ST.xy + addST + t * float2(_AddNoise_X_Speed, _AddNoise_Y_Speed);
+                float2 addPolar;
+                addPolar.x = radius * _AddNoiseTex_ST.x + addST.x;
+                addPolar.y = _AddNoise_Twist * addPolar.x + angle * _AddNoiseTex_ST.y + addST.y;
+                addPolar += t * float2(_AddNoise_X_Speed, _AddNoise_Y_Speed);
+                float2 addUV = lerp(addCart, addPolar, _Type);
+                half addNoise = SAMPLE_TEXTURE2D(_AddNoiseTex, sampler_AddNoiseTex, addUV).g;
+
+                half alphaMask = texAlpha * addNoise - i.uv0.z;
+                half crackU = lerp(cartUV.x, radius * _MainTex_ST.x, _Type);
+                half grade = lerp(alphaMask, crackU, _ColorGradation);
+
+                float3 viewWS = normalize(_WorldSpaceCameraPos - i.positionWS);
+                float3 viewOS = TransformWorldToObjectDir(viewWS);
+                float2 viewRot = MMN_RotateY(viewOS.xz, rotY);
+                float2 parallaxUV = mainUV - distort + _ParallaxScale * viewRot + distort;
+                half parallaxG = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, parallaxUV).g;
+                grade = lerp(grade, parallaxG, saturate(_ColorGradation - 1.0h));
+                grade = saturate((grade + _Color_Offset) * _Color_Range);
+                half4 tint = lerp(_SubColor, _MainColor, grade);
+
+                half3 texTint = lerp(main.rgb * i.color.rgb, i.color.rgb, _Use_G_Channel_Alpha);
+                half3 color = texTint * tint.rgb * _Intensity_Color;
+                color *= 1.0h + _DimmingFactor * _IsControlPlayer;
+
+                half alpha = saturate(alphaMask / max(1.0001h - i.uv0.z, 1e-5h) * _Intensity_Alpha);
+                alpha = saturate(tint.a * alpha * i.color.a * boxMask) * saturate(_EffectAlpha);
+                alpha *= MMN_NearPlaneFade(worldPos, i.screenPos, _NearPlaneAlpha,
                                            _NearPlaneAlphaEdge, _NearPlaneInvertDistance,
                                            _NearPlaneDirectionMode, _NearPlaneDirectionValue,
                                            _RaycastMinimumAlpha, _NearPlaneDitherMode);
