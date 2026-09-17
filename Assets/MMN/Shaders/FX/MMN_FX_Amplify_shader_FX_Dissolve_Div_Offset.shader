@@ -9,7 +9,8 @@
 // TEXCOORD0.z = Custom1.x dissolve.
 // TEXCOORD0.w = Custom1.y MainTex U offset (and |U|^Custom1.y when _Use_Offset_Power).
 // TEXCOORD1.x = Custom1.z MainTex V offset.
-// Noise R multiplies dissolve. AlphaTex R has no Custom1 offset.
+// Noise G multiplies dissolve. AlphaTex G has no Custom1 offset.
+// _Use_G_Channel_Alpha swaps RGB to plain vertex colour (mad = lerp(tex*color, color, useG)).
 // Polar U is Amplify radius*2. Twist shears noise V after scroll.
 //
 // NOT-IMPLEMENTED: FOG_LINEAR. DEBUG_DISPLAY. ShadowCaster.
@@ -61,6 +62,7 @@ Shader "MMN/FX/Amplify shader/FX_Dissolve_Div_Offset"
         [Space()] _LerpColor_Intensity ("LerpColor_Intensity", Float) = 1
         [Header(Intensity)] [Space()] _Intensity_Color ("Intensity_Color", Float) = 1
         _Intensity_Alpha ("Intensity_Alpha", Float) = 1
+        _EdgeSoftness ("Edge Softness (0 = original)", Range(0, 1)) = 0
         [Enum(UnityEngine.Rendering.BlendMode)] [Header(Rendering Options)] [Space()] _BlendSrc ("Blend Src", Float) = 5
         [Enum(UnityEngine.Rendering.BlendMode)] _BlendDst ("Blend Dst", Float) = 10
         [Enum(UnityEngine.Rendering.CompareFunction)] _ZTest ("Z Test", Float) = 4
@@ -144,6 +146,7 @@ Shader "MMN/FX/Amplify shader/FX_Dissolve_Div_Offset"
                 half _LerpColor_Intensity;
                 half _Intensity_Color;
                 half _Intensity_Alpha;
+                half _EdgeSoftness;
                 half _ZTest;
                 half _BlendSrc;
                 half _BlendDst;
@@ -214,18 +217,18 @@ Shader "MMN/FX/Amplify shader/FX_Dissolve_Div_Offset"
                 float2 mainUV = lerp(offsetUV, float2(poweredU, selected.y), _Use_Offset_Power);
 
                 half4 mainTex = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, mainUV);
-                half3 texRgb = lerp(mainTex.rgb * i.color.rgb, i.color.rgb * (1.0h - mainTex.rgb), _Use_G_Channel_Alpha);
+                half3 texRgb = lerp(mainTex.rgb * i.color.rgb, i.color.rgb, _Use_G_Channel_Alpha);
                 half mainAlpha = lerp(mainTex.a, mainTex.g, _Use_G_Channel_Alpha);
 
                 float2 noiseUV = MMN_SelectUV(i.uv0.xy, _NoiseTex_ST, radius);
                 noiseUV += time * float2(_Noise_X_Speed, _Noise_Y_Speed);
                 noiseUV.y = noiseUV.x * _Twist + noiseUV.y;
-                half noiseR = SAMPLE_TEXTURE2D(_NoiseTex, sampler_NoiseTex, noiseUV).r;
+                half noiseG = SAMPLE_TEXTURE2D(_NoiseTex, sampler_NoiseTex, noiseUV).g;
 
                 float2 alphaUV = MMN_SelectUV(i.uv0.xy, _AlphaTex_ST, radius);
-                half alphaTex = SAMPLE_TEXTURE2D(_AlphaTex, sampler_AlphaTex, alphaUV).r;
+                half alphaTex = SAMPLE_TEXTURE2D(_AlphaTex, sampler_AlphaTex, alphaUV).g;
 
-                half dissolved = mainAlpha * noiseR * alphaTex - dissolveCustom;
+                half dissolved = mainAlpha * noiseG * alphaTex - dissolveCustom;
 
                 half gradeU = (half)lerp(i.uv0.x, radius * 2.0 - i.uv0.x, _UVType);
                 half gradeSrc = lerp(dissolved, gradeU, _ColorGradation);
@@ -236,8 +239,10 @@ Shader "MMN/FX/Amplify shader/FX_Dissolve_Div_Offset"
                 half lerpAmt = saturate((gradeSrc + _LerpColor_Offset) * _LerpColor_Range);
                 color = lerp(color, _LerpColor.rgb * _LerpColor_Intensity, lerpAmt);
 
-                half alpha = saturate(dissolved / (1.0h - dissolveCustom) * _Intensity_Alpha)
-                           * i.color.a * tint.a * saturate(_EffectAlpha);
+                half alphaRamp = dissolved / (1.0h - dissolveCustom) * _Intensity_Alpha;
+                // _EdgeSoftness widens the 0->1 band; 0 keeps the original hard ramp bit-for-bit.
+                alphaRamp /= 1.0h + _EdgeSoftness * _Intensity_Alpha;
+                half alpha = saturate(alphaRamp) * i.color.a * tint.a * saturate(_EffectAlpha);
 
                 alpha *= MMN_NearPlaneFade(i.positionWS, i.screenPos, _NearPlaneAlpha,
                                            _NearPlaneAlphaEdge, _NearPlaneInvertDistance,
