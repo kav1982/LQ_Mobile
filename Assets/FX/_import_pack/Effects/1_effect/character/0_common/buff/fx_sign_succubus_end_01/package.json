@@ -1,0 +1,2629 @@
+{
+  "id": "1_effect/character/0_common/buff/fx_sign_succubus_end_01",
+  "category": "Effects",
+  "title": "fx_sign_succubus_end_01",
+  "originalPath": "1_effect/character/0_common/buff/fx_sign_succubus_end_01.prefab",
+  "source": {
+    "seedBundle": "dedicated_bundle_efac3823",
+    "blob": "AssetPackages/0636.blob",
+    "chunk": 208,
+    "closureBundles": 14
+  },
+  "meshes": [
+    {
+      "name": "Mesh_Tube",
+      "vertexCount": 220,
+      "submeshCount": 1,
+      "flags": 29,
+      "indexCounts": [
+        540
+      ],
+      "file": "Mesh_Tube.mmesh",
+      "pathID": 1005752077410191397,
+      "key": "Mesh_Tube",
+      "boundsMin": [
+        -0.305,
+        -0.016,
+        -0.682
+      ],
+      "boundsMax": [
+        0.305,
+        0.016,
+        0.305
+      ]
+    },
+    {
+      "name": "Mesh_Sp",
+      "vertexCount": 156,
+      "submeshCount": 1,
+      "flags": 29,
+      "indexCounts": [
+        456
+      ],
+      "file": "Mesh_Sp.mmesh",
+      "pathID": -6198546323541722120,
+      "key": "Mesh_Sp",
+      "boundsMin": [
+        -0.198,
+        -0.061,
+        -0.198
+      ],
+      "boundsMax": [
+        0.198,
+        0.061,
+        0.198
+      ]
+    }
+  ],
+  "materials": [
+    {
+      "name": "FX_Glow_06_Alp",
+      "key": "FX_Glow_06_Alp",
+      "pathID": 2376679018077089177,
+      "shader": "MMN/FX/Amplify shader/FX_Default",
+      "file": "FX_Glow_06_Alp.json"
+    },
+    {
+      "name": "FX_Sign_01",
+      "key": "FX_Sign_01",
+      "pathID": 1000165224022695352,
+      "shader": "MMN/FX/Amplify shader/FX_Opaque",
+      "file": "FX_Sign_01.json"
+    },
+    {
+      "name": "FX_Sign_Succubus",
+      "key": "FX_Sign_Succubus",
+      "pathID": -6778654610769352022,
+      "shader": "MMN/FX/Amplify shader/FX_Opaque_Specular",
+      "file": "FX_Sign_Succubus.json"
+    },
+    {
+      "name": "FX_Glow_02_SP",
+      "key": "FX_Glow_02_SP",
+      "pathID": -9174650827087644415,
+      "shader": "MMN/FX/Amplify shader/FX_Default",
+      "file": "FX_Glow_02_SP.json"
+    }
+  ],
+  "textures": [
+    "FX_Glow_02.png",
+    "FX_Glow_14.png",
+    "FX_Sign_Succubus.png",
+    "Mesh_Sign_DyeMap.png"
+  ],
+  "textureSettings": {
+    "FX_Glow_02.png": {
+      "colorSpace": 0,
+      "mipCount": 1,
+      "wrapU": 0,
+      "wrapV": 0,
+      "filterMode": 0,
+      "aniso": 0
+    },
+    "FX_Glow_14.png": {
+      "colorSpace": 1,
+      "mipCount": 1,
+      "wrapU": 1,
+      "wrapV": 1,
+      "filterMode": 1,
+      "aniso": 1
+    },
+    "FX_Sign_Succubus.png": {
+      "colorSpace": 1,
+      "mipCount": 10,
+      "wrapU": 0,
+      "wrapV": 0,
+      "filterMode": 1,
+      "aniso": 1
+    },
+    "Mesh_Sign_DyeMap.png": {
+      "colorSpace": 1,
+      "mipCount": 11,
+      "wrapU": 0,
+      "wrapV": 0,
+      "filterMode": 1,
+      "aniso": 1
+    }
+  },
+  "hierarchy": [
+    {
+      "name": "FX_Glow_06_Add",
+      "pathID": -8472893442016785177,
+      "parent": 2122507799502026783,
+      "active": true,
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "worldPosition": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "localRotation": [
+        -1.1324881370455842e-06,
+        1.0728834922701935e-06,
+        0.7071057558059692,
+        0.7071078419685364
+      ],
+      "localScale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "meshKey": null,
+      "meshName": null,
+      "meshBinding": null,
+      "materialPathIDs": [],
+      "materialKeys": [],
+      "materialNames": [
+        "FX_Glow_06_Alp"
+      ],
+      "hasRenderer": false,
+      "components": [
+        "Transform",
+        "ParticleSystem",
+        "ParticleSystemRenderer"
+      ],
+      "particle": {
+        "duration": 5.0,
+        "looping": false,
+        "prewarm": false,
+        "simulationSpeed": 1.0,
+        "scalingMode": 1,
+        "simulationSpace": 1,
+        "playOnAwake": true,
+        "maxParticles": 1000,
+        "startDelay": {
+          "min": 0.0,
+          "max": 0.0,
+          "mode": 0
+        },
+        "startLifetime": {
+          "min": 0.2,
+          "max": 0.4,
+          "mode": 3
+        },
+        "startSpeed": {
+          "min": 0.0,
+          "max": 0.0,
+          "mode": 3
+        },
+        "startSize": {
+          "min": 0.07,
+          "max": 0.15,
+          "mode": 3
+        },
+        "size3D": false,
+        "startSizeY": {
+          "min": 1.0,
+          "max": 1.0,
+          "mode": 3
+        },
+        "startSizeZ": {
+          "min": 1.0,
+          "max": 1.0,
+          "mode": 3
+        },
+        "rotation3D": false,
+        "startRotationX": {
+          "min": 0.0,
+          "max": 0.0,
+          "mode": 0
+        },
+        "startRotationY": {
+          "min": 0.0,
+          "max": 0.0,
+          "mode": 0
+        },
+        "startRotationZ": {
+          "min": 0.0,
+          "max": 0.0,
+          "mode": 0
+        },
+        "gravityModifier": {
+          "min": -0.05,
+          "max": -0.05,
+          "mode": 0
+        },
+        "startColor": [
+          1.0,
+          0.91092,
+          0.49686,
+          1.0
+        ],
+        "startColorEx": {
+          "mode": 2,
+          "max": [
+            1.0,
+            0.91092,
+            0.49686,
+            1.0
+          ],
+          "min": [
+            1.0,
+            0.90112,
+            0.44969,
+            1.0
+          ],
+          "maxGradient": {
+            "colorKeys": [
+              [
+                0.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ]
+            ],
+            "alphaKeys": [
+              [
+                0.0,
+                1.0
+              ],
+              [
+                1.0,
+                1.0
+              ]
+            ]
+          },
+          "minGradient": {
+            "colorKeys": [
+              [
+                0.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ]
+            ],
+            "alphaKeys": [
+              [
+                0.0,
+                1.0
+              ],
+              [
+                1.0,
+                1.0
+              ]
+            ]
+          }
+        },
+        "emissionRate": {
+          "min": 0.0,
+          "max": 0.0,
+          "mode": 0
+        },
+        "emissionEnabled": true,
+        "bursts": [
+          {
+            "time": 0.0,
+            "countMin": 7.0,
+            "countMax": 7.0,
+            "cycles": 1,
+            "interval": 0.01,
+            "probability": 1.0
+          }
+        ],
+        "ringBufferMode": 0,
+        "ringBufferLoopFrom": 0.0,
+        "ringBufferLoopTo": 1.0,
+        "cullingMode": 0,
+        "stopAction": 0,
+        "shape": {
+          "enabled": true,
+          "type": "Sphere",
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "position": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "radius": 0.15,
+          "radiusThickness": 0.5,
+          "angle": 25.0,
+          "arc": 360.0,
+          "alignToDirection": false,
+          "randomDirection": 0.0
+        },
+        "sizeOverLifetime": true,
+        "sizeSeparateAxes": false,
+        "sizeCurve": {
+          "min": 1.0,
+          "max": 1.0,
+          "mode": 1,
+          "keys": [
+            [
+              0.0,
+              0.0,
+              13.03695,
+              13.03695,
+              0.0,
+              0.07114,
+              0
+            ],
+            [
+              0.26752,
+              1.0,
+              -1.0969,
+              -1.0969,
+              0.0,
+              0.11509,
+              0
+            ],
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0,
+              0.33333,
+              0.33333,
+              0
+            ]
+          ]
+        },
+        "sizeCurveY": null,
+        "sizeCurveZ": null,
+        "colorOverLifetime": true,
+        "colorGradient": {
+          "colorKeys": [
+            [
+              0.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ]
+          ],
+          "alphaKeys": [
+            [
+              0.0,
+              1.0
+            ],
+            [
+              0.25295,
+              1.0
+            ],
+            [
+              0.29412,
+              0.47059
+            ],
+            [
+              0.33236,
+              1.0
+            ],
+            [
+              1.0,
+              1.0
+            ]
+          ]
+        },
+        "colorOverLifetimeEx": {
+          "mode": 3,
+          "max": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "min": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "maxGradient": {
+            "colorKeys": [
+              [
+                0.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ]
+            ],
+            "alphaKeys": [
+              [
+                0.0,
+                1.0
+              ],
+              [
+                0.25295,
+                1.0
+              ],
+              [
+                0.29412,
+                0.47059
+              ],
+              [
+                0.33236,
+                1.0
+              ],
+              [
+                1.0,
+                1.0
+              ]
+            ]
+          },
+          "minGradient": {
+            "colorKeys": [
+              [
+                0.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ]
+            ],
+            "alphaKeys": [
+              [
+                0.0,
+                1.0
+              ],
+              [
+                0.11177,
+                1.0
+              ],
+              [
+                0.15589,
+                0.47059
+              ],
+              [
+                0.20294,
+                1.0
+              ],
+              [
+                1.0,
+                1.0
+              ]
+            ]
+          }
+        },
+        "velocityOverLifetime": {
+          "enabled": true,
+          "space": 0,
+          "x": {
+            "min": 2.5,
+            "max": 2.5,
+            "mode": 2,
+            "keys": [
+              [
+                0.0,
+                1.0,
+                -0.90386,
+                -0.90386,
+                0.33333,
+                0.2099,
+                0
+              ],
+              [
+                1.0,
+                0.05,
+                0.0,
+                0.0,
+                0.33333,
+                0.33333,
+                0
+              ]
+            ],
+            "keysMin": [
+              [
+                0.0,
+                -1.0,
+                1.35722,
+                1.35722,
+                0.33333,
+                0.10712,
+                0
+              ],
+              [
+                1.0,
+                -0.05,
+                0.0,
+                0.0,
+                0.33333,
+                0.33333,
+                0
+              ]
+            ]
+          },
+          "y": {
+            "min": 2.5,
+            "max": 2.5,
+            "mode": 2,
+            "keys": [
+              [
+                0.0,
+                1.0,
+                -0.90386,
+                -0.90386,
+                0.33333,
+                0.2099,
+                0
+              ],
+              [
+                1.0,
+                0.05,
+                0.0,
+                0.0,
+                0.33333,
+                0.33333,
+                0
+              ]
+            ],
+            "keysMin": [
+              [
+                0.0,
+                -1.0,
+                1.35722,
+                1.35722,
+                0.33333,
+                0.10712,
+                0
+              ],
+              [
+                1.0,
+                -0.05,
+                0.0,
+                0.0,
+                0.33333,
+                0.33333,
+                0
+              ]
+            ]
+          },
+          "z": {
+            "min": 2.5,
+            "max": 2.5,
+            "mode": 2,
+            "keys": [
+              [
+                0.0,
+                1.0,
+                -0.90386,
+                -0.90386,
+                0.33333,
+                0.2099,
+                0
+              ],
+              [
+                1.0,
+                0.05,
+                0.0,
+                0.0,
+                0.33333,
+                0.33333,
+                0
+              ]
+            ],
+            "keysMin": [
+              [
+                0.0,
+                -1.0,
+                1.35722,
+                1.35722,
+                0.33333,
+                0.10712,
+                0
+              ],
+              [
+                1.0,
+                -0.05,
+                0.0,
+                0.0,
+                0.33333,
+                0.33333,
+                0
+              ]
+            ]
+          },
+          "orbitalX": {
+            "min": 2.0,
+            "max": 2.0,
+            "mode": 2,
+            "keys": [
+              [
+                0.0,
+                1.0,
+                -2.17569,
+                -2.17569,
+                0.0,
+                0.08755,
+                0
+              ],
+              [
+                1.0,
+                0.3,
+                0.01141,
+                0.01141,
+                0.10984,
+                0.0,
+                0
+              ]
+            ],
+            "keysMin": [
+              [
+                0.0,
+                -1.0,
+                1.9911,
+                1.9911,
+                0.0,
+                0.06797,
+                0
+              ],
+              [
+                1.0,
+                -0.3,
+                -0.23325,
+                -0.23325,
+                0.13431,
+                0.0,
+                0
+              ]
+            ]
+          },
+          "orbitalY": {
+            "min": 2.0,
+            "max": 2.0,
+            "mode": 2,
+            "keys": [
+              [
+                0.0,
+                1.0,
+                -2.17569,
+                -2.17569,
+                0.0,
+                0.08755,
+                0
+              ],
+              [
+                1.0,
+                0.3,
+                0.01141,
+                0.01141,
+                0.10984,
+                0.0,
+                0
+              ]
+            ],
+            "keysMin": [
+              [
+                0.0,
+                -1.0,
+                1.9911,
+                1.9911,
+                0.0,
+                0.06797,
+                0
+              ],
+              [
+                1.0,
+                -0.3,
+                -0.23325,
+                -0.23325,
+                0.13431,
+                0.0,
+                0
+              ]
+            ]
+          },
+          "orbitalZ": {
+            "min": 2.0,
+            "max": 2.0,
+            "mode": 2,
+            "keys": [
+              [
+                0.0,
+                1.0,
+                -2.17569,
+                -2.17569,
+                0.0,
+                0.08755,
+                0
+              ],
+              [
+                1.0,
+                0.3,
+                0.01141,
+                0.01141,
+                0.10984,
+                0.0,
+                0
+              ]
+            ],
+            "keysMin": [
+              [
+                0.0,
+                -1.0,
+                1.9911,
+                1.9911,
+                0.0,
+                0.06797,
+                0
+              ],
+              [
+                1.0,
+                -0.3,
+                -0.23325,
+                -0.23325,
+                0.13431,
+                0.0,
+                0
+              ]
+            ]
+          },
+          "orbitalOffsetX": {
+            "min": 0.0,
+            "max": 0.0,
+            "mode": 0
+          },
+          "orbitalOffsetY": {
+            "min": 0.0,
+            "max": 0.0,
+            "mode": 0
+          },
+          "orbitalOffsetZ": {
+            "min": 0.0,
+            "max": 0.0,
+            "mode": 0
+          },
+          "radial": {
+            "min": 0.0,
+            "max": 0.0,
+            "mode": 0
+          },
+          "speedModifier": {
+            "min": 1.0,
+            "max": 1.0,
+            "mode": 0
+          }
+        },
+        "forceOverLifetime": null,
+        "limitVelocity": null,
+        "inheritVelocity": null,
+        "trails": null,
+        "subEmitters": null,
+        "lights": null,
+        "noise": null,
+        "rotationOverLifetime": null,
+        "textureSheet": null,
+        "customData": null,
+        "renderer": {
+          "renderMode": "Billboard",
+          "alignment": 0,
+          "sortMode": 0,
+          "lengthScale": 2.0,
+          "meshPathID": 0,
+          "materialPathIDs": [
+            2376679018077089177
+          ],
+          "sortingFudge": 0.0,
+          "pivot": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "flip": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "normalDirection": 1.0,
+          "minParticleSize": 0.0,
+          "maxParticleSize": 0.5,
+          "enableGPUInstancing": true,
+          "useCustomVertexStreams": false,
+          "vertexStreams": [
+            0,
+            1,
+            3,
+            4
+          ],
+          "castShadows": 0,
+          "sortingOrder": 0,
+          "sortingLayerID": 0,
+          "trailMaterialPathID": null,
+          "materialKeys": [
+            "FX_Glow_06_Alp"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Mesh_Tube",
+      "pathID": -7615123252540239353,
+      "parent": 4584896451282946101,
+      "active": true,
+      "localPosition": [
+        -0.0,
+        0.0,
+        0.0
+      ],
+      "worldPosition": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "localRotation": [
+        6.657902673623539e-08,
+        -0.0,
+        -0.0,
+        1.0
+      ],
+      "localScale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "meshKey": "Mesh_Tube",
+      "meshName": "Mesh_Tube",
+      "meshBinding": "pptr",
+      "materialPathIDs": [
+        1000165224022695352
+      ],
+      "materialKeys": [
+        "FX_Sign_01"
+      ],
+      "materialNames": [
+        "FX_Sign_01"
+      ],
+      "hasRenderer": true,
+      "components": [
+        "Transform",
+        "MeshFilter",
+        "MeshRenderer"
+      ]
+    },
+    {
+      "name": "FX_Sign_Boro_End",
+      "pathID": -2919457401176543308,
+      "parent": -1347464766789017586,
+      "active": true,
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "worldPosition": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "localRotation": [
+        -0.0,
+        -0.0,
+        -0.0,
+        1.0
+      ],
+      "localScale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "meshKey": null,
+      "meshName": null,
+      "meshBinding": null,
+      "materialPathIDs": [],
+      "materialKeys": [],
+      "materialNames": [],
+      "hasRenderer": false,
+      "components": [
+        "Transform",
+        "Animator"
+      ],
+      "animator": {
+        "cullingMode": 0,
+        "updateMode": 0,
+        "applyRootMotion": false
+      }
+    },
+    {
+      "name": "Mesh_Sp",
+      "pathID": -2792036979706770397,
+      "parent": 4584896451282946101,
+      "active": true,
+      "localPosition": [
+        -0.0,
+        0.0,
+        0.0
+      ],
+      "worldPosition": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "localRotation": [
+        6.657902673623539e-08,
+        -0.0,
+        -0.0,
+        1.0
+      ],
+      "localScale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "meshKey": "Mesh_Sp",
+      "meshName": "Mesh_Sp",
+      "meshBinding": "pptr",
+      "materialPathIDs": [
+        -6778654610769352022
+      ],
+      "materialKeys": [
+        "FX_Sign_Succubus"
+      ],
+      "materialNames": [
+        "FX_Sign_Succubus"
+      ],
+      "hasRenderer": true,
+      "components": [
+        "Transform",
+        "MeshFilter",
+        "MeshRenderer"
+      ]
+    },
+    {
+      "name": "FX_Sign_Succubus_End_01",
+      "pathID": -1347464766789017586,
+      "parent": null,
+      "active": true,
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "worldPosition": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "localRotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "localScale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "meshKey": null,
+      "meshName": null,
+      "meshBinding": null,
+      "materialPathIDs": [],
+      "materialKeys": [],
+      "materialNames": [],
+      "hasRenderer": false,
+      "components": [
+        "Transform",
+        "Animator"
+      ],
+      "animator": {
+        "cullingMode": 0,
+        "updateMode": 0,
+        "applyRootMotion": false
+      }
+    },
+    {
+      "name": "FX_Glow_02_SP",
+      "pathID": 1842950512855116869,
+      "parent": 2122507799502026783,
+      "active": true,
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "worldPosition": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "localRotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "localScale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "meshKey": null,
+      "meshName": null,
+      "meshBinding": null,
+      "materialPathIDs": [],
+      "materialKeys": [],
+      "materialNames": [
+        "FX_Glow_02_SP"
+      ],
+      "hasRenderer": false,
+      "components": [
+        "Transform",
+        "ParticleSystem",
+        "ParticleSystemRenderer"
+      ],
+      "particle": {
+        "duration": 5.0,
+        "looping": false,
+        "prewarm": false,
+        "simulationSpeed": 1.0,
+        "scalingMode": 1,
+        "simulationSpace": 0,
+        "playOnAwake": true,
+        "maxParticles": 1000,
+        "startDelay": {
+          "min": 0.0,
+          "max": 0.0,
+          "mode": 0
+        },
+        "startLifetime": {
+          "min": 0.3,
+          "max": 0.3,
+          "mode": 0
+        },
+        "startSpeed": {
+          "min": 0.0,
+          "max": 0.0,
+          "mode": 3
+        },
+        "startSize": {
+          "min": 1.2,
+          "max": 1.2,
+          "mode": 0
+        },
+        "size3D": false,
+        "startSizeY": {
+          "min": 1.0,
+          "max": 1.0,
+          "mode": 0
+        },
+        "startSizeZ": {
+          "min": 1.0,
+          "max": 1.0,
+          "mode": 0
+        },
+        "rotation3D": false,
+        "startRotationX": {
+          "min": 0.0,
+          "max": 0.0,
+          "mode": 0
+        },
+        "startRotationY": {
+          "min": 0.0,
+          "max": 0.0,
+          "mode": 0
+        },
+        "startRotationZ": {
+          "min": 0.0,
+          "max": 0.0,
+          "mode": 0
+        },
+        "gravityModifier": {
+          "min": 0.0,
+          "max": 0.0,
+          "mode": 0
+        },
+        "startColor": [
+          0.76415,
+          0.69526,
+          0.38688,
+          1.0
+        ],
+        "startColorEx": {
+          "mode": 0,
+          "max": [
+            0.76415,
+            0.69526,
+            0.38688,
+            1.0
+          ],
+          "min": [
+            1.0,
+            0.90112,
+            0.44969,
+            1.0
+          ],
+          "maxGradient": {
+            "colorKeys": [
+              [
+                0.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ]
+            ],
+            "alphaKeys": [
+              [
+                0.0,
+                1.0
+              ],
+              [
+                1.0,
+                1.0
+              ]
+            ]
+          },
+          "minGradient": {
+            "colorKeys": [
+              [
+                0.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ]
+            ],
+            "alphaKeys": [
+              [
+                0.0,
+                1.0
+              ],
+              [
+                1.0,
+                1.0
+              ]
+            ]
+          }
+        },
+        "emissionRate": {
+          "min": 0.0,
+          "max": 0.0,
+          "mode": 0
+        },
+        "emissionEnabled": true,
+        "bursts": [
+          {
+            "time": 0.0,
+            "countMin": 1.0,
+            "countMax": 1.0,
+            "cycles": 1,
+            "interval": 0.01,
+            "probability": 1.0
+          }
+        ],
+        "ringBufferMode": 0,
+        "ringBufferLoopFrom": 0.0,
+        "ringBufferLoopTo": 1.0,
+        "cullingMode": 0,
+        "stopAction": 0,
+        "shape": {
+          "enabled": false,
+          "type": "Sphere",
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "position": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "radius": 0.1,
+          "radiusThickness": 1.0,
+          "angle": 25.0,
+          "arc": 360.0,
+          "alignToDirection": false,
+          "randomDirection": 0.0
+        },
+        "sizeOverLifetime": true,
+        "sizeSeparateAxes": false,
+        "sizeCurve": {
+          "min": 1.0,
+          "max": 1.0,
+          "mode": 1,
+          "keys": [
+            [
+              0.0,
+              0.0,
+              5.9718,
+              5.9718,
+              0.0,
+              0.15346,
+              0
+            ],
+            [
+              0.17717,
+              0.79268,
+              0.76431,
+              0.76431,
+              0.33333,
+              0.12106,
+              0
+            ],
+            [
+              1.0,
+              1.0,
+              -0.0081,
+              -0.0081,
+              0.16125,
+              0.0,
+              0
+            ]
+          ]
+        },
+        "sizeCurveY": null,
+        "sizeCurveZ": null,
+        "colorOverLifetime": true,
+        "colorGradient": {
+          "colorKeys": [
+            [
+              0.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "alphaKeys": [
+            [
+              0.0,
+              1.0
+            ],
+            [
+              1.0,
+              1.0
+            ]
+          ]
+        },
+        "colorOverLifetimeEx": {
+          "mode": 1,
+          "max": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "min": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "maxGradient": {
+            "colorKeys": [
+              [
+                0.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              [
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            ],
+            "alphaKeys": [
+              [
+                0.0,
+                1.0
+              ],
+              [
+                1.0,
+                1.0
+              ]
+            ]
+          },
+          "minGradient": {
+            "colorKeys": [
+              [
+                0.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ]
+            ],
+            "alphaKeys": [
+              [
+                0.0,
+                1.0
+              ],
+              [
+                1.0,
+                1.0
+              ]
+            ]
+          }
+        },
+        "velocityOverLifetime": null,
+        "forceOverLifetime": null,
+        "limitVelocity": {
+          "enabled": true,
+          "separateAxis": false,
+          "space": 0,
+          "dampen": 0.2,
+          "magnitude": {
+            "min": 1.0,
+            "max": 1.0,
+            "mode": 1,
+            "keys": [
+              [
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0
+              ],
+              [
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0
+              ]
+            ]
+          },
+          "x": {
+            "min": 1.0,
+            "max": 1.0,
+            "mode": 0
+          },
+          "y": {
+            "min": 1.0,
+            "max": 1.0,
+            "mode": 0
+          },
+          "z": {
+            "min": 1.0,
+            "max": 1.0,
+            "mode": 0
+          },
+          "drag": {
+            "min": 0.0,
+            "max": 0.0,
+            "mode": 0
+          },
+          "multiplyDragBySize": true,
+          "multiplyDragByVelocity": true
+        },
+        "inheritVelocity": null,
+        "trails": null,
+        "subEmitters": null,
+        "lights": null,
+        "noise": null,
+        "rotationOverLifetime": null,
+        "textureSheet": null,
+        "customData": null,
+        "renderer": {
+          "renderMode": "Billboard",
+          "alignment": 3,
+          "sortMode": 0,
+          "lengthScale": 2.0,
+          "meshPathID": 0,
+          "materialPathIDs": [
+            -9174650827087644415
+          ],
+          "sortingFudge": 0.0,
+          "pivot": [
+            0.0,
+            0.0,
+            -0.3
+          ],
+          "flip": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "normalDirection": 1.0,
+          "minParticleSize": 0.0,
+          "maxParticleSize": 0.5,
+          "enableGPUInstancing": true,
+          "useCustomVertexStreams": false,
+          "vertexStreams": [
+            0,
+            1,
+            3,
+            4
+          ],
+          "castShadows": 0,
+          "sortingOrder": 0,
+          "sortingLayerID": 0,
+          "trailMaterialPathID": null,
+          "materialKeys": [
+            "FX_Glow_02_SP"
+          ]
+        }
+      }
+    },
+    {
+      "name": "FX_Impecat",
+      "pathID": 2122507799502026783,
+      "parent": -1347464766789017586,
+      "active": true,
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "worldPosition": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "localRotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "localScale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "meshKey": null,
+      "meshName": null,
+      "meshBinding": null,
+      "materialPathIDs": [],
+      "materialKeys": [],
+      "materialNames": [],
+      "hasRenderer": false,
+      "components": [
+        "Transform",
+        "ParticleSystem",
+        "ParticleSystemRenderer"
+      ],
+      "particle": {
+        "duration": 5.0,
+        "looping": true,
+        "prewarm": false,
+        "simulationSpeed": 1.0,
+        "scalingMode": 1,
+        "simulationSpace": 0,
+        "playOnAwake": true,
+        "maxParticles": 1000,
+        "startDelay": {
+          "min": 0.0,
+          "max": 0.0,
+          "mode": 0
+        },
+        "startLifetime": {
+          "min": 5.0,
+          "max": 5.0,
+          "mode": 0
+        },
+        "startSpeed": {
+          "min": 5.0,
+          "max": 5.0,
+          "mode": 0
+        },
+        "startSize": {
+          "min": 1.0,
+          "max": 1.0,
+          "mode": 0
+        },
+        "size3D": false,
+        "startSizeY": {
+          "min": 1.0,
+          "max": 1.0,
+          "mode": 0
+        },
+        "startSizeZ": {
+          "min": 1.0,
+          "max": 1.0,
+          "mode": 0
+        },
+        "rotation3D": false,
+        "startRotationX": {
+          "min": 0.0,
+          "max": 0.0,
+          "mode": 0
+        },
+        "startRotationY": {
+          "min": 0.0,
+          "max": 0.0,
+          "mode": 0
+        },
+        "startRotationZ": {
+          "min": 0.0,
+          "max": 0.0,
+          "mode": 0
+        },
+        "gravityModifier": {
+          "min": 0.0,
+          "max": 0.0,
+          "mode": 0
+        },
+        "startColor": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "startColorEx": {
+          "mode": 0,
+          "max": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "min": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "maxGradient": {
+            "colorKeys": [
+              [
+                0.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ]
+            ],
+            "alphaKeys": [
+              [
+                0.0,
+                1.0
+              ],
+              [
+                1.0,
+                1.0
+              ]
+            ]
+          },
+          "minGradient": {
+            "colorKeys": [
+              [
+                0.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ]
+            ],
+            "alphaKeys": [
+              [
+                0.0,
+                1.0
+              ],
+              [
+                1.0,
+                1.0
+              ]
+            ]
+          }
+        },
+        "emissionRate": {
+          "min": 10.0,
+          "max": 10.0,
+          "mode": 0
+        },
+        "emissionEnabled": false,
+        "bursts": [],
+        "ringBufferMode": 0,
+        "ringBufferLoopFrom": 0.0,
+        "ringBufferLoopTo": 1.0,
+        "cullingMode": 0,
+        "stopAction": 0,
+        "shape": {
+          "enabled": false,
+          "type": "Cone",
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "position": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "radius": 1.0,
+          "radiusThickness": 1.0,
+          "angle": 25.0,
+          "arc": 360.0,
+          "alignToDirection": false,
+          "randomDirection": 0.0
+        },
+        "sizeOverLifetime": false,
+        "sizeSeparateAxes": false,
+        "sizeCurve": null,
+        "sizeCurveY": null,
+        "sizeCurveZ": null,
+        "colorOverLifetime": false,
+        "colorGradient": null,
+        "colorOverLifetimeEx": null,
+        "velocityOverLifetime": null,
+        "forceOverLifetime": null,
+        "limitVelocity": null,
+        "inheritVelocity": null,
+        "trails": null,
+        "subEmitters": null,
+        "lights": null,
+        "noise": null,
+        "rotationOverLifetime": null,
+        "textureSheet": null,
+        "customData": null,
+        "renderer": {
+          "renderMode": "Billboard",
+          "alignment": 0,
+          "sortMode": 0,
+          "lengthScale": 2.0,
+          "meshPathID": 0,
+          "materialPathIDs": [
+            0
+          ],
+          "sortingFudge": 0.0,
+          "pivot": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "flip": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "normalDirection": 1.0,
+          "minParticleSize": 0.0,
+          "maxParticleSize": 0.5,
+          "enableGPUInstancing": true,
+          "useCustomVertexStreams": false,
+          "vertexStreams": [
+            0,
+            1,
+            3,
+            4
+          ],
+          "castShadows": 0,
+          "sortingOrder": 0,
+          "sortingLayerID": 0,
+          "trailMaterialPathID": null,
+          "materialKeys": []
+        }
+      }
+    },
+    {
+      "name": "FX_Glow_06_Add",
+      "pathID": 4536789755501935458,
+      "parent": -1347464766789017586,
+      "active": true,
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "worldPosition": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "localRotation": [
+        -1.1324881370455842e-06,
+        1.0728834922701935e-06,
+        0.7071057558059692,
+        0.7071078419685364
+      ],
+      "localScale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "meshKey": null,
+      "meshName": null,
+      "meshBinding": null,
+      "materialPathIDs": [],
+      "materialKeys": [],
+      "materialNames": [
+        "FX_Glow_06_Alp"
+      ],
+      "hasRenderer": false,
+      "components": [
+        "Transform",
+        "ParticleSystem",
+        "ParticleSystemRenderer"
+      ],
+      "particle": {
+        "duration": 5.0,
+        "looping": false,
+        "prewarm": false,
+        "simulationSpeed": 1.0,
+        "scalingMode": 1,
+        "simulationSpace": 1,
+        "playOnAwake": true,
+        "maxParticles": 1000,
+        "startDelay": {
+          "min": 0.0,
+          "max": 0.0,
+          "mode": 0
+        },
+        "startLifetime": {
+          "min": 0.3,
+          "max": 0.4,
+          "mode": 3
+        },
+        "startSpeed": {
+          "min": 0.0,
+          "max": 0.0,
+          "mode": 3
+        },
+        "startSize": {
+          "min": 0.07,
+          "max": 0.15,
+          "mode": 3
+        },
+        "size3D": false,
+        "startSizeY": {
+          "min": 1.0,
+          "max": 1.0,
+          "mode": 3
+        },
+        "startSizeZ": {
+          "min": 1.0,
+          "max": 1.0,
+          "mode": 3
+        },
+        "rotation3D": false,
+        "startRotationX": {
+          "min": 0.0,
+          "max": 0.0,
+          "mode": 0
+        },
+        "startRotationY": {
+          "min": 0.0,
+          "max": 0.0,
+          "mode": 0
+        },
+        "startRotationZ": {
+          "min": 0.0,
+          "max": 0.0,
+          "mode": 0
+        },
+        "gravityModifier": {
+          "min": -0.05,
+          "max": -0.05,
+          "mode": 0
+        },
+        "startColor": [
+          1.0,
+          0.91092,
+          0.49686,
+          1.0
+        ],
+        "startColorEx": {
+          "mode": 2,
+          "max": [
+            1.0,
+            0.91092,
+            0.49686,
+            1.0
+          ],
+          "min": [
+            1.0,
+            0.90112,
+            0.44969,
+            1.0
+          ],
+          "maxGradient": {
+            "colorKeys": [
+              [
+                0.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ]
+            ],
+            "alphaKeys": [
+              [
+                0.0,
+                1.0
+              ],
+              [
+                1.0,
+                1.0
+              ]
+            ]
+          },
+          "minGradient": {
+            "colorKeys": [
+              [
+                0.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ]
+            ],
+            "alphaKeys": [
+              [
+                0.0,
+                1.0
+              ],
+              [
+                1.0,
+                1.0
+              ]
+            ]
+          }
+        },
+        "emissionRate": {
+          "min": 0.0,
+          "max": 0.0,
+          "mode": 0
+        },
+        "emissionEnabled": true,
+        "bursts": [
+          {
+            "time": 0.0,
+            "countMin": 7.0,
+            "countMax": 7.0,
+            "cycles": 1,
+            "interval": 0.01,
+            "probability": 1.0
+          }
+        ],
+        "ringBufferMode": 0,
+        "ringBufferLoopFrom": 0.0,
+        "ringBufferLoopTo": 1.0,
+        "cullingMode": 0,
+        "stopAction": 0,
+        "shape": {
+          "enabled": true,
+          "type": "Sphere",
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "position": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "radius": 0.3,
+          "radiusThickness": 0.0,
+          "angle": 25.0,
+          "arc": 360.0,
+          "alignToDirection": false,
+          "randomDirection": 0.0
+        },
+        "sizeOverLifetime": true,
+        "sizeSeparateAxes": false,
+        "sizeCurve": {
+          "min": 1.0,
+          "max": 1.0,
+          "mode": 1,
+          "keys": [
+            [
+              0.0,
+              0.0,
+              13.03695,
+              13.03695,
+              0.0,
+              0.07114,
+              0
+            ],
+            [
+              0.26752,
+              1.0,
+              -1.0969,
+              -1.0969,
+              0.0,
+              0.11509,
+              0
+            ],
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0,
+              0.33333,
+              0.33333,
+              0
+            ]
+          ]
+        },
+        "sizeCurveY": null,
+        "sizeCurveZ": null,
+        "colorOverLifetime": true,
+        "colorGradient": {
+          "colorKeys": [
+            [
+              0.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ]
+          ],
+          "alphaKeys": [
+            [
+              0.0,
+              1.0
+            ],
+            [
+              0.25295,
+              1.0
+            ],
+            [
+              0.29412,
+              0.47059
+            ],
+            [
+              0.33236,
+              1.0
+            ],
+            [
+              1.0,
+              1.0
+            ]
+          ]
+        },
+        "colorOverLifetimeEx": {
+          "mode": 3,
+          "max": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "min": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "maxGradient": {
+            "colorKeys": [
+              [
+                0.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ]
+            ],
+            "alphaKeys": [
+              [
+                0.0,
+                1.0
+              ],
+              [
+                0.25295,
+                1.0
+              ],
+              [
+                0.29412,
+                0.47059
+              ],
+              [
+                0.33236,
+                1.0
+              ],
+              [
+                1.0,
+                1.0
+              ]
+            ]
+          },
+          "minGradient": {
+            "colorKeys": [
+              [
+                0.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ]
+            ],
+            "alphaKeys": [
+              [
+                0.0,
+                1.0
+              ],
+              [
+                0.11177,
+                1.0
+              ],
+              [
+                0.15589,
+                0.47059
+              ],
+              [
+                0.20294,
+                1.0
+              ],
+              [
+                1.0,
+                1.0
+              ]
+            ]
+          }
+        },
+        "velocityOverLifetime": {
+          "enabled": true,
+          "space": 0,
+          "x": {
+            "min": 1.0,
+            "max": 1.0,
+            "mode": 2,
+            "keys": [
+              [
+                0.0,
+                1.0,
+                -1.21666,
+                -1.21666,
+                0.33333,
+                0.18216,
+                0
+              ],
+              [
+                1.0,
+                0.05,
+                0.0,
+                0.0,
+                0.33333,
+                0.33333,
+                0
+              ]
+            ],
+            "keysMin": [
+              [
+                0.0,
+                -1.0,
+                1.217,
+                1.217,
+                0.33333,
+                0.15443,
+                0
+              ],
+              [
+                1.0,
+                -0.05,
+                0.0,
+                0.0,
+                0.33333,
+                0.33333,
+                0
+              ]
+            ]
+          },
+          "y": {
+            "min": 1.0,
+            "max": 1.0,
+            "mode": 2,
+            "keys": [
+              [
+                0.0,
+                1.0,
+                -1.21666,
+                -1.21666,
+                0.33333,
+                0.18216,
+                0
+              ],
+              [
+                1.0,
+                0.05,
+                0.0,
+                0.0,
+                0.33333,
+                0.33333,
+                0
+              ]
+            ],
+            "keysMin": [
+              [
+                0.0,
+                -1.0,
+                1.217,
+                1.217,
+                0.33333,
+                0.15443,
+                0
+              ],
+              [
+                1.0,
+                -0.05,
+                0.0,
+                0.0,
+                0.33333,
+                0.33333,
+                0
+              ]
+            ]
+          },
+          "z": {
+            "min": 1.0,
+            "max": 1.0,
+            "mode": 2,
+            "keys": [
+              [
+                0.0,
+                1.0,
+                -1.21666,
+                -1.21666,
+                0.33333,
+                0.18216,
+                0
+              ],
+              [
+                1.0,
+                0.05,
+                0.0,
+                0.0,
+                0.33333,
+                0.33333,
+                0
+              ]
+            ],
+            "keysMin": [
+              [
+                0.0,
+                -1.0,
+                1.217,
+                1.217,
+                0.33333,
+                0.15443,
+                0
+              ],
+              [
+                1.0,
+                -0.05,
+                0.0,
+                0.0,
+                0.33333,
+                0.33333,
+                0
+              ]
+            ]
+          },
+          "orbitalX": {
+            "min": 10.0,
+            "max": 10.0,
+            "mode": 2,
+            "keys": [
+              [
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.33333,
+                0
+              ],
+              [
+                1.0,
+                0.14894,
+                -0.85106,
+                -0.85106,
+                0.33333,
+                0.0,
+                0
+              ]
+            ],
+            "keysMin": [
+              [
+                0.0,
+                0.4734,
+                0.21144,
+                0.21144,
+                0.0,
+                0.15933,
+                0
+              ],
+              [
+                1.0,
+                0.04787,
+                -0.42554,
+                -0.42554,
+                0.33333,
+                0.0,
+                0
+              ]
+            ]
+          },
+          "orbitalY": {
+            "min": 0.0,
+            "max": 0.0,
+            "mode": 2,
+            "keys": [
+              [
+                0.0,
+                1.0,
+                -2.17569,
+                -2.17569,
+                0.0,
+                0.08755,
+                0
+              ],
+              [
+                1.0,
+                0.3,
+                0.01141,
+                0.01141,
+                0.10984,
+                0.0,
+                0
+              ]
+            ],
+            "keysMin": [
+              [
+                0.0,
+                -1.0,
+                1.9911,
+                1.9911,
+                0.0,
+                0.06797,
+                0
+              ],
+              [
+                1.0,
+                -0.3,
+                -0.23325,
+                -0.23325,
+                0.13431,
+                0.0,
+                0
+              ]
+            ]
+          },
+          "orbitalZ": {
+            "min": 0.0,
+            "max": 0.0,
+            "mode": 2,
+            "keys": [
+              [
+                0.0,
+                1.0,
+                -2.17569,
+                -2.17569,
+                0.0,
+                0.08755,
+                0
+              ],
+              [
+                1.0,
+                0.3,
+                0.01141,
+                0.01141,
+                0.10984,
+                0.0,
+                0
+              ]
+            ],
+            "keysMin": [
+              [
+                0.0,
+                -1.0,
+                1.9911,
+                1.9911,
+                0.0,
+                0.06797,
+                0
+              ],
+              [
+                1.0,
+                -0.3,
+                -0.23325,
+                -0.23325,
+                0.13431,
+                0.0,
+                0
+              ]
+            ]
+          },
+          "orbitalOffsetX": {
+            "min": 0.0,
+            "max": 0.0,
+            "mode": 0
+          },
+          "orbitalOffsetY": {
+            "min": 0.0,
+            "max": 0.0,
+            "mode": 0
+          },
+          "orbitalOffsetZ": {
+            "min": 0.0,
+            "max": 0.0,
+            "mode": 0
+          },
+          "radial": {
+            "min": 0.0,
+            "max": 0.0,
+            "mode": 0
+          },
+          "speedModifier": {
+            "min": 1.0,
+            "max": 1.0,
+            "mode": 0
+          }
+        },
+        "forceOverLifetime": null,
+        "limitVelocity": null,
+        "inheritVelocity": null,
+        "trails": null,
+        "subEmitters": null,
+        "lights": null,
+        "noise": null,
+        "rotationOverLifetime": null,
+        "textureSheet": null,
+        "customData": null,
+        "renderer": {
+          "renderMode": "Billboard",
+          "alignment": 0,
+          "sortMode": 0,
+          "lengthScale": 2.0,
+          "meshPathID": 0,
+          "materialPathIDs": [
+            2376679018077089177
+          ],
+          "sortingFudge": 0.0,
+          "pivot": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "flip": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "normalDirection": 1.0,
+          "minParticleSize": 0.0,
+          "maxParticleSize": 0.5,
+          "enableGPUInstancing": true,
+          "useCustomVertexStreams": false,
+          "vertexStreams": [
+            0,
+            1,
+            3,
+            4
+          ],
+          "castShadows": 0,
+          "sortingOrder": 0,
+          "sortingLayerID": 0,
+          "trailMaterialPathID": null,
+          "materialKeys": [
+            "FX_Glow_06_Alp"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Offset",
+      "pathID": 4584896451282946101,
+      "parent": -2919457401176543308,
+      "active": true,
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "worldPosition": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "localRotation": [
+        -0.7071068286895752,
+        0.0,
+        0.0,
+        0.7071068286895752
+      ],
+      "localScale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "meshKey": null,
+      "meshName": null,
+      "meshBinding": null,
+      "materialPathIDs": [],
+      "materialKeys": [],
+      "materialNames": [],
+      "hasRenderer": false,
+      "components": [
+        "Transform"
+      ]
+    }
+  ],
+  "animations": [
+    {
+      "name": "FX_Sign_02_End",
+      "length": 0.56667,
+      "loop": false,
+      "sampleRate": 60.0,
+      "hostPathID": -2919457401176543308,
+      "bindings": [
+        {
+          "targetPathID": 4584896451282946101,
+          "path": "Offset",
+          "pathHash": 1587990502,
+          "property": "localEulerAnglesRaw",
+          "curves": {
+            "x": [
+              [
+                0.0,
+                6.0,
+                0.0,
+                3.0
+              ],
+              [
+                1.0,
+                0.0,
+                0.0,
+                1.0
+              ],
+              [
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                1.0,
+                -90.0,
+                0.0,
+                0.0
+              ],
+              [
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            ],
+            "y": [
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            ],
+            "z": [
+              [
+                1.0,
+                0.00049,
+                0.0,
+                843.74573
+              ]
+            ]
+          }
+        }
+      ],
+      "cullingMode": 0,
+      "updateMode": 0,
+      "applyRootMotion": false
+    },
+    {
+      "name": "FX_Sign_02",
+      "length": 0.91667,
+      "loop": false,
+      "sampleRate": 60.0,
+      "hostPathID": -1347464766789017586,
+      "bindings": [],
+      "cullingMode": 0,
+      "updateMode": 0,
+      "applyRootMotion": false
+    }
+  ],
+  "shaders": [
+    "MMN/FX/Amplify shader/FX_Default",
+    "MMN/FX/Amplify shader/FX_Opaque",
+    "MMN/FX/Amplify shader/FX_Opaque_Specular"
+  ],
+  "unresolvedMaterials": []
+}

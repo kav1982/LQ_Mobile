@@ -1,0 +1,678 @@
+{
+  "id": "1_effect/character/class/4_mage/mage_fire/fx_firemage_rapidfire_lod2",
+  "category": "Effects",
+  "title": "fx_firemage_rapidfire_lod2",
+  "originalPath": "1_effect/character/class/4_mage/mage_fire/fx_firemage_rapidfire_lod2.prefab",
+  "source": {
+    "seedBundle": "dedicated_bundle_109ab1cd",
+    "blob": "AssetPackages/0636.blob",
+    "chunk": 411,
+    "closureBundles": 9
+  },
+  "meshes": [],
+  "materials": [
+    {
+      "name": "FX_FireMage_Trail_05",
+      "key": "FX_FireMage_Trail_05",
+      "pathID": 4610612386761750475,
+      "shader": "MMN/FX/Amplify shader/FX_Dissolve_Div_Distortion_2C_AddNoise",
+      "file": "FX_FireMage_Trail_05.json"
+    },
+    {
+      "name": "FX_FireMage_Trail_06",
+      "key": "FX_FireMage_Trail_06",
+      "pathID": -5595555679433910418,
+      "shader": "MMN/FX/Amplify shader/FX_Dissolve_Div_Distortion_2C_AddNoise",
+      "file": "FX_FireMage_Trail_06.json"
+    },
+    {
+      "name": "FX_Common_Shadow_01",
+      "key": "FX_Common_Shadow_01",
+      "pathID": 1270187118899004876,
+      "shader": "MMN/FX/Amplify shader/FX_Opaque",
+      "file": "FX_Common_Shadow_01.json"
+    }
+  ],
+  "textures": [
+    "FX_Mask_23.png",
+    "FX_Noise_200.png",
+    "FX_Noise_36.png",
+    "FX_Null_01.png"
+  ],
+  "textureSettings": {
+    "FX_Mask_23.png": {
+      "colorSpace": 1,
+      "mipCount": 8,
+      "wrapU": 0,
+      "wrapV": 0,
+      "filterMode": 1,
+      "aniso": 1
+    },
+    "FX_Noise_200.png": {
+      "colorSpace": 0,
+      "mipCount": 10,
+      "wrapU": 0,
+      "wrapV": 0,
+      "filterMode": 1,
+      "aniso": 1
+    },
+    "FX_Noise_36.png": {
+      "colorSpace": 0,
+      "mipCount": 1,
+      "wrapU": 0,
+      "wrapV": 0,
+      "filterMode": 1,
+      "aniso": 1
+    },
+    "FX_Null_01.png": {
+      "colorSpace": 1,
+      "mipCount": 1,
+      "wrapU": 0,
+      "wrapV": 0,
+      "filterMode": 1,
+      "aniso": 1
+    }
+  },
+  "hierarchy": [
+    {
+      "name": "FX_FireMage_Trail_05",
+      "pathID": -4507959298600444274,
+      "parent": -1926333661370948926,
+      "active": true,
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "worldPosition": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "localRotation": [
+        -0.0,
+        -0.0,
+        -0.0,
+        1.0
+      ],
+      "localScale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "meshKey": null,
+      "meshName": null,
+      "meshBinding": null,
+      "materialPathIDs": [],
+      "materialKeys": [],
+      "materialNames": [
+        "FX_FireMage_Trail_05"
+      ],
+      "hasRenderer": false,
+      "components": [
+        "Transform",
+        "TrailRenderer",
+        "Animator"
+      ],
+      "trailRenderer": {
+        "time": 0.15,
+        "minVertexDistance": 0.1,
+        "autodestruct": false,
+        "emitting": true,
+        "widthMultiplier": 0.5,
+        "widthCurve": [
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0
+          ]
+        ],
+        "color": {
+          "colorKeys": [
+            [
+              0.15589,
+              0.88679,
+              0.58147,
+              0.29002
+            ],
+            [
+              0.99413,
+              0.80189,
+              0.34811,
+              0.13365
+            ]
+          ],
+          "alphaKeys": [
+            [
+              0.0,
+              0.03922
+            ],
+            [
+              1.0,
+              0.03922
+            ]
+          ]
+        },
+        "numCornerVertices": 0,
+        "numCapVertices": 0,
+        "alignment": 0,
+        "textureMode": 0,
+        "shadowBias": 0.5,
+        "generateLightingData": false,
+        "materialPathIDs": [
+          4610612386761750475
+        ],
+        "materialKeys": [
+          "FX_FireMage_Trail_05"
+        ]
+      },
+      "animator": {
+        "cullingMode": 0,
+        "updateMode": 0,
+        "applyRootMotion": false
+      }
+    },
+    {
+      "name": "FX_FireMage_RapidFire_LOD2",
+      "pathID": -1926333661370948926,
+      "parent": null,
+      "active": true,
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "worldPosition": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "localRotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "localScale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "meshKey": null,
+      "meshName": null,
+      "meshBinding": null,
+      "materialPathIDs": [],
+      "materialKeys": [],
+      "materialNames": [],
+      "hasRenderer": false,
+      "components": [
+        "Transform",
+        "ParticleSystem",
+        "ParticleSystemRenderer",
+        "Animator"
+      ],
+      "particle": {
+        "duration": 5.0,
+        "looping": true,
+        "prewarm": false,
+        "simulationSpeed": 1.0,
+        "scalingMode": 1,
+        "simulationSpace": 0,
+        "playOnAwake": true,
+        "maxParticles": 1000,
+        "startDelay": {
+          "min": 0.0,
+          "max": 0.0,
+          "mode": 0
+        },
+        "startLifetime": {
+          "min": 5.0,
+          "max": 5.0,
+          "mode": 0
+        },
+        "startSpeed": {
+          "min": 5.0,
+          "max": 5.0,
+          "mode": 0
+        },
+        "startSize": {
+          "min": 1.0,
+          "max": 1.0,
+          "mode": 0
+        },
+        "size3D": false,
+        "startSizeY": {
+          "min": 1.0,
+          "max": 1.0,
+          "mode": 0
+        },
+        "startSizeZ": {
+          "min": 1.0,
+          "max": 1.0,
+          "mode": 0
+        },
+        "rotation3D": false,
+        "startRotationX": {
+          "min": 0.0,
+          "max": 0.0,
+          "mode": 0
+        },
+        "startRotationY": {
+          "min": 0.0,
+          "max": 0.0,
+          "mode": 0
+        },
+        "startRotationZ": {
+          "min": 0.0,
+          "max": 0.0,
+          "mode": 0
+        },
+        "gravityModifier": {
+          "min": 0.0,
+          "max": 0.0,
+          "mode": 0
+        },
+        "startColor": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "startColorEx": {
+          "mode": 0,
+          "max": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "min": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "maxGradient": {
+            "colorKeys": [
+              [
+                0.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ]
+            ],
+            "alphaKeys": [
+              [
+                0.0,
+                1.0
+              ],
+              [
+                1.0,
+                1.0
+              ]
+            ]
+          },
+          "minGradient": {
+            "colorKeys": [
+              [
+                0.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ]
+            ],
+            "alphaKeys": [
+              [
+                0.0,
+                1.0
+              ],
+              [
+                1.0,
+                1.0
+              ]
+            ]
+          }
+        },
+        "emissionRate": {
+          "min": 10.0,
+          "max": 10.0,
+          "mode": 0
+        },
+        "emissionEnabled": false,
+        "bursts": [],
+        "ringBufferMode": 0,
+        "ringBufferLoopFrom": 0.0,
+        "ringBufferLoopTo": 1.0,
+        "cullingMode": 0,
+        "stopAction": 0,
+        "shape": {
+          "enabled": false,
+          "type": "Cone",
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "position": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "radius": 1.0,
+          "radiusThickness": 1.0,
+          "angle": 25.0,
+          "arc": 360.0,
+          "alignToDirection": false,
+          "randomDirection": 0.0
+        },
+        "sizeOverLifetime": false,
+        "sizeSeparateAxes": false,
+        "sizeCurve": null,
+        "sizeCurveY": null,
+        "sizeCurveZ": null,
+        "colorOverLifetime": false,
+        "colorGradient": null,
+        "colorOverLifetimeEx": null,
+        "velocityOverLifetime": null,
+        "forceOverLifetime": null,
+        "limitVelocity": null,
+        "inheritVelocity": null,
+        "trails": null,
+        "subEmitters": null,
+        "lights": null,
+        "noise": null,
+        "rotationOverLifetime": null,
+        "textureSheet": null,
+        "customData": null,
+        "renderer": {
+          "renderMode": "Billboard",
+          "alignment": 0,
+          "sortMode": 0,
+          "lengthScale": 2.0,
+          "meshPathID": 0,
+          "materialPathIDs": [
+            0
+          ],
+          "sortingFudge": 0.0,
+          "pivot": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "flip": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "normalDirection": 1.0,
+          "minParticleSize": 0.0,
+          "maxParticleSize": 0.5,
+          "enableGPUInstancing": true,
+          "useCustomVertexStreams": false,
+          "vertexStreams": [
+            0,
+            1,
+            3,
+            4
+          ],
+          "castShadows": 0,
+          "sortingOrder": 0,
+          "sortingLayerID": 0,
+          "trailMaterialPathID": null,
+          "materialKeys": []
+        }
+      },
+      "animator": {
+        "cullingMode": 0,
+        "updateMode": 0,
+        "applyRootMotion": false
+      }
+    },
+    {
+      "name": "FX_FireMage_Trail_06",
+      "pathID": 201918585467745175,
+      "parent": -4507959298600444274,
+      "active": true,
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "worldPosition": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "localRotation": [
+        -0.0,
+        -0.0,
+        -0.0,
+        1.0
+      ],
+      "localScale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "meshKey": null,
+      "meshName": null,
+      "meshBinding": null,
+      "materialPathIDs": [],
+      "materialKeys": [],
+      "materialNames": [
+        "FX_FireMage_Trail_06"
+      ],
+      "hasRenderer": false,
+      "components": [
+        "Transform",
+        "TrailRenderer"
+      ],
+      "trailRenderer": {
+        "time": 0.3,
+        "minVertexDistance": 0.1,
+        "autodestruct": false,
+        "emitting": true,
+        "widthMultiplier": 0.7,
+        "widthCurve": [
+          [
+            0.0,
+            0.65824,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0
+          ],
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0
+          ]
+        ],
+        "color": {
+          "colorKeys": [
+            [
+              0.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ]
+          ],
+          "alphaKeys": [
+            [
+              0.0,
+              0.03922
+            ],
+            [
+              1.0,
+              0.03922
+            ]
+          ]
+        },
+        "numCornerVertices": 0,
+        "numCapVertices": 0,
+        "alignment": 0,
+        "textureMode": 0,
+        "shadowBias": 0.5,
+        "generateLightingData": false,
+        "materialPathIDs": [
+          -5595555679433910418
+        ],
+        "materialKeys": [
+          "FX_FireMage_Trail_06"
+        ]
+      }
+    },
+    {
+      "name": "Shadow",
+      "pathID": 3716900494575122961,
+      "parent": -4507959298600444274,
+      "active": true,
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "worldPosition": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "localRotation": [
+        -0.0,
+        -0.0,
+        -0.0,
+        1.0
+      ],
+      "localScale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "meshKey": null,
+      "meshName": null,
+      "meshBinding": null,
+      "materialPathIDs": [],
+      "materialKeys": [],
+      "materialNames": [
+        "FX_Common_Shadow_01"
+      ],
+      "hasRenderer": false,
+      "components": [
+        "Transform",
+        "TrailRenderer"
+      ],
+      "trailRenderer": {
+        "time": 0.15,
+        "minVertexDistance": 0.1,
+        "autodestruct": false,
+        "emitting": true,
+        "widthMultiplier": 0.3,
+        "widthCurve": [
+          [
+            0.0,
+            0.01674,
+            15.25491,
+            15.25491,
+            0.0,
+            0.20155,
+            0
+          ],
+          [
+            0.08301,
+            0.65824,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0
+          ],
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0
+          ]
+        ],
+        "color": {
+          "colorKeys": [
+            [
+              0.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ]
+          ],
+          "alphaKeys": [
+            [
+              0.0,
+              1.0
+            ],
+            [
+              1.0,
+              1.0
+            ]
+          ]
+        },
+        "numCornerVertices": 0,
+        "numCapVertices": 0,
+        "alignment": 0,
+        "textureMode": 0,
+        "shadowBias": 0.5,
+        "generateLightingData": false,
+        "materialPathIDs": [
+          1270187118899004876
+        ],
+        "materialKeys": [
+          "FX_Common_Shadow_01"
+        ]
+      }
+    }
+  ],
+  "animations": [],
+  "shaders": [
+    "MMN/FX/Amplify shader/FX_Dissolve_Div_Distortion_2C_AddNoise",
+    "MMN/FX/Amplify shader/FX_Opaque"
+  ],
+  "unresolvedMaterials": []
+}

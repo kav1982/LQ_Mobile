@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using TirChonaill.Editor;
 using UnityEditor;
+using UnityEditor.Animations;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -38,28 +40,90 @@ namespace FX.Editor
             "1_effect/environment/prop/fx_campfire_colhen_loop",
         };
 
+        static readonly string[] FireMagePreviewIds =
+        {
+            "1_effect/character/class/4_mage/fx_mage_fireball_projectile_01",
+            "1_effect/character/class/4_mage/fx_fireball_explosion",
+            "1_effect/character/class/4_mage/fx_fx_fireball_explosion_decal",
+            "1_effect/character/class/4_mage/fx_meteorstrike_explosion_tier2a",
+            "1_effect/character/class/4_mage/fx_meteorstrike_projectile_tier2a",
+            "1_effect/character/class/4_mage/fx_expertmage_enchantmagic_fire_02",
+            "1_effect/character/class/4_mage/mage_fire/fx_firemage_incinerate_end_01",
+            "1_effect/character/class/4_mage/mage_fire/fx_firemage_firestorm_skill",
+            "1_effect/character/class/4_mage/mage_fire/fx_firemage_flamecannon",
+            "1_effect/character/class/4_mage/mage_fire/fx_firemage_incinerate_casting",
+            "1_effect/character/class/4_mage/mage_fire/fx_firemage_incinerate_loop_01",
+            "1_effect/character/class/4_mage/mage_fire/fx_firemage_ignite_tier2_explosion",
+            "1_effect/character/class/4_mage/mage_fire/fx_firemage_backdraft_01",
+            "1_effect/character/class/4_mage/mage_fire/fx_firemage_wandfire",
+            "1_effect/character/class/4_mage/mage_fire/fx_firemage_flame_creating_01",
+        };
+
+        const string EnvCatalog = PackRoot + "/catalog.json";
+        const string ClassCatalog = PackRoot + "/catalog_class.json";
+
         [MenuItem("MMN/FX/1. Import Environment FX")]
         public static void ImportAll()
         {
-            ImportPackages(null);
+            ImportPackages(null, EnvCatalog);
         }
 
         [MenuItem("MMN/FX/1b. Reimport Scene Preview FX")]
         public static void ImportPreviewFx()
         {
-            ImportPackages(PreviewFxIds);
+            ImportPackages(PreviewFxIds, EnvCatalog);
         }
 
-        public static void ImportPackages(string[] onlyIds)
+        [MenuItem("MMN/FX/2. Import Class FX (Fire Mage)")]
+        public static void ImportClassFx()
         {
-            string catalogPath = PackRoot + "/catalog.json";
+            ImportPackages(null, ClassCatalog);
+        }
+
+        [MenuItem("MMN/FX/2b. Reimport Fire Mage Preview FX")]
+        public static void ImportFireMagePreviewFx()
+        {
+            ImportPackages(FireMagePreviewIds, ClassCatalog);
+        }
+
+        [MenuItem("MMN/FX/2c. Build Fire Mage Preview Scene")]
+        public static void BuildFireMagePreviewScene()
+        {
+            const string scenePath = OutRoot + "/Scene/FX_TestClassFire.unity";
+            EnsureFolder(OutRoot + "/Scene");
+            EditorSceneManager.SaveOpenScenes();
+            var scene = EditorSceneManager.NewScene(NewSceneSetup.DefaultGameObjects, NewSceneMode.Single);
+            int placed = 0;
+            for (int i = 0; i < FireMagePreviewIds.Length; i++)
+            {
+                string prefabPath = $"{OutRoot}/{FireMagePreviewIds[i]}.prefab";
+                var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath);
+                if (prefab == null)
+                {
+                    Debug.LogWarning($"[FX] preview missing {prefabPath}");
+                    continue;
+                }
+                var go = (GameObject)PrefabUtility.InstantiatePrefab(prefab);
+                go.transform.position = new Vector3(i * 6f, 0f, 0f);
+                placed++;
+            }
+            if (!EditorSceneManager.SaveScene(scene, scenePath))
+                Debug.LogError($"[FX] failed to save {scenePath}");
+            else
+                Debug.Log($"[FX] preview scene {scenePath} placed={placed}");
+        }
+
+        public static void ImportPackages(string[] onlyIds, string catalogPath = null)
+        {
+            if (string.IsNullOrEmpty(catalogPath))
+                catalogPath = EnvCatalog;
             if (!File.Exists(catalogPath))
             {
-                Debug.LogError($"[FX] missing {catalogPath} - run extract_fx_environment.py first");
+                Debug.LogError($"[FX] missing {catalogPath} - run the matching extract script first");
                 return;
             }
 
-            foreach (var sub in new[] { TexRoot, MatRoot, MeshRoot, OutRoot + "/1_effect/environment" })
+            foreach (var sub in new[] { TexRoot, MatRoot, MeshRoot, OutRoot + "/1_effect" })
                 EnsureFolder(sub);
 
             var catalog = MiniJson.Deserialize(File.ReadAllText(catalogPath, Encoding.UTF8)) as Dictionary<string, object>;
@@ -298,6 +362,15 @@ namespace FX.Editor
                 mat.shader = shader;
             }
 
+            if (!string.IsNullOrEmpty(wanted)
+                && (wanted.Contains("Offset_Fresnel")
+                    || wanted.Contains("Distortion_2C_AddNoise")
+                    || wanted.Contains("FX_AlphaTest_02")
+                    || wanted.Contains("VertexOffset_01")
+                    || wanted.Contains("Distortion_Offset")
+                    || wanted.Contains("Dissolve_Div_Offset")))
+                mat.enableInstancing = true;
+
             var types = PropertyTypes(shader);
 
             if (Get<Dictionary<string, object>>(d, "floats") is Dictionary<string, object> floats)
@@ -325,14 +398,32 @@ namespace FX.Editor
                     if (!types.TryGetValue(kv.Key, out var pt) || pt != ShaderPropertyType.Texture) continue;
 
                     string png = Get<string>(te, "png");
+                    bool assigned = false;
                     if (!string.IsNullOrEmpty(png)
                         && texMap.TryGetValue(Path.GetFileNameWithoutExtension(png), out var tex))
+                    {
                         mat.SetTexture(kv.Key, tex);
+                        assigned = true;
+                    }
 
                     var scale = ToVector2(Get<List<object>>(te, "scale"));
                     var offset = ToVector2(Get<List<object>>(te, "offset"));
-                    if (scale.HasValue && scale.Value != Vector2.zero) mat.SetTextureScale(kv.Key, scale.Value);
-                    if (offset.HasValue) mat.SetTextureOffset(kv.Key, offset.Value);
+                    if (assigned)
+                    {
+                        if (scale.HasValue && scale.Value != Vector2.zero) mat.SetTextureScale(kv.Key, scale.Value);
+                        if (offset.HasValue) mat.SetTextureOffset(kv.Key, offset.Value);
+                    }
+
+                    if (kv.Key.StartsWith("_NoiseTex", StringComparison.Ordinal))
+                    {
+                        if (assigned) mat.EnableKeyword("_NOISETEX");
+                        else mat.DisableKeyword("_NOISETEX");
+                    }
+                    if (kv.Key.StartsWith("_MaskTex", StringComparison.Ordinal))
+                    {
+                        if (assigned) mat.EnableKeyword("_MASKTEX");
+                        else mat.DisableKeyword("_MASKTEX");
+                    }
                 }
 
             if (mat.HasProperty("_QueueOffset"))
@@ -473,6 +564,20 @@ namespace FX.Editor
             }
         }
 
+        static Mesh BuiltinFromFileId(long fileId)
+        {
+            switch (fileId)
+            {
+                case 10202: return BuiltinMesh("builtin:Cube");
+                case 10206: return BuiltinMesh("builtin:Cylinder");
+                case 10207: return BuiltinMesh("builtin:Sphere");
+                case 10208: return BuiltinMesh("builtin:Capsule");
+                case 10209: return BuiltinMesh("builtin:Plane");
+                case 10210: return BuiltinMesh("builtin:Quad");
+                default: return null;
+            }
+        }
+
         static Mesh BuiltinMesh(string spec)
         {
             string name = spec.Substring("builtin:".Length);
@@ -518,6 +623,17 @@ namespace FX.Editor
                 if (light != null)
                     BuildLight(go, light);
 
+                var trail = Get<Dictionary<string, object>>(n, "trailRenderer");
+                if (trail != null)
+                    BuildTrailRenderer(go, trail, matByKey, matByPathId);
+
+                var script = Get<Dictionary<string, object>>(n, "script");
+                if (script != null && Get<string>(script, "className") == "DecalTransformMaterialSetter")
+                {
+                    var setter = go.AddComponent<DecalTransformMaterialSetter>();
+                    setter.useZeroTimeBurst = ToB(script, "useZeroTimeBurst", false);
+                }
+
                 var particle = Get<Dictionary<string, object>>(n, "particle");
                 if (particle != null)
                 {
@@ -549,6 +665,16 @@ namespace FX.Editor
                     && m.shader.name == "MMN/FX/ObjectDecalForCampFire")
                     && go.GetComponent<MMN_CampFireDecalBinder>() == null)
                     go.AddComponent<MMN_CampFireDecalBinder>();
+            }
+
+            BindSubEmitters(dicts, goByPid);
+            try
+            {
+                BuildAnimations(id, man, goByPid);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"[FX] animator {id}: {e.Message}");
             }
 
             var roots = dicts
@@ -650,8 +776,16 @@ namespace FX.Editor
                 main.startRotation = Radians(Get<Dictionary<string, object>>(p, "startRotationZ"));
             }
             main.gravityModifier = MinMax(Get<Dictionary<string, object>>(p, "gravityModifier"), 0f);
-            var startColor = ToColor(p.TryGetValue("startColor", out var sc) ? sc : null);
-            if (startColor.HasValue) main.startColor = startColor.Value;
+            var startColorEx = Get<Dictionary<string, object>>(p, "startColorEx");
+            if (startColorEx != null)
+                main.startColor = BuildMinMaxGradient(startColorEx);
+            else
+            {
+                var startColor = ToColor(p.TryGetValue("startColor", out var sc) ? sc : null);
+                if (startColor.HasValue) main.startColor = startColor.Value;
+            }
+            var startDelay = Get<Dictionary<string, object>>(p, "startDelay");
+            if (startDelay != null) main.startDelay = MinMax(startDelay, 0f);
             main.scalingMode = ToF(p.TryGetValue("scalingMode", out var sm) ? sm : 1f) < 0.5f
                 ? ParticleSystemScalingMode.Hierarchy : ParticleSystemScalingMode.Local;
             int sim = (int)ToF(p.TryGetValue("simulationSpace", out var simo) ? simo : 0f);
@@ -659,6 +793,24 @@ namespace FX.Editor
                 : sim == 2 ? ParticleSystemSimulationSpace.Custom
                 : ParticleSystemSimulationSpace.Local;
             main.playOnAwake = ToB(p, "playOnAwake", true);
+            int ring = (int)ToF(p.TryGetValue("ringBufferMode", out var rb) ? rb : 0f);
+            main.ringBufferMode = ring == 2 ? ParticleSystemRingBufferMode.LoopUntilReplaced
+                : ring == 1 ? ParticleSystemRingBufferMode.PauseUntilReplaced
+                : ParticleSystemRingBufferMode.Disabled;
+            if (ring != 0)
+                main.ringBufferLoopRange = new Vector2(
+                    ToF(p.TryGetValue("ringBufferLoopFrom", out var rf) ? rf : 0f),
+                    ToF(p.TryGetValue("ringBufferLoopTo", out var rt) ? rt : 1f));
+            int cull = (int)ToF(p.TryGetValue("cullingMode", out var cm) ? cm : 0f);
+            main.cullingMode = cull == 2 ? ParticleSystemCullingMode.PauseAndCatchup
+                : cull == 1 ? ParticleSystemCullingMode.Pause
+                : cull == 3 ? ParticleSystemCullingMode.AlwaysSimulate
+                : ParticleSystemCullingMode.Automatic;
+            int stop = (int)ToF(p.TryGetValue("stopAction", out var sa) ? sa : 0f);
+            main.stopAction = stop == 1 ? ParticleSystemStopAction.Disable
+                : stop == 2 ? ParticleSystemStopAction.Destroy
+                : stop == 3 ? ParticleSystemStopAction.Callback
+                : ParticleSystemStopAction.None;
 
             var emission = ps.emission;
             var rate = Get<Dictionary<string, object>>(p, "emissionRate");
@@ -674,8 +826,8 @@ namespace FX.Editor
                     if (b == null) continue;
                     list.Add(new ParticleSystem.Burst(
                         ToF(b.TryGetValue("time", out var t) ? t : 0f),
-                        (short)ToF(b.TryGetValue("countMin", out var cm) ? cm : 1f),
-                        (short)ToF(b.TryGetValue("countMax", out var cx) ? cx : 1f)));
+                        (short)ToF(b.TryGetValue("countMin", out var cmin) ? cmin : 1f),
+                        (short)ToF(b.TryGetValue("countMax", out var cmax) ? cmax : 1f)));
                 }
                 if (list.Count > 0) emission.SetBursts(list.ToArray());
             }
@@ -710,19 +862,36 @@ namespace FX.Editor
             {
                 var col = ps.colorOverLifetime;
                 col.enabled = true;
-                col.color = new ParticleSystem.MinMaxGradient(
-                    BuildGradient(Get<Dictionary<string, object>>(p, "colorGradient")));
+                var ex = Get<Dictionary<string, object>>(p, "colorOverLifetimeEx");
+                col.color = ex != null
+                    ? BuildMinMaxGradient(ex)
+                    : new ParticleSystem.MinMaxGradient(
+                        BuildGradient(Get<Dictionary<string, object>>(p, "colorGradient")));
             }
 
             if (ToB(p, "sizeOverLifetime", false))
             {
                 var size = ps.sizeOverLifetime;
                 size.enabled = true;
-                size.size = MinMax(Get<Dictionary<string, object>>(p, "sizeCurve"), 1f);
+                if (ToB(p, "sizeSeparateAxes", false))
+                {
+                    size.separateAxes = true;
+                    size.x = MinMax(Get<Dictionary<string, object>>(p, "sizeCurve"), 1f);
+                    size.y = MinMax(Get<Dictionary<string, object>>(p, "sizeCurveY"), 1f);
+                    size.z = MinMax(Get<Dictionary<string, object>>(p, "sizeCurveZ"), 1f);
+                }
+                else
+                {
+                    size.size = MinMax(Get<Dictionary<string, object>>(p, "sizeCurve"), 1f);
+                }
             }
 
             ApplyAxisModule(ps.velocityOverLifetime, Get<Dictionary<string, object>>(p, "velocityOverLifetime"));
+            ApplyOrbital(ps.velocityOverLifetime, Get<Dictionary<string, object>>(p, "velocityOverLifetime"));
             ApplyAxisModule(ps.forceOverLifetime, Get<Dictionary<string, object>>(p, "forceOverLifetime"));
+            ApplyLimitVelocity(ps, Get<Dictionary<string, object>>(p, "limitVelocity"));
+            ApplyInheritVelocity(ps, Get<Dictionary<string, object>>(p, "inheritVelocity"));
+            ApplyTrails(ps, Get<Dictionary<string, object>>(p, "trails"));
             ApplyRotation(ps, Get<Dictionary<string, object>>(p, "rotationOverLifetime"));
             ApplyNoise(ps, Get<Dictionary<string, object>>(p, "noise"));
             ApplyTextureSheet(ps, Get<Dictionary<string, object>>(p, "textureSheet"));
@@ -730,6 +899,8 @@ namespace FX.Editor
 
             var rendererData = Get<Dictionary<string, object>>(p, "renderer");
             var pr = go.GetComponent<ParticleSystemRenderer>();
+            if (pr != null && rendererData == null)
+                pr.enabled = false;
             if (rendererData != null && pr != null)
             {
                 string mode = Get<string>(rendererData, "renderMode") ?? "Billboard";
@@ -758,11 +929,32 @@ namespace FX.Editor
                 pr.enableGPUInstancing = ToB(rendererData, "enableGPUInstancing", true);
 
                 string meshKey = Get<string>(rendererData, "meshKey");
+                if (string.IsNullOrEmpty(meshKey))
+                    meshKey = Get<string>(rendererData, "meshName");
                 if (!string.IsNullOrEmpty(meshKey) && meshByKey.TryGetValue(meshKey, out var m))
                     pr.mesh = m;
+                else if (!string.IsNullOrEmpty(meshKey)
+                    && meshKey.StartsWith("builtin:", StringComparison.OrdinalIgnoreCase))
+                    pr.mesh = BuiltinMesh(meshKey);
+                else if (pr.mesh == null)
+                {
+                    long meshPid = ToL(rendererData.TryGetValue("meshPathID", out var mpid) ? mpid : 0L);
+                    pr.mesh = BuiltinFromFileId(meshPid);
+                }
 
                 var mats = ResolveMaterials(rendererData, matByKey, matByPathId);
                 if (mats.Count > 0) pr.sharedMaterials = mats.ToArray();
+                else pr.enabled = false;
+
+                string trailKey = Get<string>(rendererData, "trailMaterialKey");
+                if (!string.IsNullOrEmpty(trailKey) && matByKey.TryGetValue(trailKey, out var trailMat))
+                    pr.trailMaterial = trailMat;
+                int castShadows = (int)ToF(rendererData.TryGetValue("castShadows", out var csh) ? csh : 0f);
+                pr.shadowCastingMode = castShadows == 1 ? ShadowCastingMode.On
+                    : castShadows == 2 ? ShadowCastingMode.TwoSided
+                    : castShadows == 3 ? ShadowCastingMode.ShadowsOnly
+                    : ShadowCastingMode.Off;
+                pr.sortingOrder = (int)ToF(rendererData.TryGetValue("sortingOrder", out var so) ? so : 0f);
 
                 var streamObjs = Get<List<object>>(rendererData, "vertexStreams");
                 if (ToB(rendererData, "useCustomVertexStreams", false)
@@ -913,6 +1105,14 @@ namespace FX.Editor
             cd.SetMode(slot, mode == 2 ? ParticleSystemCustomDataMode.Color
                 : mode == 1 ? ParticleSystemCustomDataMode.Vector
                 : ParticleSystemCustomDataMode.Disabled);
+            if (mode == 2)
+            {
+                string colorKey = slot == ParticleSystemCustomData.Custom1 ? "color0" : "color1";
+                var color = Get<Dictionary<string, object>>(data, colorKey);
+                if (color != null)
+                    cd.SetColor(slot, BuildMinMaxGradient(color));
+                return;
+            }
             if (mode != 1) return;
             int count = Mathf.Clamp((int)ToF(data.TryGetValue(countKey, out var c) ? c : 4f), 1, 4);
             cd.SetVectorComponentCount(slot, count);
@@ -995,6 +1195,272 @@ namespace FX.Editor
         static ParticleSystem.MinMaxCurve Radians(Dictionary<string, object> d)
         {
             return MinMax(d, 0f);
+        }
+
+        static ParticleSystem.MinMaxGradient BuildMinMaxGradient(Dictionary<string, object> d)
+        {
+            int mode = (int)ToF(d.TryGetValue("mode", out var mo) ? mo : 0f);
+            var maxG = Get<Dictionary<string, object>>(d, "maxGradient");
+            var minG = Get<Dictionary<string, object>>(d, "minGradient");
+            var maxC = ToColor(d.TryGetValue("max", out var mx) ? mx : null) ?? Color.white;
+            var minC = ToColor(d.TryGetValue("min", out var mn) ? mn : null) ?? maxC;
+            if (mode == 3 && maxG != null && minG != null)
+                return new ParticleSystem.MinMaxGradient(BuildGradient(minG), BuildGradient(maxG));
+            if (mode == 1 && maxG != null)
+                return new ParticleSystem.MinMaxGradient(BuildGradient(maxG));
+            if (mode == 2)
+                return new ParticleSystem.MinMaxGradient(minC, maxC);
+            return new ParticleSystem.MinMaxGradient(maxC);
+        }
+
+        static void ApplyOrbital(ParticleSystem.VelocityOverLifetimeModule vel, Dictionary<string, object> d)
+        {
+            if (d == null || !ToB(d, "enabled", false)) return;
+            if (d.ContainsKey("orbitalX")) vel.orbitalX = MinMax(Get<Dictionary<string, object>>(d, "orbitalX"), 0f);
+            if (d.ContainsKey("orbitalY")) vel.orbitalY = MinMax(Get<Dictionary<string, object>>(d, "orbitalY"), 0f);
+            if (d.ContainsKey("orbitalZ")) vel.orbitalZ = MinMax(Get<Dictionary<string, object>>(d, "orbitalZ"), 0f);
+            if (d.ContainsKey("orbitalOffsetX")) vel.orbitalOffsetX = MinMax(Get<Dictionary<string, object>>(d, "orbitalOffsetX"), 0f);
+            if (d.ContainsKey("orbitalOffsetY")) vel.orbitalOffsetY = MinMax(Get<Dictionary<string, object>>(d, "orbitalOffsetY"), 0f);
+            if (d.ContainsKey("orbitalOffsetZ")) vel.orbitalOffsetZ = MinMax(Get<Dictionary<string, object>>(d, "orbitalOffsetZ"), 0f);
+            if (d.ContainsKey("radial")) vel.radial = MinMax(Get<Dictionary<string, object>>(d, "radial"), 0f);
+            if (d.ContainsKey("speedModifier")) vel.speedModifier = MinMax(Get<Dictionary<string, object>>(d, "speedModifier"), 1f);
+        }
+
+        static void ApplyLimitVelocity(ParticleSystem ps, Dictionary<string, object> d)
+        {
+            if (d == null || !ToB(d, "enabled", false)) return;
+            var lim = ps.limitVelocityOverLifetime;
+            lim.enabled = true;
+            lim.separateAxes = ToB(d, "separateAxis", false);
+            lim.space = (int)ToF(d.TryGetValue("space", out var sp) ? sp : 0f) == 1
+                ? ParticleSystemSimulationSpace.World : ParticleSystemSimulationSpace.Local;
+            lim.dampen = ToF(d.TryGetValue("dampen", out var dp) ? dp : 0f);
+            if (lim.separateAxes)
+            {
+                lim.limitX = MinMax(Get<Dictionary<string, object>>(d, "x"), 1f);
+                lim.limitY = MinMax(Get<Dictionary<string, object>>(d, "y"), 1f);
+                lim.limitZ = MinMax(Get<Dictionary<string, object>>(d, "z"), 1f);
+            }
+            else
+            {
+                lim.limit = MinMax(Get<Dictionary<string, object>>(d, "magnitude"), 1f);
+            }
+            var drag = Get<Dictionary<string, object>>(d, "drag");
+            if (drag != null) lim.drag = MinMax(drag, 0f);
+            lim.multiplyDragByParticleSize = ToB(d, "multiplyDragBySize", false);
+            lim.multiplyDragByParticleVelocity = ToB(d, "multiplyDragByVelocity", false);
+        }
+
+        static void ApplyInheritVelocity(ParticleSystem ps, Dictionary<string, object> d)
+        {
+            if (d == null || !ToB(d, "enabled", false)) return;
+            var iv = ps.inheritVelocity;
+            iv.enabled = true;
+            iv.mode = (int)ToF(d.TryGetValue("mode", out var mo) ? mo : 0f) == 1
+                ? ParticleSystemInheritVelocityMode.Current : ParticleSystemInheritVelocityMode.Initial;
+            iv.curve = MinMax(Get<Dictionary<string, object>>(d, "multiplier"), 0f);
+        }
+
+        static void ApplyTrails(ParticleSystem ps, Dictionary<string, object> d)
+        {
+            if (d == null || !ToB(d, "enabled", false)) return;
+            var tr = ps.trails;
+            tr.enabled = true;
+            tr.mode = (int)ToF(d.TryGetValue("mode", out var mo) ? mo : 0f) == 1
+                ? ParticleSystemTrailMode.Ribbon : ParticleSystemTrailMode.PerParticle;
+            tr.ratio = ToF(d.TryGetValue("ratio", out var ra) ? ra : 1f);
+            tr.lifetime = MinMax(Get<Dictionary<string, object>>(d, "lifetime"), 1f);
+            tr.minVertexDistance = ToF(d.TryGetValue("minVertexDistance", out var mv) ? mv : 0.2f);
+            tr.worldSpace = ToB(d, "worldSpace", false);
+            tr.dieWithParticles = ToB(d, "dieWithParticles", true);
+            tr.ribbonCount = Mathf.Max(1, (int)ToF(d.TryGetValue("ribbonCount", out var rc) ? rc : 1f));
+            tr.splitSubEmitterRibbons = ToB(d, "splitSubEmitterRibbons", false);
+            tr.attachRibbonsToTransform = ToB(d, "attachRibbonsToTransform", false);
+            tr.textureMode = (ParticleSystemTrailTextureMode)Mathf.Clamp(
+                (int)ToF(d.TryGetValue("textureMode", out var tm) ? tm : 0f), 0, 3);
+            tr.sizeAffectsWidth = ToB(d, "sizeAffectsWidth", true);
+            tr.sizeAffectsLifetime = ToB(d, "sizeAffectsLifetime", false);
+            tr.inheritParticleColor = ToB(d, "inheritParticleColor", true);
+            var colLife = Get<Dictionary<string, object>>(d, "colorOverLifetime");
+            if (colLife != null) tr.colorOverLifetime = BuildMinMaxGradient(colLife);
+            var width = Get<Dictionary<string, object>>(d, "widthOverTrail");
+            if (width != null) tr.widthOverTrail = MinMax(width, 1f);
+            var colTrail = Get<Dictionary<string, object>>(d, "colorOverTrail");
+            if (colTrail != null) tr.colorOverTrail = BuildMinMaxGradient(colTrail);
+            tr.generateLightingData = ToB(d, "generateLightingData", false);
+            tr.shadowBias = ToF(d.TryGetValue("shadowBias", out var sb) ? sb : 0f);
+        }
+
+        static void BuildTrailRenderer(GameObject go, Dictionary<string, object> d,
+            Dictionary<string, Material> matByKey, Dictionary<long, Material> matByPathId)
+        {
+            var tr = go.AddComponent<TrailRenderer>();
+            tr.time = ToF(d.TryGetValue("time", out var t) ? t : 5f);
+            tr.minVertexDistance = ToF(d.TryGetValue("minVertexDistance", out var mv) ? mv : 0.1f);
+            tr.autodestruct = ToB(d, "autodestruct", false);
+            tr.emitting = ToB(d, "emitting", true);
+            tr.widthMultiplier = ToF(d.TryGetValue("widthMultiplier", out var wm) ? wm : 1f);
+            var widthKeys = Get<List<object>>(d, "widthCurve");
+            if (widthKeys != null && widthKeys.Count > 0)
+                tr.widthCurve = KeysToCurve(widthKeys);
+            var color = Get<Dictionary<string, object>>(d, "color");
+            if (color != null) tr.colorGradient = BuildGradient(color);
+            tr.numCornerVertices = (int)ToF(d.TryGetValue("numCornerVertices", out var nc) ? nc : 0f);
+            tr.numCapVertices = (int)ToF(d.TryGetValue("numCapVertices", out var np) ? np : 0f);
+            tr.alignment = (int)ToF(d.TryGetValue("alignment", out var al) ? al : 0f) == 1
+                ? LineAlignment.TransformZ : LineAlignment.View;
+            tr.textureMode = (LineTextureMode)Mathf.Clamp(
+                (int)ToF(d.TryGetValue("textureMode", out var tm) ? tm : 0f), 0, 3);
+            tr.shadowBias = ToF(d.TryGetValue("shadowBias", out var sb) ? sb : 0.5f);
+            tr.generateLightingData = ToB(d, "generateLightingData", false);
+            var mats = ResolveMaterials(d, matByKey, matByPathId);
+            if (mats.Count > 0) tr.sharedMaterials = mats.ToArray();
+        }
+
+        static void BindSubEmitters(List<Dictionary<string, object>> dicts, Dictionary<long, GameObject> goByPid)
+        {
+            foreach (var n in dicts)
+            {
+                var particle = Get<Dictionary<string, object>>(n, "particle");
+                var sub = Get<Dictionary<string, object>>(particle, "subEmitters");
+                if (sub == null || !ToB(sub, "enabled", false)) continue;
+                if (!goByPid.TryGetValue(ToL(n["pathID"]), out var go)) continue;
+                var ps = go.GetComponent<ParticleSystem>();
+                if (ps == null) continue;
+                var module = ps.subEmitters;
+                module.enabled = true;
+                foreach (var eo in Get<List<object>>(sub, "emitters") ?? new List<object>())
+                {
+                    var e = eo as Dictionary<string, object>;
+                    if (e == null) continue;
+                    long pid = ToL(e.TryGetValue("emitterPathID", out var ep) ? ep : null);
+                    if (pid == 0 || !goByPid.TryGetValue(pid, out var child)) continue;
+                    var other = child.GetComponent<ParticleSystem>();
+                    if (other == null || other == ps) continue;
+                    var type = (ParticleSystemSubEmitterType)Mathf.Clamp(
+                        (int)ToF(e.TryGetValue("type", out var ty) ? ty : 0f), 0, 4);
+                    var props = (ParticleSystemSubEmitterProperties)(int)ToF(
+                        e.TryGetValue("properties", out var pr) ? pr : 0f);
+                    module.AddSubEmitter(other, type, props);
+                }
+            }
+        }
+
+        static void BuildAnimations(string id, Dictionary<string, object> man, Dictionary<long, GameObject> goByPid)
+        {
+            var clips = Get<List<object>>(man, "animations");
+            if (clips == null || clips.Count == 0) return;
+            string animRoot = OutRoot + "/0_resource/animations/" + Sanitize(id.Replace("/", "_"));
+            EnsureFolder(animRoot);
+
+            var byHost = new Dictionary<long, List<Dictionary<string, object>>>();
+            foreach (var o in clips)
+            {
+                var clip = o as Dictionary<string, object>;
+                if (clip == null) continue;
+                long host = ToL(clip.TryGetValue("hostPathID", out var h) ? h : null);
+                if (host == 0 || !goByPid.ContainsKey(host)) continue;
+                if (!byHost.TryGetValue(host, out var list))
+                    byHost[host] = list = new List<Dictionary<string, object>>();
+                list.Add(clip);
+            }
+
+            foreach (var kv in byHost)
+            {
+                var hostGo = goByPid[kv.Key];
+                AnimationClip first = null;
+                foreach (var src in kv.Value)
+                {
+                    var clip = CreateAnimationClip(src, goByPid);
+                    if (clip == null) continue;
+                    string clipPath = $"{animRoot}/{Sanitize(clip.name)}.anim";
+                    AssetDatabase.CreateAsset(clip, clipPath);
+                    if (first == null) first = AssetDatabase.LoadAssetAtPath<AnimationClip>(clipPath);
+                }
+                if (first == null) continue;
+                var animator = hostGo.GetComponent<Animator>();
+                if (animator == null)
+                    animator = hostGo.AddComponent<Animator>();
+                string ctrlPath = $"{animRoot}/{Sanitize(hostGo.name)}.controller";
+                AnimatorController controller = AssetDatabase.LoadAssetAtPath<AnimatorController>(ctrlPath);
+                if (controller == null)
+                    controller = AnimatorController.CreateAnimatorControllerAtPathWithClip(ctrlPath, first);
+                else if (controller.layers.Length > 0 && controller.layers[0].stateMachine.defaultState != null)
+                    controller.layers[0].stateMachine.defaultState.motion = first;
+                animator.runtimeAnimatorController =
+                    AssetDatabase.LoadAssetAtPath<AnimatorController>(ctrlPath) ?? controller;
+                var meta = kv.Value[0];
+                animator.applyRootMotion = ToB(meta, "applyRootMotion", false);
+                int cull = (int)ToF(meta.TryGetValue("cullingMode", out var cm) ? cm : 0f);
+                animator.cullingMode = cull == 1 ? AnimatorCullingMode.CullUpdateTransforms
+                    : cull == 2 ? AnimatorCullingMode.CullCompletely
+                    : AnimatorCullingMode.AlwaysAnimate;
+                int update = (int)ToF(meta.TryGetValue("updateMode", out var um) ? um : 0f);
+                animator.updateMode = update == 1 ? AnimatorUpdateMode.AnimatePhysics
+                    : update == 2 ? AnimatorUpdateMode.UnscaledTime
+                    : AnimatorUpdateMode.Normal;
+            }
+        }
+
+        static AnimationClip CreateAnimationClip(Dictionary<string, object> src, Dictionary<long, GameObject> goByPid)
+        {
+            var clip = new AnimationClip
+            {
+                name = Get<string>(src, "name") ?? "clip",
+                frameRate = Mathf.Max(1f, ToF(src.TryGetValue("sampleRate", out var sr) ? sr : 60f)),
+            };
+            long host = ToL(src.TryGetValue("hostPathID", out var h) ? h : null);
+            foreach (var bo in Get<List<object>>(src, "bindings") ?? new List<object>())
+            {
+                var b = bo as Dictionary<string, object>;
+                if (b == null) continue;
+                string property = Get<string>(b, "property");
+                if (string.IsNullOrEmpty(property)) continue;
+                GameObject target = null;
+                long tpid = ToL(b.TryGetValue("targetPathID", out var tp) ? tp : null);
+                if (tpid != 0) goByPid.TryGetValue(tpid, out target);
+                string rel = "";
+                if (target != null && host != 0 && goByPid.TryGetValue(host, out var hostGo))
+                    rel = AnimationUtility.CalculateTransformPath(target.transform, hostGo.transform);
+                else
+                    rel = Get<string>(b, "path") ?? "";
+
+                var curves = Get<Dictionary<string, object>>(b, "curves");
+                if (curves == null) continue;
+                foreach (var kv in curves)
+                {
+                    var keys = kv.Value as List<object>;
+                    if (keys == null || keys.Count == 0) continue;
+                    AnimationUtility.SetEditorCurve(clip,
+                        EditorCurveBinding.FloatCurve(rel, typeof(Transform), property + "." + kv.Key),
+                        KeysToCurve(keys));
+                }
+            }
+
+            var settings = AnimationUtility.GetAnimationClipSettings(clip);
+            if (ToB(src, "loop", false)) settings.loopTime = true;
+            float extractedLen = ToF(src.TryGetValue("length", out var ln) ? ln : 0f);
+            if (extractedLen > settings.stopTime)
+            {
+                settings.stopTime = extractedLen;
+                HoldClipTo(clip, extractedLen);
+            }
+            AnimationUtility.SetAnimationClipSettings(clip, settings);
+            return clip;
+        }
+
+        static void HoldClipTo(AnimationClip clip, float time)
+        {
+            var bindings = AnimationUtility.GetCurveBindings(clip);
+            for (int i = 0; i < bindings.Length; i++)
+            {
+                var curve = AnimationUtility.GetEditorCurve(clip, bindings[i]);
+                if (curve == null || curve.length == 0) continue;
+                var last = curve[curve.length - 1];
+                if (last.time + 1e-4f >= time) continue;
+                curve.AddKey(new Keyframe(time, last.value, 0f, 0f));
+                AnimationUtility.SetEditorCurve(clip, bindings[i], curve);
+            }
         }
 
         static void EnsureFolder(string path)
