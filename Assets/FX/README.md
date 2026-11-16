@@ -1,5 +1,7 @@
 # FX
 
+工程总路径规则：`Doc/asset-paths.md`。
+
 Original paths from `assets/patchableassets/fx/`.
 
 - `0_resource/` shared textures, materials, meshes, animations
