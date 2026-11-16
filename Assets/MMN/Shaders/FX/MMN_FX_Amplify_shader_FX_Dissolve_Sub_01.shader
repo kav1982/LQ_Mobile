@@ -1,7 +1,10 @@
-// NOT-IMPLEMENTED: playable environment-FX shell for MMN/FX/Amplify shader/FX_Dissolve_Sub_01.
+// Playable reconstruction of MMN/FX/Amplify shader/FX_Dissolve_Sub_01.
 // Properties and render states follow the extracted original contract.
-// Fragment approximates FX_Default (main texture * vertex colour * intensity).
-// Dissolve / distortion / vertex-offset / stencil maths are not transcribed.
+// Dissolve maths are approximated from the transcribed FX_Dissolve_Div_01
+// (Custom1.x / TEXCOORD0.z threshold, mask = mainAlpha * noise - dissolve).
+// Original Sub bytecode was not in the contract (programs empty).
+//
+// NOT-IMPLEMENTED: FOG_LINEAR, DEBUG_DISPLAY, ShadowCaster (same as Div_01).
 Shader "MMN/FX/Amplify shader/FX_Dissolve_Sub_01"
 {
     Properties
@@ -69,7 +72,11 @@ Shader "MMN/FX/Amplify shader/FX_Dissolve_Sub_01"
             #pragma target 4.5
             #pragma vertex vert
             #pragma fragment frag
+            #pragma shader_feature_local_fragment _RAYCAST_ON
+            #pragma shader_feature_local_fragment _NOISETEX
+
             #define MMN_FX_USE_DEPTH
+
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DeclareDepthTexture.hlsl"
@@ -81,47 +88,60 @@ Shader "MMN/FX/Amplify shader/FX_Dissolve_Sub_01"
             CBUFFER_START(UnityPerMaterial)
                 float4 _MainTex_ST;
                 float4 _NoiseTex_ST;
-                float4 _EmissionColor;
-                float _AlphaCutoff;
-                float _Mode;
-                float _TransitionValue;
-                float _SpawnTransition;
-                float _RaycastHarftoneClip;
-                float _RaycastMinimumAlpha;
-                float _NearPlaneAlpha;
+                half4 _EmissionColor;
                 float4 _NearPlaneAlphaEdge;
-                float _NearPlaneInvertDistance;
-                float _NearPlaneDirectionMode;
-                float _NearPlaneDitherMode;
-                float _LightReceive;
-                float _LightRatio;
-                float _SoftParticle;
+                float4 _NearPlaneDirectionValue;
+                half4 _MainColor;
+                half4 _SubColor;
+                half _AlphaCutoff;
+                half _Mode;
+                half _TransitionValue;
+                half _SpawnTransition;
+                half _RaycastHarftoneClip;
+                half _RaycastMinimumAlpha;
+                half _NearPlaneAlpha;
+                half _NearPlaneInvertDistance;
+                half _NearPlaneDirectionMode;
+                half _NearPlaneDitherMode;
+                half _LightReceive;
+                half _LightRatio;
+                half _SoftParticle;
                 float _SoftParticleNearFadeDistance;
                 float _SoftParticleFarFadeDistance;
-                float _FogReceive;
-                float _SoftParticleFadeOutRange;
-                float _Raycast;
-                float4 _NearPlaneDirectionValue;
-                float _Use_G_Channel_Alpha;
+                half _FogReceive;
+                half _SoftParticleFadeOutRange;
+                half _Raycast;
+                half _Use_G_Channel_Alpha;
                 float _Noise_X_Speed;
                 float _Noise_Y_Speed;
                 float _Twist;
-                float _ColorGradation;
-                float4 _MainColor;
-                float4 _SubColor;
+                half _ColorGradation;
                 float _Color_Offset;
                 float _Color_Range;
-                float _Intensity_Color;
-                float _Intensity_Alpha;
-                float _BlendSrc;
-                float _BlendDst;
-                float _ZTest;
-                float _CullMode;
-                float _EffectAlpha;
+                half _Intensity_Color;
+                half _Intensity_Alpha;
+                half _BlendSrc;
+                half _BlendDst;
+                half _ZTest;
+                half _CullMode;
+                half _EffectAlpha;
             CBUFFER_END
 
-            struct Attributes { float4 positionOS : POSITION; float2 uv : TEXCOORD0; float4 color : COLOR; };
-            struct Varyings { float4 positionCS : SV_POSITION; float2 uv : TEXCOORD0; float4 screenPos : TEXCOORD1; float3 positionWS : TEXCOORD2; float4 color : COLOR; };
+            struct Attributes
+            {
+                float4 positionOS : POSITION;
+                float4 uv0 : TEXCOORD0;
+                float4 color : COLOR;
+            };
+
+            struct Varyings
+            {
+                float4 positionCS : SV_POSITION;
+                float4 uv0 : TEXCOORD0;
+                float4 screenPos : TEXCOORD1;
+                float3 positionWS : TEXCOORD2;
+                float4 color : COLOR;
+            };
 
             Varyings vert(Attributes v)
             {
@@ -130,28 +150,55 @@ Shader "MMN/FX/Amplify shader/FX_Dissolve_Sub_01"
                 o.positionCS = p.positionCS;
                 o.positionWS = p.positionWS;
                 o.screenPos = p.positionNDC;
-                o.uv = v.uv * _MainTex_ST.xy + _MainTex_ST.zw;
+                o.uv0 = v.uv0;
                 o.color = v.color;
                 return o;
             }
 
             half4 frag(Varyings i) : SV_Target
             {
-                half4 tex = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.uv);
-                half texAlpha = lerp(tex.a, tex.g, _Use_G_Channel_Alpha);
-                half3 color = lerp(tex.rgb * i.color.rgb, i.color.rgb, _Use_G_Channel_Alpha);
-                color *= _Intensity_Color;
-                color *= _MainColor.rgb;
-                half alpha = saturate(texAlpha * i.color.a * _Intensity_Alpha * saturate(_EffectAlpha));
+                float time = MMN_FxTime();
+                half dissolve = (half)i.uv0.z;
+
+                float2 mainUV = i.uv0.xy * _MainTex_ST.xy + _MainTex_ST.zw;
+                half4 mainTex = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, mainUV);
+                half mainAlpha = lerp(mainTex.a, mainTex.g, _Use_G_Channel_Alpha);
+
+                float2 noiseUV = i.uv0.xy * _NoiseTex_ST.xy + _NoiseTex_ST.zw;
+                noiseUV.y = noiseUV.x * _Twist + noiseUV.y;
+                noiseUV += time * float2(_Noise_X_Speed, _Noise_Y_Speed);
+                #ifdef _NOISETEX
+                half noise = SAMPLE_TEXTURE2D(_NoiseTex, sampler_NoiseTex, noiseUV).g;
+                #else
+                half noise = 1.0h;
+                #endif
+
+                half mask = mainAlpha * noise - dissolve;
+                half gradeSrc = lerp(mask, (half)mainUV.x, _ColorGradation);
+                half grade = saturate((gradeSrc + _Color_Offset) * _Color_Range);
+                half4 tint = lerp(_SubColor, _MainColor, grade);
+
+                half3 texColor = lerp(mainTex.rgb * i.color.rgb, i.color.rgb, _Use_G_Channel_Alpha);
+                half3 color = texColor * (tint.rgb * _Intensity_Color);
+
+                half denom = max(1.0h - dissolve, 1e-5h);
+                half alpha = saturate(mask / denom * _Intensity_Alpha)
+                           * (tint.a * i.color.a) * saturate(_EffectAlpha);
+
                 alpha *= MMN_NearPlaneFade(i.positionWS, i.screenPos, _NearPlaneAlpha,
                                            _NearPlaneAlphaEdge, _NearPlaneInvertDistance,
                                            _NearPlaneDirectionMode, _NearPlaneDirectionValue,
                                            _RaycastMinimumAlpha, _NearPlaneDitherMode);
+                #ifdef _RAYCAST_ON
+                    alpha *= saturate(max(1.0h - _RaycastHarftoneClip, _RaycastMinimumAlpha));
+                #endif
+
                 color = MMN_LightReceive(color, _LightReceive, _LightRatio);
                 alpha *= MMN_SoftParticleFade(i.screenPos, _SoftParticle,
                                               _SoftParticleNearFadeDistance,
                                               _SoftParticleFarFadeDistance,
                                               _SoftParticleFadeOutRange);
+
                 MMN_ApplyModeTransition(color, alpha, _Mode, _TransitionValue, _SpawnTransition);
                 return half4(color, alpha);
             }

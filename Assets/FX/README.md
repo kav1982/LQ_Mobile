@@ -18,6 +18,8 @@ Original paths from `assets/patchableassets/fx/`.
 
 Talent folders other than `4_mage/mage_fire` are empty placeholders; import writes into the matching original path.
 
+Preview scenes in `Scene/`: `FX_TestEnvironment`, `FX_TestClassFire`, `FX_TestWater`.
+
 Import menu:
 
 - **MMN / FX / 1. Import Environment FX**
