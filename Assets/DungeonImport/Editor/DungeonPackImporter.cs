@@ -22,8 +22,8 @@ namespace DungeonImport.Editor
     {
         public static void ImportAll(string dungeon)
         {
-            string packRoot = $"Assets/{dungeon}/_import_pack";
-            string outRoot = $"Assets/{dungeon}";
+            string packRoot = $"Assets/Worlds/{dungeon}/_import_pack";
+            string outRoot = $"Assets/Worlds/{dungeon}";
             string catalogPath = packRoot + "/catalog.json";
             if (!File.Exists(catalogPath))
             {
@@ -655,7 +655,7 @@ namespace DungeonImport.Editor
 
         public static void BuildScene(string dungeon)
         {
-            string outRoot = $"Assets/{dungeon}";
+            string outRoot = $"Assets/Worlds/{dungeon}";
             var prefabs = AssetDatabase.FindAssets("t:Prefab", new[] { outRoot + "/Prefabs" })
                 .Select(AssetDatabase.GUIDToAssetPath)
                 .Select(AssetDatabase.LoadAssetAtPath<GameObject>)
@@ -842,7 +842,7 @@ namespace DungeonImport.Editor
         static Dictionary<string, Dictionary<string, object>> LoadAuthoredLightManifests(string dungeon)
         {
             var map = new Dictionary<string, Dictionary<string, object>>(StringComparer.OrdinalIgnoreCase);
-            string roomsDir = $"Assets/{dungeon}/_import_pack/Rooms";
+            string roomsDir = $"Assets/Worlds/{dungeon}/_import_pack/Rooms";
             if (!Directory.Exists(roomsDir)) return map;
             foreach (var manPath in Directory.GetFiles(roomsDir, "package.json", SearchOption.AllDirectories))
             {
