@@ -41,7 +41,7 @@ Shader "MMN/FX/Amplify shader/FX_AlphaTest_02"
         [Toggle(_RAYCAST_ON)] [HideInInspector] _Raycast ("_Raycast", Float) = 1
         [HideInInspector] _NearPlaneDirectionValue ("nearPlaneDirectionValue", Vector) = (0,0.5,0,0)
         [Header(Custom1.x     Dissolve)] [Header(Custom1.y     Distortion)] [Header(Custom1.z     MainTex Offset X)] [Header(Main Texture)] [Space()] _MainTex ("MainTex", 2D) = "white" {}
-        [Toggle] _Use_G_Channel_Alpha ("Use_G_Channel_Alpha", Float) = 0
+        [ToggleUI] _Use_G_Channel_Alpha ("Use_G_Channel_Alpha", Float) = 0
         _Main_X_Speed ("Main_X_Speed", Float) = 0
         _Main_Y_Speed ("Main_Y_Speed", Float) = 0
         [Header(Noise Texture)] [Space()] _NoiseTex1 ("NoiseTex", 2D) = "white" {}
@@ -68,7 +68,7 @@ Shader "MMN/FX/Amplify shader/FX_AlphaTest_02"
         _BackSubColor ("Back Sub Color", Color) = (1,1,1,1)
         [Space(5)] _BackColorOffset ("Back Color Offset", Float) = 0
         _BackColorRange ("Back Color Range", Float) = 1
-        [Toggle] [Space()] _UseCustomDataColor ("Use Custom Data Color", Float) = 0
+        [ToggleUI] [Space()] _UseCustomDataColor ("Use Custom Data Color", Float) = 0
         [Header(Intensity)] [Space()] _Intensity_Color ("Intensity_Color", Float) = 1
         [HideInInspector] _texcoord ("_texcoord", 2D) = "white" {}
     }

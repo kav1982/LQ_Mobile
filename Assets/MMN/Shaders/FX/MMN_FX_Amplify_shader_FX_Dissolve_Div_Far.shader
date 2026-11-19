@@ -29,7 +29,7 @@ Shader "MMN/FX/Amplify shader/FX_Dissolve_Div_Far"
         _NearPlaneDirectionValue ("nearPlaneDirectionValue", Vector) = (0,0.5,0,0)
         [Header(tcd0.z     Dissolve)] [Header(Main Texture)] [Space()] _MainTex ("MainTex", 2D) = "white" {}
         _MainTex_ST ("MainTex_ST", Vector) = (1,1,0,0)
-        [Toggle] _Use_G_Channel_Alpha ("Use_G_Channel_Alpha", Float) = 0
+        [ToggleUI] _Use_G_Channel_Alpha ("Use_G_Channel_Alpha", Float) = 0
         [Enum(UV,0,Polar,1)] _UVType ("UV Type", Float) = 0
         _NoiseTex_ST ("NoiseTex_ST", Vector) = (1,1,0,0)
         [Header(Noise Texture)] [Space()] _NoiseTex ("NoiseTex", 2D) = "white" {}

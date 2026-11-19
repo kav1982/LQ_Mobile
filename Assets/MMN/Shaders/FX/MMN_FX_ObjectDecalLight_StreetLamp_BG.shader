@@ -7,7 +7,7 @@ Shader "MMN/FX/ObjectDecalLight_StreetLamp_BG"
         _FalloffRange ("光源中心距离（min, max）", Vector) = (0.01,0.06,0,0)
         [Header(Rendering Options)] [Space(10)] [Enum(UnityEngine.Rendering.BlendMode)] _BlendSrc ("Blend Src", Float) = 5
         [Enum(UnityEngine.Rendering.BlendMode)] _BlendDst ("Blend Dst", Float) = 1
-        [Header(Fog)] [Space(10)] [Toggle] _ReceiveFog ("应用雾", Float) = 1
+        [Header(Fog)] [Space(10)] [ToggleUI] _ReceiveFog ("应用雾", Float) = 1
         [Toggle(_RAYCAST_ON)] _Raycast ("_Raycast", Float) = 1
         _TransitionValue ("Transition 值", Float) = 1
         _RaycastHarftoneClip ("raycastHarftoneClip", Range(0, 1)) = 0

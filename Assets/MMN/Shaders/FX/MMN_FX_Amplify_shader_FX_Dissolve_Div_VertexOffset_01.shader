@@ -39,7 +39,7 @@ Shader "MMN/FX/Amplify shader/FX_Dissolve_Div_VertexOffset_01"
         [Toggle(_RAYCAST_ON)] [HideInInspector] _Raycast ("_Raycast", Float) = 1
         [HideInInspector] _NearPlaneDirectionValue ("nearPlaneDirectionValue", Vector) = (0,0.5,0,0)
         [Header(Custom1.x     Dissolve)] [Header(Custom1.y     VertexOffset Power)] [Header(Custom1.z      WaveLength Power)] [Header(Custom1.w     MainTex U OffSet)] [Header(Custom2.x     Wave OffSet)] [Header(Main Texture)] [Space()] _MainTex ("MainTex", 2D) = "white" {}
-        [Toggle] _Use_G_Channel_Alpha ("Use_G_Channel_Alpha", Float) = 0
+        [ToggleUI] _Use_G_Channel_Alpha ("Use_G_Channel_Alpha", Float) = 0
         _Main_X_Speed ("Main_X_Speed", Float) = 0
         _Main_Y_Speed ("Main_Y_Speed", Float) = 0
         [Header(Noise Texture)] [Space()] _NoiseTex ("NoiseTex", 2D) = "white" {}

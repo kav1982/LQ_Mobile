@@ -8,7 +8,7 @@ Shader "MMN/FX/EffectLightDecal"
         _EffectLightColor ("EffectLightColor", Color) = (1,1,1,1)
         _EffectLightIntensity ("EffectLightIntensity", Float) = 1
         _BrightnessLimit ("BrightnessLimit", Float) = 1
-        [Toggle] _IsParticle ("IsParticle", Float) = 1
+        [ToggleUI] _IsParticle ("IsParticle", Float) = 1
         _worldPosition ("worldPosition", Vector) = (0,0,0,0)
         _worldScaleAndRotY ("worldScaleAndRotY", Vector) = (1,1,1,0)
     }

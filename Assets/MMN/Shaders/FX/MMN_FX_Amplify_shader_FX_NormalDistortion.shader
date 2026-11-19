@@ -28,7 +28,7 @@ Shader "MMN/FX/Amplify shader/FX_NormalDistortion"
         [Toggle(_RAYCAST_ON)] _Raycast ("_Raycast", Float) = 1
         _NearPlaneDirectionValue ("nearPlaneDirectionValue", Vector) = (0,0.5,0,0)
         [Header(Main Texture)] [Space()] _MainTex ("MainTex", 2D) = "black" {}
-        [Toggle] _NormalTexture ("NormalTexture", Float) = 0
+        [ToggleUI] _NormalTexture ("NormalTexture", Float) = 0
         _Distortion_Power ("Distortion_Power", Float) = 1
         [Header(Noise Texture)] [Space()] _NoiseTex ("NoiseTex", 2D) = "white" {}
         [Enum(UnityEngine.Rendering.BlendMode)] [Header(Rendering Options)] [Space()] _BlendSrc ("Blend Src", Float) = 5

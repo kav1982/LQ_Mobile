@@ -40,7 +40,7 @@ Shader "MMN/FX/Amplify shader/FX_Default"
         [Toggle(_RAYCAST_ON)] [HideInInspector] _Raycast ("_Raycast", Float) = 1
         [HideInInspector] _NearPlaneDirectionValue ("nearPlaneDirectionValue", Vector) = (0,0.5,0,0)
         [Header(Main Texture)] [Space()] _MainTex ("MainTex", 2D) = "white" {}
-        [Toggle] _Use_G_Channel_Alpha ("Use_G_Channel_Alpha", Float) = 0
+        [ToggleUI] _Use_G_Channel_Alpha ("Use_G_Channel_Alpha", Float) = 0
         [HideInInspector] _Color ("Color", Color) = (1,1,1,1)
         [Header(Intensity)] [Space()] _Intensity_Color ("Intensity_Color", Float) = 1
         _Intensity_Alpha ("Intensity_Alpha", Float) = 1

@@ -37,8 +37,8 @@ Shader "MMN/FX/Amplify shader/FX_Dissolve_Div_Distortion_01"
         [Toggle(_RAYCAST_ON)] [HideInInspector] _Raycast ("_Raycast", Float) = 1
         [HideInInspector] _NearPlaneDirectionValue ("nearPlaneDirectionValue", Vector) = (0,0.5,0,0)
         [Header(Custom1.x     Dissolve)] [Header(Custom1.y     Distortion Power)] [Header(Main Texture)] [Space()] _MainTex ("MainTex", 2D) = "white" {}
-        [Toggle] _Use_G_Channel_Alpha ("Use_G_Channel_Alpha", Float) = 0
-        [Toggle] _Use_Dissolve_Alpha ("Use_Dissolve_Alpha", Float) = 0
+        [ToggleUI] _Use_G_Channel_Alpha ("Use_G_Channel_Alpha", Float) = 0
+        [ToggleUI] _Use_Dissolve_Alpha ("Use_Dissolve_Alpha", Float) = 0
         [Header(Noise Texture)] [Space()] _NoiseTex ("NoiseTex", 2D) = "white" {}
         _Noise_X_Speed ("Noise_X_Speed", Float) = 1
         _Noise_Y_Speed ("Noise_Y_Speed", Float) = 1
@@ -47,7 +47,7 @@ Shader "MMN/FX/Amplify shader/FX_Dissolve_Div_Distortion_01"
         [Header(Distortion)] [Space()] _Distortion_X_Power ("Distortion_X_Power", Float) = 1
         _Distortion_Y_Power ("Distortion_Y_Power", Float) = 1
         [Space(10)] _Distortion_Offset ("Distortion_Offset", Float) = -0.5
-        [Toggle] [Space(10)] _Use_Distort_To_Center ("Use_Distort_To_Center", Float) = 0
+        [ToggleUI] [Space(10)] _Use_Distort_To_Center ("Use_Distort_To_Center", Float) = 0
         _Distortion_Power ("Distortion_Power", Float) = 1
         [Header(Vertex Texture)] [Space()] _VertexTex ("VertexTex", 2D) = "black" {}
         _Vertex_X_Speed ("Vertex_X_Speed", Float) = 1

@@ -33,8 +33,8 @@ Shader "MMN/FX/Amplify shader/FX_Opaque_Rim"
         _Twist ("Twist", Float) = 0
         [Header(Rim Light)] [Space()] _RimColor ("Rim Color", Color) = (1,1,1,0)
         _RimPower1 ("Rim Power", Float) = 1
-        [Toggle] _RimnAddMult ("Rimn Add/Mult", Float) = 0
-        [Toggle] _OneMinus ("One Minus", Float) = 0
+        [ToggleUI] _RimnAddMult ("Rimn Add/Mult", Float) = 0
+        [ToggleUI] _OneMinus ("One Minus", Float) = 0
         [Header(Intensity)] [Space()] _Intensity_Color ("Intensity_Color", Float) = 1
         _EffectAlpha ("EffectAlpha", Float) = 1
         _Color ("Color", Color) = (1,1,1,1)

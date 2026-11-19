@@ -50,7 +50,7 @@ Shader "MMN/FX/Amplify shader/FX_Dissolve_Div_Panning_2CVertexOffset_02"
         [Header(tcd0.z     Dissolve)] [Header(tcd0.w     VertexOffset Power)] [Header(Main Texture)] [Space()] _MainTex ("MainTex", 2D) = "white" {}
         _Main_X_Speed ("Main_X_Speed", Float) = 1
         _Main_Y_Speed ("Main_Y_Speed", Float) = 1
-        [Toggle] _Use_G_Channel_Alpha ("Use_G_Channel_Alpha", Float) = 0
+        [ToggleUI] _Use_G_Channel_Alpha ("Use_G_Channel_Alpha", Float) = 0
         [Header(Noise Texture)] [Space()] _NoiseTex ("NoiseTex", 2D) = "white" {}
         _NoiseTex_WolrdTilling ("NoiseTex_WolrdTilling", Float) = 0.2
         _Noise_X_Speed ("Noise_X_Speed", Float) = 1

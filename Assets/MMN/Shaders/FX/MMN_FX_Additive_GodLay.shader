@@ -10,7 +10,7 @@ Shader "MMN/FX/Amplify shader/Environment/Additive_GodLay"
         _Color ("Color", Color) = (1,1,1,1)
         _Intensive ("Intensive", Range(0, 1)) = 0.3
         _Float0 ("柔和高度调节", Range(1, 10)) = 2
-        [Toggle] [Space()] [Header(Night Setting)] [Space()] _NightToggle ("应用夜间设置", Float) = 0
+        [ToggleUI] [Space()] [Header(Night Setting)] [Space()] _NightToggle ("应用夜间设置", Float) = 0
         _Color_Night ("Color_Night", Color) = (1,1,1,1)
         _Intensive_Night ("Intensive_Night", Range(0, 1)) = 0.3
         _Float1 ("柔和高度调节（夜）", Range(1, 10)) = 2

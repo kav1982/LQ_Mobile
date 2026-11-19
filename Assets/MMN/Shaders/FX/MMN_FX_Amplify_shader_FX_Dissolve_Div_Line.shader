@@ -28,7 +28,7 @@ Shader "MMN/FX/Amplify shader/FX_Dissolve_Div_Line"
         [Toggle( _RAYCAST_ON )] _Raycast ("_Raycast", Float) = 1
         _NearPlaneDirectionValue ("nearPlaneDirectionValue", Vector) = (0,0.5,0,0)
         [Header(Custom.1.x     Dissolve)] [Header(Custom.1.y     LineOffset)] [Header(Main Texture)] [Space()] _MainTex ("MainTex", 2D) = "white" {}
-        [Toggle] _Use_G_Channel_Alpha ("Use_G_Channel_Alpha", Float) = 0
+        [ToggleUI] _Use_G_Channel_Alpha ("Use_G_Channel_Alpha", Float) = 0
         [Header(Noise Texture)] [Space()] _NoiseTex ("NoiseTex", 2D) = "white" {}
         _Noise_X_Speed ("Noise_X_Speed", Float) = 0
         _Noise_Y_Speed ("Noise_Y_Speed", Float) = 0

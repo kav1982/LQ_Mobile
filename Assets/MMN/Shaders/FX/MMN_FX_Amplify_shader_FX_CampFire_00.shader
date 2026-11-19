@@ -42,7 +42,7 @@ Shader "MMN/FX/Amplify shader/FX_CampFire_00"
         [Toggle(_RAYCAST_ON)] [HideInInspector] _Raycast ("_Raycast", Float) = 1
         [HideInInspector] _NearPlaneDirectionValue ("nearPlaneDirectionValue", Vector) = (0,0.5,0,0)
         [Header(tcd0.z     Dissolve)] [Header(Main Texture)] [Space()] _MainTex ("MainTex", 2D) = "white" {}
-        [Toggle] _Use_G_Channel_Alpha ("Use_G_Channel_Alpha", Float) = 0
+        [ToggleUI] _Use_G_Channel_Alpha ("Use_G_Channel_Alpha", Float) = 0
         [Header(Color Texture)] [Space()] _ColorTex ("ColorTex", 2D) = "white" {}
         _Color_X_Speed ("Color_X_Speed", Float) = 0
         _Color_Y_Speed ("Color_Y_Speed", Float) = 0

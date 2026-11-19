@@ -28,7 +28,7 @@ Shader "MMN/FX/Amplify shader/FX_Dissolve_Div_Panning_2CVertexOffset_2"
         [Toggle( _RAYCAST_ON )] _Raycast ("_Raycast", Float) = 1
         _NearPlaneDirectionValue ("nearPlaneDirectionValue", Vector) = (0,0.5,0,0)
         [Header(Custom1.x     Dissolve)] [Header(Custom1.y    VertexOffset Power)] [Header(Main Texture)] [Space()] _MainTex ("MainTex", 2D) = "white" {}
-        [Toggle] _Use_G_Channel_Alpha1 ("Use_G_Channel_Alpha", Float) = 0
+        [ToggleUI] _Use_G_Channel_Alpha1 ("Use_G_Channel_Alpha", Float) = 0
         [Space()] _Main_X_Speed ("Main_X_Speed", Float) = 1
         _Main_Y_Speed ("Main_Y_Speed", Float) = 0
         [Header(Sub Texture)] [Space()] _SubTex ("SubTex", 2D) = "white" {}

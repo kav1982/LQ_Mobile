@@ -28,7 +28,7 @@ Shader "MMN/FX/Amplify shader/FX_Dissolve_Div_Mesh_Billbored"
         [Toggle( _RAYCAST_ON )] _Raycast ("_Raycast", Float) = 1
         _NearPlaneDirectionValue ("nearPlaneDirectionValue", Vector) = (0,0.5,0,0)
         [Header(Main Texture)] [Space()] _MainTex ("MainTex", 2D) = "white" {}
-        [Toggle] _Use_G_Channel_Alpha ("Use_G_Channel_Alpha", Float) = 0
+        [ToggleUI] _Use_G_Channel_Alpha ("Use_G_Channel_Alpha", Float) = 0
         [Header(Flipbook)] [Space()] _Colums ("Colums", Float) = 1
         _Rows ("Rows", Float) = 1
         _Speed ("Speed", Float) = 1

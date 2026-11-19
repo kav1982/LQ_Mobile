@@ -32,11 +32,11 @@ Shader "MMN/FX/Amplify shader/FX_AlphaTest_Explosion_01"
         [Header(Noise Texture)] [Space()] _NoiseTex ("NoiseTex", 2D) = "white" {}
         _Noise_X_Speed ("Noise_X_Speed", Float) = 0
         _Noise_Y_Speed ("Noise_Y_Speed", Float) = 0
-        [Toggle] [Space()] _Use_WorldLight ("Use_WorldLight", Float) = 0
+        [ToggleUI] [Space()] _Use_WorldLight ("Use_WorldLight", Float) = 0
         [Header(Vertex Offset)] [Space()] _Vertex_Extrude ("Vertex_Extrude", Float) = 0.5
         _Vertex_Suckin ("Vertex_Suckin", Float) = -0.5
         [Header(Mask Texture)] [Space()] _MaskTex ("MaskTex", 2D) = "white" {}
-        [Toggle] [Header(Fresnel)] [Space()] _Use_Fresnel ("Use_Fresnel", Float) = 0
+        [ToggleUI] [Header(Fresnel)] [Space()] _Use_Fresnel ("Use_Fresnel", Float) = 0
         _Bias ("Bias", Float) = 0
         _Scale ("Scale", Float) = 1
         [Enum(UnityEngine.Rendering.CullMode)] _CullMode ("Cull Mode", Float) = 0

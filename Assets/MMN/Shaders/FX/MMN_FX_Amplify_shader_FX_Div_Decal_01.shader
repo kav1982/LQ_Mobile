@@ -28,8 +28,8 @@ Shader "MMN/FX/Amplify shader/FX_Div_Decal_01"
         [Toggle( _RAYCAST_ON )] _Raycast ("_Raycast", Float) = 1
         _NearPlaneDirectionValue ("nearPlaneDirectionValue", Vector) = (0,0.5,0,0)
         [Header(Main Texture)] [Space()] _MainTex ("MainTex", 2D) = "white" {}
-        [Toggle] _Use_G_Channel_Alpha ("Use_G_Channel_Alpha", Float) = 0
-        [Toggle] [Enum(Noraml,0,Polar,1)] _Type ("Type", Float) = 0
+        [ToggleUI] _Use_G_Channel_Alpha ("Use_G_Channel_Alpha", Float) = 0
+        [ToggleUI] [Enum(Noraml,0,Polar,1)] _Type ("Type", Float) = 0
         _ParallaxScale ("Parallax Scale", Range(-0.5, 0)) = 0
         [Space()] _Main_Tile_U ("Main_Tile_U", Float) = 1
         _Main_Tile_V ("Main_Tile_V", Float) = 1

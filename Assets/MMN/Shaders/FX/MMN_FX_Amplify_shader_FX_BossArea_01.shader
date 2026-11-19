@@ -9,7 +9,7 @@ Shader "MMN/FX/Amplify shader/FX_BossArea_01"
         _EmissionColor ("Emission Color", Color) = (1,1,1,1)
         _AlphaCutoff ("Alpha Cutoff ", Range(0, 1)) = 0.5
         _WorldPivotAndRadius ("경계의 월드 피벗(xyz)과 반지름(w)", Vector) = (0,0,0,25)
-        [Toggle] _IsWorldPivot ("월드 피벗 기준으로 사라지게 합니까?", Float) = 0
+        [ToggleUI] _IsWorldPivot ("월드 피벗 기준으로 사라지게 합니까?", Float) = 0
         _MinimumAlpha ("알파의 최솟값", Range(0, 1)) = 0
         _DistanceBias ("멀리있으면 사라지는 거리 (미터 단위 m 기준)", Range(0, 100)) = 20
         _Radius ("버텍스 밀기의 범위", Range(0, 10)) = 10
@@ -33,7 +33,7 @@ Shader "MMN/FX/Amplify shader/FX_BossArea_01"
         [Toggle(_RAYCAST_ON)] _Raycast ("_Raycast", Float) = 1
         _NearPlaneDirectionValue ("nearPlaneDirectionValue", Vector) = (0,0.5,0,0)
         [Header(tcd0.z     Dissolve)] [Header(Main Texture)] [Space()] _MainTex ("MainTex", 2D) = "white" {}
-        [Toggle] _Use_G_Channel_Alpha ("Use_G_Channel_Alpha", Float) = 0
+        [ToggleUI] _Use_G_Channel_Alpha ("Use_G_Channel_Alpha", Float) = 0
         [Header(Noise Texture)] [Space()] _NoiseTex ("NoiseTex", 2D) = "white" {}
         _Noise_X_Speed ("Noise_X_Speed", Float) = 1
         _Noise_Y_Speed ("Noise_Y_Speed", Float) = 1

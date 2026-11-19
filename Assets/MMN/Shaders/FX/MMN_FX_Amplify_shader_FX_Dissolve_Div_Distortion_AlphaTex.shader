@@ -28,7 +28,7 @@ Shader "MMN/FX/Amplify shader/FX_Dissolve_Div_Distortion_AlphaTex"
         [Toggle(_RAYCAST_ON)] _Raycast ("_Raycast", Float) = 1
         _NearPlaneDirectionValue ("nearPlaneDirectionValue", Vector) = (0,0.5,0,0)
         [Header(tcd0.z     Dissolve)] [Header(tcd0.w     Distortion Power)] [Header(tcd1.xy     AlphaTex Offset)] [Header(Main Texture)] [Space()] _MainTex ("MainTex", 2D) = "white" {}
-        [Toggle] _Use_G_Channel_Alpha ("Use_G_Channel_Alpha", Float) = 0
+        [ToggleUI] _Use_G_Channel_Alpha ("Use_G_Channel_Alpha", Float) = 0
         [Header(Alpha Texture)] [Space()] _AlphaTex ("AlphaTex", 2D) = "white" {}
         [Header(Noise Texture)] [Space()] _NoiseTex ("NoiseTex", 2D) = "white" {}
         _Noise_Y_Speed ("Noise_Y_Speed", Float) = 1

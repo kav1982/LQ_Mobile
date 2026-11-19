@@ -18,7 +18,7 @@ Shader "MMN/FX/Amplify shader/FX_Trail_Default"
         [Enum(UnityEngine.Rendering.BlendMode)] [Header(Rendering Options)] [Space()] _BlendSrc ("Blend Src", Float) = 1
         [Enum(UnityEngine.Rendering.BlendMode)] _BlendDst ("Blend Dst", Float) = 1
         [Enum(UnityEngine.Rendering.BlendMode)] _BlendSrcA ("Blend Src Alpha", Float) = 1
-        [Toggle] _Use_G_Channel_Alpha ("Use_G_Channel_Alpha", Float) = 0
+        [ToggleUI] _Use_G_Channel_Alpha ("Use_G_Channel_Alpha", Float) = 0
         [Enum(UnityEngine.Rendering.CullMode)] [Header(Z Buffer)] [Space(10)] _CullMode ("Cull Mode", Float) = 0
         _Mode ("Mode", Float) = -1
         _TransitionValue ("TransitionValue", Range(0, 1)) = 1

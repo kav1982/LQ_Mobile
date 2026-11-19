@@ -27,7 +27,7 @@ Shader "MMN/FX/Amplify shader/FX_ExplosionSmoke_01"
         [Toggle(_RAYCAST_ON)] _Raycast ("_Raycast", Float) = 1
         _NearPlaneDirectionValue ("nearPlaneDirectionValue", Vector) = (0,0.5,0,0)
         [Header(tcd0.z     Dissolve)] [Header(tcd0.w     FireColor Offset)] [Header(Main Texture)] [Space()] _MainTex ("MainTex", 2D) = "white" {}
-        [Toggle] _Use_G_Channel_Alpha ("Use_G_Channel_Alpha", Float) = 0
+        [ToggleUI] _Use_G_Channel_Alpha ("Use_G_Channel_Alpha", Float) = 0
         [Header(Alpha Texture)] [Space()] _AlphaTex ("AlphaTex", 2D) = "white" {}
         [Header(Color)] [Space()] _FireColor ("Fire Color", Color) = (0.501961,0.501961,0.501961,1)
         _Color_Range ("Color_Range", Float) = 1

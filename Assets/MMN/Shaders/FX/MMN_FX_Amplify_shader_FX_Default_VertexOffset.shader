@@ -28,9 +28,9 @@ Shader "MMN/FX/Amplify shader/FX_Default_VertexOffset"
         [Toggle( _RAYCAST_ON )] _Raycast ("_Raycast", Float) = 1
         _NearPlaneDirectionValue ("nearPlaneDirectionValue", Vector) = (0,0.5,0,0)
         [Header(Custom1.x     p_Speed)] [Header(Custom1.y     p_Size.x)] [Header(Main Texture)] [Space()] _MainTex ("MainTex", 2D) = "white" {}
-        [Toggle] _Use_G_Channel_Alpha ("Use_G_Channel_Alpha", Float) = 0
+        [ToggleUI] _Use_G_Channel_Alpha ("Use_G_Channel_Alpha", Float) = 0
         [Header(Mask Texture)] [Space()] _MaskTex ("MaskTex", 2D) = "white" {}
-        [Toggle] [Header(Vertex Option)] [Space()] _Use_VretexColor ("Use_VretexColor", Float) = 0
+        [ToggleUI] [Header(Vertex Option)] [Space()] _Use_VretexColor ("Use_VretexColor", Float) = 0
         _VelocityVector ("Velocity Vector", Vector) = (0,1,0,0)
         _VertexOffset_Speed ("VertexOffset_Speed", Float) = 1
         _Sphereofinfluence ("Sphere of influence", Range(0, 0.9)) = 0.9

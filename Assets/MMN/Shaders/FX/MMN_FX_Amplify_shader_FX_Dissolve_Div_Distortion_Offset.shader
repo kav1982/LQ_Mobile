@@ -38,7 +38,7 @@ Shader "MMN/FX/Amplify shader/FX_Dissolve_Div_Distortion_Offset"
         [HideInInspector] _NearPlaneDirectionValue ("nearPlaneDirectionValue", Vector) = (0,0.5,0,0)
         [Header(Custom1.x     Dissolve)] [Header(Custom1.y     AlphaTex Offset X)] [Header(Custom1.z     AlphaTex Offset Y)] [Header(Main Texture)] [Space()] _MainTex ("MainTex", 2D) = "white" {}
         [Enum(UV,0,Polar,1)] _UVType ("UV Type", Float) = 0
-        [Toggle] _Use_G_Channel_Alpha ("Use_G_Channel_Alpha", Float) = 0
+        [ToggleUI] _Use_G_Channel_Alpha ("Use_G_Channel_Alpha", Float) = 0
         [HideInInspector] _NoiseTex_ST ("NoiseTex_ST", Vector) = (1,1,0,0)
         [HideInInspector] _MainTex_ST ("MainTex_ST", Vector) = (1,1,0,0)
         [HideInInspector] _AlphaTex_ST ("AlphaTex_ST", Vector) = (1,1,0,0)

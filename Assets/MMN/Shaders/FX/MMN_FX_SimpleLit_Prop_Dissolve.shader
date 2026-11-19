@@ -6,11 +6,11 @@ Shader "MMN/FX/SimpleLit_Prop_Dissolve"
 {
     Properties
     {
-        [Toggle] _ALPHATEST ("알파테스트", Float) = 0
-        [Toggle] _BackFaceNormalturn ("백페이스 노말을 돌려서 뒷면도 노말을 앞으로 생성한다", Float) = 0
+        [ToggleUI] _ALPHATEST ("알파테스트", Float) = 0
+        [ToggleUI] _BackFaceNormalturn ("백페이스 노말을 돌려서 뒷면도 노말을 앞으로 생성한다", Float) = 0
         _RaycastHarftoneClip ("레이케스트 하프톤 클립", Range(0, 1)) = 0
         _VertexColorWeight ("버텍스 칼라 영향력 가중치", Range(0, 1)) = 1
-        [Toggle] _ShowVertexColor ("Show Vertex Color(확인용)", Float) = 0
+        [ToggleUI] _ShowVertexColor ("Show Vertex Color(확인용)", Float) = 0
         _BaseMap ("Base Map (RGB) Smoothness / Alpha (A)", 2D) = "white" {}
         _BaseColor ("Base Tint", Color) = (1,1,1,1)
         _AlbedoTintStrength ("Albedo Tint Strength", Range(-1, 1)) = 0
@@ -26,7 +26,7 @@ Shader "MMN/FX/SimpleLit_Prop_Dissolve"
         [Toggle(_CUSTOMDATA_ON)] _Customdata ("커스텀 데이터 적용", Float) = 0
         _NoiseTex ("디졸브 텍스쳐", 2D) = "white" {}
         _NoiseTexScale ("디졸브 텍스쳐의 크기", Range(0.1, 10)) = 4
-        [Toggle] _NoiseCutoff ("디졸브 컷오프를 켤까요?", Float) = 1
+        [ToggleUI] _NoiseCutoff ("디졸브 컷오프를 켤까요?", Float) = 1
         _NoiseCutoffSmoothness ("컷오프의 부드러움", Range(0, 0.5)) = 0.1
         _DissolveColor ("디졸브 색상", Color) = (0,0,0,0)
         _DissolveWidth ("디졸브 두께", Range(0, 5)) = 1

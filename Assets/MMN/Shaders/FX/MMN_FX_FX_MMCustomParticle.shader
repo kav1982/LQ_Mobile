@@ -11,7 +11,7 @@ Shader "MMN/FX/FX_MMCustomParticle"
     Properties
     {
         _RamdomSeed ("不是高达种子，是随机种子", Float) = 0
-        [Toggle] _Billboard ("广告牌开启", Float) = 1
+        [ToggleUI] _Billboard ("广告牌开启", Float) = 1
         _EmitterDimention ("发射器尺寸", Vector) = (0.1,0.1,0.1,1)
         _FlowConstant ("流动常数（0为Burst）", Range(0, 1)) = 1
         _StartSize ("粒子起始大小", Float) = 0.5
@@ -29,14 +29,14 @@ Shader "MMN/FX/FX_MMCustomParticle"
         _OrbitalSpeedMax ("Orbital Max (xyz)", Vector) = (0,0,0,0)
         _Wind ("风", Vector) = (0,0,0,0)
         _Gravity ("重力", Vector) = (0,0,0,0)
-        [Toggle] _IfRandomRotation ("旋转方向随机？", Float) = 0
-        [Toggle] _IfRandomRotationStart ("起始旋转角度随机？", Float) = 0
+        [ToggleUI] _IfRandomRotation ("旋转方向随机？", Float) = 0
+        [ToggleUI] _IfRandomRotationStart ("起始旋转角度随机？", Float) = 0
         _RotationSpeed ("旋转速度", Float) = 0
         _Rotation ("初始旋转角度", Float) = 0
         _BaseMap ("基础贴图", 2D) = "white" {}
         _Flipbook ("序列帧 XY", Vector) = (1,1,0,0)
         _FlipbookSpeed ("序列帧速度", Float) = 1
-        [Toggle] _MatchParticleLife ("与粒子生命周期匹配？", Float) = 0
+        [ToggleUI] _MatchParticleLife ("与粒子生命周期匹配？", Float) = 0
         _StartColor ("粒子起始颜色", Color) = (1,1,1,1)
         _EndColor ("粒子结束颜色", Color) = (1,1,1,1)
         _StartAlpha ("粒子起始透明度", Range(0.1, 10)) = 0.1
@@ -44,16 +44,16 @@ Shader "MMN/FX/FX_MMCustomParticle"
         [Toggle(_DISSOLVE_FEATURE)] _IsDissolve ("开启溶解", Float) = 0
         _DissolveMap ("溶解贴图", 2D) = "gray" {}
         _DissolveAmount ("溶解进度", Range(0, 1)) = 1
-        [Toggle] _DissolveCutoff ("开启溶解裁剪？", Float) = 1
+        [ToggleUI] _DissolveCutoff ("开启溶解裁剪？", Float) = 1
         _DissolveEdgeColor ("溶解边缘颜色", Color) = (0,0,0,0)
         _DissolveEdgeWidth ("溶解边缘宽度", Range(0, 1)) = 0.5
         [KeywordEnum(Default, OnlyDay, OnlyNight)] _Day_Alpha ("昼夜可见性", Float) = 0
-        [Toggle] _IsDebugTime ("使用手动时间", Float) = 0
+        [ToggleUI] _IsDebugTime ("使用手动时间", Float) = 0
         _ManualTime ("手动时间控制", Range(0, 1)) = 0
-        [Toggle] _DebugColor ("使用调试颜色", Float) = 0
-        [Toggle] _LightReceive ("接收光照？", Float) = 0
+        [ToggleUI] _DebugColor ("使用调试颜色", Float) = 0
+        [ToggleUI] _LightReceive ("接收光照？", Float) = 0
         _LightRatio ("lightRatio", Range(0, 1)) = 1
-        [Toggle] _FogReceive ("接收雾效？", Float) = 0
+        [ToggleUI] _FogReceive ("接收雾效？", Float) = 0
         [ToggleUI] _NearPlaneAlpha ("NearPlaneAlpha", Range(0, 18)) = 0
         _NearPlaneAlphaEdge ("NearPlaneAlphaEdge", Vector) = (0.1,1,2,4)
         [ToggleUI] _NearPlaneInvertDistance ("NearPlaneInvertDistance", Range(0, 1)) = 0

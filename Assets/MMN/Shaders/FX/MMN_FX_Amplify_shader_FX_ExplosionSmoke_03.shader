@@ -27,8 +27,8 @@ Shader "MMN/FX/Amplify shader/FX_ExplosionSmoke_03"
         [Toggle(_RAYCAST_ON)] _Raycast ("_Raycast", Float) = 1
         _NearPlaneDirectionValue ("nearPlaneDirectionValue", Vector) = (0,0.5,0,0)
         [Header(tcd0.z      Dissolve)] [Header(tcd0.w     Emissive Dissolve)] [Header(tcd1.x       AlpSub Sensitivity)] [Header(Main Texture)] [Space()] _MainTex ("MainTex", 2D) = "white" {}
-        [Toggle] _Use_G_Channel_Alpha ("Use_G_Channel_Alpha", Float) = 0
-        [Toggle] _Use_Polar_UV ("Use_Polar_UV", Float) = 0
+        [ToggleUI] _Use_G_Channel_Alpha ("Use_G_Channel_Alpha", Float) = 0
+        [ToggleUI] _Use_Polar_UV ("Use_Polar_UV", Float) = 0
         [Header(Alpha Texture)] [Space()] _AlphaTex ("AlphaTex", 2D) = "white" {}
         _Polar_Radial ("Polar_Radial", Float) = 1
         _Polar_Lengh ("Polar_Lengh", Float) = 1

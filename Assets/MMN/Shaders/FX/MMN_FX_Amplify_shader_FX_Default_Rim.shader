@@ -28,7 +28,7 @@ Shader "MMN/FX/Amplify shader/FX_Default_Rim"
         [Toggle(_RAYCAST_ON)] _Raycast ("_Raycast", Float) = 1
         _NearPlaneDirectionValue ("nearPlaneDirectionValue", Vector) = (0,0.5,0,0)
         [Header(Main Texture)] [Space()] _MainTex ("MainTex", 2D) = "white" {}
-        [Toggle] _Use_G_Channel_Alpha ("Use_G_Channel_Alpha", Float) = 0
+        [ToggleUI] _Use_G_Channel_Alpha ("Use_G_Channel_Alpha", Float) = 0
         _XSpeed ("X Speed", Float) = 0
         _YSpeed ("Y Speed", Float) = 0
         _Twist ("Twist", Float) = 0

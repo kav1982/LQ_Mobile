@@ -29,8 +29,8 @@ Shader "MMN/FX/Amplify shader/FX_ParticleDecal"
         _NearPlaneDirectionValue ("nearPlaneDirectionValue", Vector) = (0,0.5,0,0)
         [Header(Main Texture)] [Space()] _MainTex ("MainTex", 2D) = "white" {}
         _MainTex_ST ("MainTex_ST", Vector) = (1,1,0,0)
-        [Toggle] _Use_G_Channel_Alpha ("Use_G_Channel_Alpha", Float) = 0
-        [Toggle] [Enum(Noraml,0,Polar,1)] _Type ("Type", Float) = 0
+        [ToggleUI] _Use_G_Channel_Alpha ("Use_G_Channel_Alpha", Float) = 0
+        [ToggleUI] [Enum(Noraml,0,Polar,1)] _Type ("Type", Float) = 0
         [Header(Noise Texture)] [Space()] _NoiseTex ("NoiseTex", 2D) = "white" {}
         _NoiseTex_ST ("NoiseTex_ST", Vector) = (1,1,0,0)
         _Noise_X_Speed ("Noise_X_Speed", Float) = 0
