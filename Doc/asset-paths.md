@@ -12,7 +12,7 @@
 | `Assets/Props/` | 跨场景道具（目前 `Plants`、`TreasureBox`） | 某个区域私有的建筑、植被 |
 | `Assets/FX/` | 特效 prefab / 贴图 / 材质 / 预览场景 | shader 源文件 |
 | `Assets/MMN/Shaders/` | 全部 MMN shader 与 include | 特效贴图、prefab |
-| `Assets/Characters/` | 角色（目前只有 `Infant`） | 场景、道具 |
+| `Assets/Characters/` | 角色（`Infant`）与怪物（`Monsters/{Species}`） | 场景、道具 |
 | `Assets/DungeonImport/` | 地下城导入器代码 | 导入产物 |
 | `Assets/FX/_import_pack/` 与 `{Root}/_import_pack/` | 解包中间结果 | 最终给场景用的 prefab |
 
@@ -109,8 +109,6 @@ Assets/MMN/Shaders/
 
 ## Characters
 
-当前只有 Infant：
-
 ```
 Assets/Characters/Infant/
   Source/           AssetRipper 原路径
@@ -119,7 +117,38 @@ Assets/Characters/Infant/
   Editor/ Runtime/ Shaders/
 ```
 
-新种族：`Assets/Characters/{Race}/`，不要和场景、特效混放。细节见 `Assets/Characters/Infant/README.md`。
+```
+Assets/Characters/Monsters/{Species}/
+  Source/           AssetRipper 原路径（包内相对路径不摊平）
+  Generated/        预览 Prefab / 材质 / AnimatorController
+  Scenes/           该种展示场，默认 {Species}_Preview.unity
+  Editor/           该种预览脚本
+```
+
+当前怪物：
+
+| 种 | 身体 | 预览场景 |
+|---|---|---|
+| `Goblin` | `monster_goblin_*` 42 只 + 对应武器 / `animation/monster/goblin/` Clip | `Goblin/Scenes/Goblin_Preview.unity`（格子场，Goblinpig 也摆在这里） |
+| `GoblinPig` | `monster_goblinpig_*` 9 只；动画在 `animation/monster/pig/` | 无独立场景，由 Goblin 展示场一起生成 |
+| `Gnoll` | `monster_gnoll_*` 50 只 + 9 件武器 / `animation/monster/gnoll/` | `Gnoll/Scenes/Gnoll_Preview.unity`（GnollArcher 也摆在这里） |
+| `GnollArcher` | `monster_gnollarcher_*` 3 只；动画用 gnoll 的 archer clip | 无独立场景，由 Gnoll 展示场一起生成 |
+| `GhostArmor` | `monster_ghostarmor_*` 约 40 只 + 32 件武器 | `GhostArmor/Scenes/GhostArmor_Preview.unity` |
+| `Ratman` | `monster_ratman_*` 39 只；包里没有独立武器 Prefab | `Ratman/Scenes/Ratman_Preview.unity` |
+| `Skeleton` | `monster_skeleton_*`；`default_hound` / `default_swordsman` 的 UnityFS 未导出 | `Skeleton/Scenes/Skeleton_Preview.unity` |
+| `Golem` | `monster_golem_*`；格子间距 8m（体型比人形大） | `Golem/Scenes/Golem_Preview.unity` |
+| `Kobold` | `monster_kobold_*` 33 只 + 22 件武器 | `Kobold/Scenes/Kobold_Preview.unity` |
+| `Mud` | `monster_mud_*` 30 只 + 弓/斧/大剑/剑/盾/杖 | `Mud/Scenes/Mud_Preview.unity` |
+| `Earthen` | `monster_earthen_*` 22 只 + 弓/斧/钝器/大剑/盾/杖；格子间距 5m；clip 只有 highshaman / duelist 两套 | `Earthen/Scenes/Earthen_Preview.unity` |
+| `Digger` | `monster_digger_*` 23 只；格子间距 5m；包里没有独立武器 | `Digger/Scenes/Digger_Preview.unity` |
+| `Slime` | `monster_slime_*` 17 只（去掉 cutscene / maplecollabo）；格子间距 5m | `Slime/Scenes/Slime_Preview.unity` |
+| `Rat` | `monster_rat_*` 20 只（不含 Ratman）；包里没有独立武器 | `Rat/Scenes/Rat_Preview.unity` |
+| `Spider` | `monster_spider_*` 20 只 | `Spider/Scenes/Spider_Preview.unity`（Spiderling 也摆在这里） |
+| `Spiderling` | `monster_spiderling_*` 11 只；动画用 spider clip | 无独立场景，由 Spider 展示场一起生成 |
+
+玩家种族：`Assets/Characters/{Race}/`，不要和场景、特效混放。细节见 `Assets/Characters/Infant/README.md`。
+
+怪物不按 118 种各开一个 Characters 顶级目录。shader dummy 不复制；`MMN/CH/Standard` 继续用 Infant Source 里已有的那份。预览材质绑 `Characters/Infant/Reconstructed/Standard`。
 
 ## 预览场景
 
@@ -129,6 +158,7 @@ Assets/Characters/Infant/
 | 道具 | `Assets/Props/{Pack}/Scenes/` |
 | 特效 | `Assets/FX/Scene/FX_Test*.unity` |
 | 角色示例 | `Assets/Characters/{Race}/Reconstructed/…` |
+| 怪物预览 | `Assets/Characters/Monsters/{Species}/Scenes/` |
 
 预览场景可以重排实例坐标，不要改 prefab 资源本身的路径。
 
