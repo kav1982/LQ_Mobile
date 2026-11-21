@@ -1,0 +1,152 @@
+{
+  "id": "1_effect/environment/housing/fx_housing_oven_kitchen_smoke_loop_01",
+  "category": "Effects",
+  "title": "fx_housing_oven_kitchen_smoke_loop_01",
+  "originalPath": "1_effect/environment/housing/fx_housing_oven_kitchen_smoke_loop_01.prefab",
+  "source": {
+    "seedBundle": "dedicated_bundle_de8c6c09",
+    "blob": "AssetPackages/0732.blob",
+    "chunk": 225,
+    "closureBundles": 6
+  },
+  "meshes": [
+    {
+      "name": "FX_Mesh_ShaderParticle_Quad_01_Max10",
+      "vertexCount": 40,
+      "submeshCount": 1,
+      "flags": 23,
+      "indexCounts": [
+        60
+      ],
+      "file": "FX_Mesh_ShaderParticle_Quad_01_Max10.mmesh",
+      "pathID": -4885228848602772906,
+      "key": "FX_Mesh_ShaderParticle_Quad_01_Max10",
+      "boundsMin": [
+        -0.5,
+        -0.5,
+        0.0
+      ],
+      "boundsMax": [
+        0.5,
+        0.5,
+        0.0
+      ]
+    }
+  ],
+  "materials": [
+    {
+      "name": "FX_ShaderParticle_Smoke_08_1",
+      "key": "FX_ShaderParticle_Smoke_08_1",
+      "pathID": 7250218997193739660,
+      "shader": "MMN/FX/FX_MMCustomParticle",
+      "file": "FX_ShaderParticle_Smoke_08_1.json"
+    }
+  ],
+  "textures": [
+    "FX_SmokeCut_01_02_Alp.png"
+  ],
+  "textureSettings": {
+    "FX_SmokeCut_01_02_Alp.png": {
+      "colorSpace": 1,
+      "mipCount": 1,
+      "wrapU": 1,
+      "wrapV": 1,
+      "filterMode": 1,
+      "aniso": 1
+    }
+  },
+  "hierarchy": [
+    {
+      "name": "FX_ShaderParticle_Smoke_08_1",
+      "pathID": 782871716850650860,
+      "parent": 6320189300188023492,
+      "active": true,
+      "localPosition": [
+        0.0,
+        2.049999952316284,
+        0.0
+      ],
+      "worldPosition": [
+        0.0,
+        2.05,
+        0.0
+      ],
+      "localRotation": [
+        0.7071068286895752,
+        -0.0,
+        -0.0,
+        -0.7071068286895752
+      ],
+      "localScale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "meshKey": "FX_Mesh_ShaderParticle_Quad_01_Max10",
+      "meshName": "FX_Mesh_ShaderParticle_Quad_01_Max10",
+      "meshBinding": "pptr",
+      "materialPathIDs": [
+        7250218997193739660
+      ],
+      "materialKeys": [
+        "FX_ShaderParticle_Smoke_08_1"
+      ],
+      "materialNames": [
+        "FX_ShaderParticle_Smoke_08_1"
+      ],
+      "hasRenderer": true,
+      "components": [
+        "Transform",
+        "MeshFilter",
+        "MeshRenderer",
+        "MonoBehaviour"
+      ],
+      "script": {
+        "className": "BoundingBoxSetter"
+      }
+    },
+    {
+      "name": "FX_Housing_Oven_Kitchen_Smoke_Loop_01",
+      "pathID": 6320189300188023492,
+      "parent": null,
+      "active": true,
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "worldPosition": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "localRotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "localScale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "meshKey": null,
+      "meshName": null,
+      "meshBinding": null,
+      "materialPathIDs": [],
+      "materialKeys": [],
+      "materialNames": [],
+      "hasRenderer": false,
+      "components": [
+        "Transform",
+        "LODGroup"
+      ]
+    }
+  ],
+  "animations": [],
+  "shaders": [
+    "MMN/FX/FX_MMCustomParticle"
+  ],
+  "unresolvedMaterials": []
+}

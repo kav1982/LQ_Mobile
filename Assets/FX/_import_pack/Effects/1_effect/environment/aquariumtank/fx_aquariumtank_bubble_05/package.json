@@ -1,0 +1,312 @@
+{
+  "id": "1_effect/environment/aquariumtank/fx_aquariumtank_bubble_05",
+  "category": "Effects",
+  "title": "fx_aquariumtank_bubble_05",
+  "originalPath": "1_effect/environment/aquariumtank/fx_aquariumtank_bubble_05.prefab",
+  "source": {
+    "seedBundle": "dedicated_bundle_82877e1b",
+    "blob": "AssetPackages/0389.blob",
+    "chunk": 575,
+    "closureBundles": 8
+  },
+  "meshes": [
+    {
+      "name": "FX_Mesh_ShaderParticle_Quad_01_Max30",
+      "vertexCount": 120,
+      "submeshCount": 1,
+      "flags": 23,
+      "indexCounts": [
+        180
+      ],
+      "file": "FX_Mesh_ShaderParticle_Quad_01_Max30.mmesh",
+      "pathID": -5223932237932127326,
+      "key": "FX_Mesh_ShaderParticle_Quad_01_Max30",
+      "boundsMin": [
+        -0.5,
+        -0.5,
+        0.0
+      ],
+      "boundsMax": [
+        0.5,
+        0.5,
+        0.0
+      ]
+    },
+    {
+      "name": "FX_Mesh_ShaderParticle_Quad_01_Max20",
+      "vertexCount": 80,
+      "submeshCount": 1,
+      "flags": 23,
+      "indexCounts": [
+        120
+      ],
+      "file": "FX_Mesh_ShaderParticle_Quad_01_Max20.mmesh",
+      "pathID": 3122310267157198948,
+      "key": "FX_Mesh_ShaderParticle_Quad_01_Max20",
+      "boundsMin": [
+        -0.5,
+        -0.5,
+        0.0
+      ],
+      "boundsMax": [
+        0.5,
+        0.5,
+        0.0
+      ]
+    }
+  ],
+  "materials": [
+    {
+      "name": "FX_ShaderParticle_AquariumTank_Bubble_02_2",
+      "key": "FX_ShaderParticle_AquariumTank_Bubble_02_2",
+      "pathID": -8022217198796433526,
+      "shader": "MMN/FX/FX_MMCustomParticle",
+      "file": "FX_ShaderParticle_AquariumTank_Bubble_02_2.json"
+    },
+    {
+      "name": "FX_ShaderParticle_AquariumTank_Bubble_02_1",
+      "key": "FX_ShaderParticle_AquariumTank_Bubble_02_1",
+      "pathID": -1553252015019793211,
+      "shader": "MMN/FX/FX_MMCustomParticle",
+      "file": "FX_ShaderParticle_AquariumTank_Bubble_02_1.json"
+    },
+    {
+      "name": "FX_ShaderParticle_AquariumTank_Bubble_01_3",
+      "key": "FX_ShaderParticle_AquariumTank_Bubble_01_3",
+      "pathID": -2745866260335042313,
+      "shader": "MMN/FX/FX_MMCustomParticle",
+      "file": "FX_ShaderParticle_AquariumTank_Bubble_01_3.json"
+    }
+  ],
+  "textures": [
+    "FX_AquariumTank_Bubble_01.png",
+    "FX_AquariumTank_Bubble_02.png",
+    "FX_AquariumTank_Dust_01.png",
+    "FX_Noise_03_02.png"
+  ],
+  "textureSettings": {
+    "FX_AquariumTank_Bubble_01.png": {
+      "colorSpace": 1,
+      "mipCount": 1,
+      "wrapU": 0,
+      "wrapV": 0,
+      "filterMode": 1,
+      "aniso": 1
+    },
+    "FX_AquariumTank_Bubble_02.png": {
+      "colorSpace": 1,
+      "mipCount": 1,
+      "wrapU": 1,
+      "wrapV": 1,
+      "filterMode": 1,
+      "aniso": 1
+    },
+    "FX_AquariumTank_Dust_01.png": {
+      "colorSpace": 1,
+      "mipCount": 1,
+      "wrapU": 0,
+      "wrapV": 0,
+      "filterMode": 1,
+      "aniso": 1
+    },
+    "FX_Noise_03_02.png": {
+      "colorSpace": 0,
+      "mipCount": 1,
+      "wrapU": 0,
+      "wrapV": 0,
+      "filterMode": 1,
+      "aniso": 1
+    }
+  },
+  "hierarchy": [
+    {
+      "name": "FX_ShaderParticle_AquariumTank_Bubble_02_2",
+      "pathID": -9178659098870500938,
+      "parent": 7698355382527831608,
+      "active": true,
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "worldPosition": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "localRotation": [
+        -0.0,
+        -0.0,
+        -0.0,
+        1.0
+      ],
+      "localScale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "meshKey": "FX_Mesh_ShaderParticle_Quad_01_Max30",
+      "meshName": "FX_Mesh_ShaderParticle_Quad_01_Max30",
+      "meshBinding": "pptr",
+      "materialPathIDs": [
+        -8022217198796433526
+      ],
+      "materialKeys": [
+        "FX_ShaderParticle_AquariumTank_Bubble_02_2"
+      ],
+      "materialNames": [
+        "FX_ShaderParticle_AquariumTank_Bubble_02_2"
+      ],
+      "hasRenderer": true,
+      "components": [
+        "Transform",
+        "MeshFilter",
+        "MeshRenderer",
+        "MonoBehaviour"
+      ],
+      "script": {
+        "className": "BoundingBoxSetter"
+      }
+    },
+    {
+      "name": "FX_ShaderParticle_AquariumTank_Bubble_02_1",
+      "pathID": -3311509105540991457,
+      "parent": 7698355382527831608,
+      "active": true,
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "worldPosition": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "localRotation": [
+        -0.0,
+        -0.0,
+        -0.0,
+        1.0
+      ],
+      "localScale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "meshKey": "FX_Mesh_ShaderParticle_Quad_01_Max30",
+      "meshName": "FX_Mesh_ShaderParticle_Quad_01_Max30",
+      "meshBinding": "pptr",
+      "materialPathIDs": [
+        -1553252015019793211
+      ],
+      "materialKeys": [
+        "FX_ShaderParticle_AquariumTank_Bubble_02_1"
+      ],
+      "materialNames": [
+        "FX_ShaderParticle_AquariumTank_Bubble_02_1"
+      ],
+      "hasRenderer": true,
+      "components": [
+        "Transform",
+        "MeshFilter",
+        "MeshRenderer",
+        "MonoBehaviour"
+      ],
+      "script": {
+        "className": "BoundingBoxSetter"
+      }
+    },
+    {
+      "name": "FX_ShaderParticle_AquariumTank_Bubble_01_3",
+      "pathID": -2488642501951264315,
+      "parent": 7698355382527831608,
+      "active": true,
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "worldPosition": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "localRotation": [
+        -0.0,
+        -0.0,
+        -0.0,
+        1.0
+      ],
+      "localScale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "meshKey": "FX_Mesh_ShaderParticle_Quad_01_Max20",
+      "meshName": "FX_Mesh_ShaderParticle_Quad_01_Max20",
+      "meshBinding": "pptr",
+      "materialPathIDs": [
+        -2745866260335042313
+      ],
+      "materialKeys": [
+        "FX_ShaderParticle_AquariumTank_Bubble_01_3"
+      ],
+      "materialNames": [
+        "FX_ShaderParticle_AquariumTank_Bubble_01_3"
+      ],
+      "hasRenderer": true,
+      "components": [
+        "Transform",
+        "MeshFilter",
+        "MeshRenderer",
+        "MonoBehaviour"
+      ],
+      "script": {
+        "className": "BoundingBoxSetter"
+      }
+    },
+    {
+      "name": "FX_AquariumTank_Bubble_05",
+      "pathID": 7698355382527831608,
+      "parent": null,
+      "active": true,
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "worldPosition": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "localRotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "localScale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "meshKey": null,
+      "meshName": null,
+      "meshBinding": null,
+      "materialPathIDs": [],
+      "materialKeys": [],
+      "materialNames": [],
+      "hasRenderer": false,
+      "components": [
+        "Transform"
+      ]
+    }
+  ],
+  "animations": [],
+  "shaders": [
+    "MMN/FX/FX_MMCustomParticle"
+  ],
+  "unresolvedMaterials": []
+}

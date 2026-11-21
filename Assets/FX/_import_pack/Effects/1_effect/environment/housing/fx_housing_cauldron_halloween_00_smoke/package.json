@@ -1,0 +1,152 @@
+{
+  "id": "1_effect/environment/housing/fx_housing_cauldron_halloween_00_smoke",
+  "category": "Effects",
+  "title": "fx_housing_cauldron_halloween_00_smoke",
+  "originalPath": "1_effect/environment/housing/fx_housing_cauldron_halloween_00_smoke.prefab",
+  "source": {
+    "seedBundle": "dedicated_bundle_0c323b5b",
+    "blob": "AssetPackages/0732.blob",
+    "chunk": 218,
+    "closureBundles": 6
+  },
+  "meshes": [
+    {
+      "name": "FX_Mesh_ShaderParticle_Quad_01_Max20",
+      "vertexCount": 80,
+      "submeshCount": 1,
+      "flags": 23,
+      "indexCounts": [
+        120
+      ],
+      "file": "FX_Mesh_ShaderParticle_Quad_01_Max20.mmesh",
+      "pathID": 3122310267157198948,
+      "key": "FX_Mesh_ShaderParticle_Quad_01_Max20",
+      "boundsMin": [
+        -0.5,
+        -0.5,
+        0.0
+      ],
+      "boundsMax": [
+        0.5,
+        0.5,
+        0.0
+      ]
+    }
+  ],
+  "materials": [
+    {
+      "name": "FX_ShaderParticle_Smoke_09_1",
+      "key": "FX_ShaderParticle_Smoke_09_1",
+      "pathID": -2936036635262410561,
+      "shader": "MMN/FX/FX_MMCustomParticle",
+      "file": "FX_ShaderParticle_Smoke_09_1.json"
+    }
+  ],
+  "textures": [
+    "FX_Tex_smoke05.png"
+  ],
+  "textureSettings": {
+    "FX_Tex_smoke05.png": {
+      "colorSpace": 1,
+      "mipCount": 1,
+      "wrapU": 0,
+      "wrapV": 0,
+      "filterMode": 1,
+      "aniso": 1
+    }
+  },
+  "hierarchy": [
+    {
+      "name": "FX_Housing_Cauldron_Halloween_00_Smoke",
+      "pathID": -3587586308508044742,
+      "parent": null,
+      "active": true,
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "worldPosition": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "localRotation": [
+        -0.0,
+        -0.0,
+        -0.0,
+        1.0
+      ],
+      "localScale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "meshKey": null,
+      "meshName": null,
+      "meshBinding": null,
+      "materialPathIDs": [],
+      "materialKeys": [],
+      "materialNames": [],
+      "hasRenderer": false,
+      "components": [
+        "Transform",
+        "LODGroup"
+      ]
+    },
+    {
+      "name": "FX_ShaderParticle_Smoke_09_1",
+      "pathID": 5929313777002366059,
+      "parent": -3587586308508044742,
+      "active": true,
+      "localPosition": [
+        0.0,
+        1.0499999523162842,
+        0.0
+      ],
+      "worldPosition": [
+        0.0,
+        1.05,
+        0.0
+      ],
+      "localRotation": [
+        0.7071068286895752,
+        -0.0,
+        -0.0,
+        -0.7071068286895752
+      ],
+      "localScale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "meshKey": "FX_Mesh_ShaderParticle_Quad_01_Max20",
+      "meshName": "FX_Mesh_ShaderParticle_Quad_01_Max20",
+      "meshBinding": "pptr",
+      "materialPathIDs": [
+        -2936036635262410561
+      ],
+      "materialKeys": [
+        "FX_ShaderParticle_Smoke_09_1"
+      ],
+      "materialNames": [
+        "FX_ShaderParticle_Smoke_09_1"
+      ],
+      "hasRenderer": true,
+      "components": [
+        "Transform",
+        "MeshFilter",
+        "MeshRenderer",
+        "MonoBehaviour"
+      ],
+      "script": {
+        "className": "BoundingBoxSetter"
+      }
+    }
+  ],
+  "animations": [],
+  "shaders": [
+    "MMN/FX/FX_MMCustomParticle"
+  ],
+  "unresolvedMaterials": []
+}
